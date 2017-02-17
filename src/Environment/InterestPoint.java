@@ -1,5 +1,7 @@
 package Environment;
 
+// Classe représentant les points d'intérêt de l'environnement
+
 public class InterestPoint extends Point {
 
 	private String name;

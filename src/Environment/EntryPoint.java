@@ -2,6 +2,8 @@ package Environment;
 
 import Environment.Point;
 
+// Classe représentant les points d'entrée dans l'environnement (le plateau)
+
 public class EntryPoint extends Point {
 
 	private String name;

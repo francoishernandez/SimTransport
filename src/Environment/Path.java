@@ -7,6 +7,7 @@ public class Path {
 
 	private PathType type;
 
+	// facteurs de poids des chemins selon le type
 	private int foot = 10;
 	private int bike = 6;
 	private int car = 1;
@@ -18,31 +19,36 @@ public class Path {
 		this.type = type;
 	}
 
+	// récupère la distance "réelle" dans l'espace
 	public double length(){
 		return Math.sqrt(
 				Math.pow(B.getX()-A.getX(),2)
 				+Math.pow(B.getY()-A.getY(),2)
-				+Math.pow(B.getZ()-A.getZ(),2)); // récupère la distance "réelle" dans l'espace
+				+Math.pow(B.getZ()-A.getZ(),2)); 
 	}
 
+	// récupère la distance dans le plan (X,Y)
 	public double planDist(){
 		return Math.sqrt(
 				Math.pow(B.getX()-A.getX(),2)
-				+Math.pow(B.getY()-A.getY(),2)); // récupère la distance dans le plan (X,Y)
+				+Math.pow(B.getY()-A.getY(),2)); 
 	}
 
+	// récupère le dénivelé
 	public double heightDiff(){
-		return B.getZ()-A.getZ(); // récupère le dénivelé
+		return B.getZ()-A.getZ(); 
 	}
 
+	// récupère la pente
 	public double slope(){
-		return heightDiff()/planDist(); // récupère la pente
+		return heightDiff()/planDist(); 
 	}
-
+	
+	// calcule un poids pour le chemin
 	public double weight(){
 		double w = 0;
 		if(type != PathType.car){
-			if(heightDiff()<=0){
+			if(heightDiff()<=0){ // cas à plat ou en descente
 				if(type == PathType.foot){
 					w = length()*foot;
 				}
@@ -50,12 +56,12 @@ public class Path {
 					w = length()*bike;
 				}
 			}
-			else{
+			else{ // cas en montée
 				if(type == PathType.foot){
-					w = length()*foot*Math.pow(slope(),2); // difficulté accrue en montée
+					w = length()*foot*Math.pow(slope(),2); // difficulté accrue en montée (hypothèse non linéaire)
 				}
 				else if (type == PathType.bike){
-					w = length()*bike*Math.pow(slope(),3); // difficulté accrue en montée
+					w = length()*bike*Math.pow(slope(),3); // difficulté accrue en montée (hypothèse non linéaire)
 				}
 			}
 		} else {
@@ -86,5 +92,5 @@ public class Path {
 
 	public void setType(PathType type) {
 		this.type = type;
-	}
+	}	
 }

@@ -5,7 +5,7 @@ public class Point {
 
 	private int x;
 	private int y;
-	private int z;
+	private int z; //altitude
 	
 	public Point(int x, int y, int z){
 		this.x = x;

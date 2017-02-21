@@ -36,7 +36,7 @@ public class Person extends jade.core.Agent {
 	    return list.get(rand.nextInt(list.size()));
 	}
 	
-	public Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork){
+	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork){
 		EntryPoint in = getRandomItem(possibleIn);
 		Point work = getRandomItem(possibleWork);
 		Time beginTime = Time.randomBegin();
@@ -51,8 +51,8 @@ public class Person extends jade.core.Agent {
 	
 	public void setup(){
 		// On prévient du lancement de la personne
-		System.out.println("Lancement de " + ID.getLocalName());
-		
+		System.out.println("Lancement de " + ID.getLocalName() + " à " + inPoint.getName());
+		System.out.println("Schedule :" + this.schedule.toString());
 		/*
 		// On lui ajoute les comportements initiaux
 		this.addBehaviour(new Trajet());

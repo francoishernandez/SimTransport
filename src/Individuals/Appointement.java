@@ -12,4 +12,8 @@ public class Appointement {
 		destination = dest;
 	}
 	
+	public String toString(){
+		return "( Départ à " + departureTime.toString() + " à destination de " + destination.getName() + " )";
+	}
+	
 }

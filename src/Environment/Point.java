@@ -50,6 +50,9 @@ public class Point {
 		return id;
 	}
 	
+	public String getName(){
+		return "Point quelconque";
+	}
 	
 	
 }

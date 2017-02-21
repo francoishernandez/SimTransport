@@ -24,7 +24,7 @@ public class Time {
 		// Elle est comprise entre 2h et 20h
 		byte hours = (byte)Math.max(Math.min(randhour, 20), 2);
 		// Les minutes tombent sur des quarts d'heure
-		byte minutes = (byte)(15*rand.nextInt(5));
+		byte minutes = (byte)(15*rand.nextInt(4));
 		return new Time(hours, minutes);
 	}
 	// Génère une heure aléatoire de départ du travail (en fonction de l'heure de commencement)
@@ -34,8 +34,18 @@ public class Time {
 		// Elle est comprise entre l'heure d'arrivée + 2h (sans compter les minutes) et 24h (minuit)
 		byte hours = (byte)Math.max(Math.min(randhour, 24), 2+begin.hours);
 		// Les minutes tombent sur des quarts d'heure
-		byte minutes = (byte)(15*rand.nextInt(5));
+		byte minutes = (byte)(15*rand.nextInt(4));
 		return new Time(hours, minutes);
+	}
+	
+	public String toString(){
+		if (minutes == 0){
+		return hours + "h00";
+		} 
+		else {
+		return hours + "h" + minutes;
+		}
+		
 	}
 	
 }

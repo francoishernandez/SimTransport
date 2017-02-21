@@ -12,4 +12,8 @@ public class InterestPoint extends Point {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getName() {
+		return name;
+	}
+
 }

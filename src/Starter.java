@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import Environment.*;
 import Individuals.*;
+import jade.wrapper.StaleProxyException;
 
 public class Starter extends jade.core.Agent {
 
@@ -29,13 +30,16 @@ public class Starter extends jade.core.Agent {
 		pointsEntree.add(E3);
 		
 
-		Person test = Person.rand_AllerRetour(pointsEntree, pointsTravail);
-		test.run();
-		Person test2 = Person.rand_AllerRetour(pointsEntree, pointsTravail);
-		test2.run();
-		Person test3 = Person.rand_AllerRetour(pointsEntree, pointsTravail);
-		test3.run();
 		
+		for (int i = 0; i < 10; i++){
+			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsTravail);
+			try {
+				this.getContainerController().acceptNewAgent("person"+(i+1), newPerson).start();
+			} catch (StaleProxyException e) {
+				e.printStackTrace();
+			}	
+		}
+			
 	}
 	
 }

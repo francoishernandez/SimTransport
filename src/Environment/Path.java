@@ -30,6 +30,8 @@ public abstract class Path {
 	public double heightDiff(){
 		return B.getZ()-A.getZ(); 
 	}
+	
+	public abstract double weight();
 
 	// récupère la pente
 	public double slope(){

@@ -1,5 +1,7 @@
 package Individuals;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 import Environment.*;
 import jade.core.AID;
@@ -9,9 +11,10 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Person extends jade.core.Agent {
+	
 
 	EntryPoint inPoint;
-	ArrayList<Appointement> Schedule;
+	ArrayList<Appointement> schedule;
 	AID ID;
 	
 	Point localisation;
@@ -20,10 +23,30 @@ public class Person extends jade.core.Agent {
 	
 	static int nbPeople = 0;
 	
-	public Person() {
+	public Person(EntryPoint in, ArrayList<Appointement> sched) {
 		nbPeople++;
 		ID = new AID("Person#"+nbPeople, false);
-		localisation = inPoint;
+		inPoint = in;
+		localisation = in;
+		schedule = sched;
+	}
+	
+	static Random rand = new Random();
+	static <T> T getRandomItem(ArrayList<T> list) {
+	    return list.get(rand.nextInt(list.size()));
+	}
+	
+	public Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork){
+		EntryPoint in = getRandomItem(possibleIn);
+		Point work = getRandomItem(possibleWork);
+		Time beginTime = Time.randomBegin();
+		Time endTime = Time.randomEnd(beginTime);
+		Appointement beginApp = new Appointement(beginTime,work);
+		Appointement endApp = new Appointement(endTime,in);
+		ArrayList<Appointement> sched = new ArrayList<Appointement>();
+		sched.add(beginApp);
+		sched.add(endApp);
+		return new Person(in, sched);
 	}
 	
 	public void setup(){

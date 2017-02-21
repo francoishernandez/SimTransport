@@ -49,7 +49,15 @@ public class test {
 		Environment e = new Environment(points, paths);
 		e.display();
 		
-		System.out.println(e.findShortestPath(points, paths, A, E));
+		double[][] weight = e.initializeWeight(points,paths);
+		System.out.println("i \t\t j \t\t weight");
+		for(int i=0; i<points.size(); i++){
+			for(int j=0; j<points.size(); j++){
+				System.out.println(i + " \t\t " + j + " \t\t " + weight[i][j]);
+			}
+		}
+		
+		e.findShortestPath(points, paths, A, E);
 
 	}
 

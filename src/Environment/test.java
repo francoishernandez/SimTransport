@@ -1,19 +1,30 @@
 package Environment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
+import Graphics.*;
+
 public class test {
+	
+	private static Window f;
+	private static Panel pan;
+	
+	public static int windowSize = 500; // taille de la fenêtre en pixels (représente 10km)
+	public static int simSize = 10000; // taille en metres de la simulation
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Point A = new Point(0,0,0);
-		Point B = new Point(0,20,0);
-		Point C = new Point(30,0,0);
-		Point D = new Point(60,50,0);
-		Point E = new Point(80,120,0);
-		Point F = new Point(50,30,0);
-		Point G = new Point(10,70,0);
+		Point A = new EntryPoint("A",1000,1000,0);
+		Point B = new EntryPoint("B",0,2000,0);
+		Point C = new Point(3000,0,0);
+		Point D = new InterestPoint("D",6000,5000,0);
+		Point E = new EntryPoint("E",8000,9000,0);
+		Point F = new Point(5000,3000,0);
+		Point G = new InterestPoint("G",1000,7000,0);
 		ArrayList<Point> points = new ArrayList<Point>();
 		points.add(A);
 		points.add(B);
@@ -46,10 +57,10 @@ public class test {
 		paths.add(de);
 		paths.add(ge);
 		
-		Environment e = new Environment(points, paths);
-		e.display();
+		Environment env = new Environment(points, paths);
+		env.display();
 		
-		double[][] weight = e.initializeWeight(points,paths);
+		double[][] weight = env.initializeWeight(points,paths);
 		System.out.println("i \t\t j \t\t weight");
 		for(int i=0; i<points.size(); i++){
 			for(int j=0; j<points.size(); j++){
@@ -57,7 +68,34 @@ public class test {
 			}
 		}
 		
-		e.findShortestPath(points, paths, A, E);
+		env.findShortestPath(points, paths, A, E);
+		
+		// AFFICHAGE
+		
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					try {
+						f = new Window();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					pan = new Panel(env);
+
+					f.add(pan);
+				}
+			});
+		}
+		
+		
+
+		catch(Exception e){
+			System.err.println("Erreur a la creation de l'interface Swing.");
+			System.err.println(e);
+		}
+		
+		
 
 	}
 

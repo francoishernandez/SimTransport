@@ -85,9 +85,9 @@ public class Panel extends JPanel {
 		ImageIcon img = new ImageIcon("images/person.png");
 		for (int i=0; i<persons.size(); i++){
 			bufferGraphics.drawImage(img.getImage(), 
-			(int)(persons.get(i).getLocalisation().getX()*ratio - 25),
-			(int)(persons.get(i).getLocalisation().getY()*ratio -25),
-			10, 10,
+			(int)(persons.get(i).getLocalisation().getX()*ratio - 10),
+			(int)(persons.get(i).getLocalisation().getY()*ratio -10),
+			20, 20,
 			null);
 		}
 

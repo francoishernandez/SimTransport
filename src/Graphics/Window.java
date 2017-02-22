@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.IOException;
 import javax.swing.*;
 import Environment.*;
-import Starter;
 
 public class Window extends JFrame {
 

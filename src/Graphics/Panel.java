@@ -1,11 +1,17 @@
 package Graphics;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import Environment.*;
 import Environment.Point;
 import Environment.test;
+import Individuals.Person;
 
 public class Panel extends JPanel {
 	Graphics bufferGraphics;
@@ -13,9 +19,11 @@ public class Panel extends JPanel {
 	Dimension dim;
 
 	Environment env;
+	ArrayList<Person> persons;
 
-	public Panel(Environment env){
+	public Panel(Environment env, ArrayList<Person> persons){
 		this.env = env;
+		this.persons = persons;
 	}
 
 	public void init(){
@@ -51,26 +59,37 @@ public class Panel extends JPanel {
 
 		// DESSIN DES POINTS
 
-		bufferGraphics.setColor(Color.BLACK);
 		for (int i=0; i<env.getPoints().size(); i++){
 			//Point p = env.getPoints().get(i);
 			if(env.getPoints().get(i) instanceof EntryPoint) {
 				bufferGraphics.setColor(Color.RED);
 				rpx = 5;
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,(int)(env.getPoints().get(i).getY()*ratio) - rpx,2*rpx, 2*rpx);
-
+				bufferGraphics.drawString(env.getPoints().get(i).getName(), (int)(env.getPoints().get(i).getX()*ratio) + 3*rpx, (int)(env.getPoints().get(i).getY()*ratio) + 3*rpx);
 			} else if (env.getPoints().get(i) instanceof InterestPoint) {
 				bufferGraphics.setColor(Color.BLUE);
 				rpx = 4;
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,(int)(env.getPoints().get(i).getY()*ratio) - rpx,2*rpx, 2*rpx);
-
+				bufferGraphics.drawString(env.getPoints().get(i).getName(), (int)(env.getPoints().get(i).getX()*ratio) + 3*rpx, (int)(env.getPoints().get(i).getY()*ratio) + 3*rpx);
 			} else {
 				bufferGraphics.setColor(Color.BLACK);
 				rpx = 3;
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,(int)(env.getPoints().get(i).getY()*ratio) - rpx,2*rpx, 2*rpx);
+				bufferGraphics.drawString(env.getPoints().get(i).getName(), (int)(env.getPoints().get(i).getX()*ratio) + 3*rpx, (int)(env.getPoints().get(i).getY()*ratio) + 3*rpx);
 			}			
 		}
-
+		
+		// DESSIN DES PERSONNES
+		
+		bufferGraphics.setColor(Color.BLACK);
+		ImageIcon img = new ImageIcon("images/person.png");
+		for (int i=0; i<persons.size(); i++){
+			bufferGraphics.drawImage(img.getImage(), 
+			(int)(persons.get(i).getLocalisation().getX()*ratio - 25),
+			(int)(persons.get(i).getLocalisation().getY()*ratio -25),
+			10, 10,
+			null);
+		}
 
 
 		g.drawImage(offscreen, 0, 0, this);

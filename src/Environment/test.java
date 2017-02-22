@@ -12,7 +12,7 @@ public class test {
 	private static Window f;
 	private static Panel pan;
 	
-	public static int windowSize = 500; // taille de la fenêtre en pixels (représente 10km)
+	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
 	public static int simSize = 10000; // taille en metres de la simulation
 
 	public static void main(String[] args) {

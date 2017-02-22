@@ -1,6 +1,11 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import Environment.*;
+import Graphics.Panel;
+import Graphics.Window;
 import Individuals.*;
 import jade.wrapper.StaleProxyException;
 
@@ -8,6 +13,12 @@ public class Starter extends jade.core.Agent {
 
 	public Starter(){
 	}
+	
+	private static Window f;
+	private static Panel pan;
+	
+	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
+	public static int simSize = 10000; // taille en metres de la simulation
 	
 	// Dans le setup du starter on crée et lance tous les agents désirés
 	public void setup(){
@@ -39,6 +50,24 @@ public class Starter extends jade.core.Agent {
 				e.printStackTrace();
 			}	
 		}
+		
+		// AFFICHAGE
+		
+				try {
+					SwingUtilities.invokeAndWait(new Runnable() {
+						public void run() {
+							try {
+								f = new Window();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+							pan = new Panel(env);
+
+							f.add(pan);
+						}
+					});
+				}
 			
 	}
 	

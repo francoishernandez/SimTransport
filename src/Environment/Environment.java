@@ -11,7 +11,7 @@ public class Environment {
 	private ArrayList<Point> points;
 	private ArrayList<Path> paths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
-
+	
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
 		ArrayList<Point> res = new ArrayList<Point>();
@@ -47,6 +47,9 @@ public class Environment {
 		return paths;
 	}
 
+	// détermination du prochain chemin a emprunter (à partir de Djikstra ci dessous)
+
+	
 	// implémentation de l'algorithme du plus court chemin de Djikstra
 
 	ArrayList<Point> findShortestPath(ArrayList<Point> points, ArrayList<Path> paths, Point source, Point target){

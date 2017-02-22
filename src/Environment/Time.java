@@ -13,6 +13,9 @@ public class Time {
 		minutes = m;
 	}
 	
+	public boolean equals(Time toCompare){
+		return ( (hours==toCompare.getHours())&&(minutes==toCompare.getMinutes()) );
+	}
 	
 	// POUR LA GENERATION ALEATOIRES DE PERSONNES ALLER-RETOUR
 	
@@ -45,7 +48,16 @@ public class Time {
 		else {
 		return hours + "h" + minutes;
 		}
-		
 	}
+
+	public byte getHours() {
+		return hours;
+	}
+
+	public byte getMinutes() {
+		return minutes;
+	}
+	
+	
 	
 }

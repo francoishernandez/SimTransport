@@ -14,12 +14,13 @@ public class Person extends jade.core.Agent {
 	
 
 	EntryPoint inPoint;
+	// On supposera les rdv triés temporellement (faudra juste faire attention à la création)
 	ArrayList<Appointement> schedule;
 	AID ID;
 	
 	Point localisation;
 	Path currentPath;
-	PersonState state = PersonState.in_place;
+	PersonState personState = PersonState.in_place;
 	
 	static int nbPeople = 0;
 	
@@ -73,5 +74,39 @@ public class Person extends jade.core.Agent {
 		}
 		*/
 	}
+
+	public Point getLocalisation() {
+		return localisation;
+	}
+
+	public void setLocalisation(Point localisation) {
+		this.localisation = localisation;
+	}
+
+	public Path getCurrentPath() {
+		return currentPath;
+	}
+
+	public void setCurrentPath(Path currentPath) {
+		this.currentPath = currentPath;
+	}
+
+	public PersonState getPersonState() {
+		return personState;
+	}
+
+	public void setPersonState(PersonState state) {
+		this.personState = state;
+	}
+
+	public ArrayList<Appointement> getSchedule() {
+		return schedule;
+	}
+
+	public AID getID() {
+		return ID;
+	}
+	
+	
 	
 }

@@ -30,7 +30,6 @@ public class Starter extends jade.core.Agent {
 		pointsEntree.add(E3);
 		
 
-		
 		for (int i = 0; i < 10; i++){
 			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsTravail);
 			try {

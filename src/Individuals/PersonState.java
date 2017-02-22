@@ -1,5 +1,5 @@
 package Individuals;
 
 public enum PersonState {
-	in_place, moving;	
+	moving, in_place, gone;	
 }

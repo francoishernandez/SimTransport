@@ -81,7 +81,7 @@ public class test {
 						e.printStackTrace();
 					}
 
-					pan = new Panel(env);
+					//pan = new Panel(env);
 
 					f.add(pan);
 				}

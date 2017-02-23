@@ -5,6 +5,9 @@ import java.io.IOException;
 import javax.swing.*;
 import Environment.*;
 
+// La classe Window correspond à la fenêtre où s'afficheront les représentation graphiques de la simulation, dessinées dans un Panel
+// Elle est instanciée au lancement de l'agent Starter
+
 public class Window extends JFrame {
 
 	public Window() throws IOException {

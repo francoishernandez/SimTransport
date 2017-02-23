@@ -58,6 +58,17 @@ public class Time {
 		return minutes;
 	}
 	
+	public void incMinute(byte m){
+		byte r = (byte) ((minutes + m) / 60);
+		minutes = (byte) ((minutes + m) % 60);
+		hours += r;
+	}
+	
+	public void stringToTime(String s){
+		String[] splited = s.split("h");
+		hours = Byte.parseByte(splited[0]);
+		minutes = Byte.parseByte(splited[1]);
+	}
 	
 	
 }

@@ -9,12 +9,13 @@ public class inPlace extends Behaviour {
 
 	public void action() {
 		// on regarde les messages de l'horloge
-		ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new Time()));
+		ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new FilterClockTick()));
 		if (m == null) {
 			block();
 		} else {
 			// Quand on reçoit le message d'horloge, on en extrait l'heure
-			Time currentTime = m.getCurrentTime();
+			Time currentTime = new Time((byte)0,(byte)0);
+			currentTime.stringToTime(m.getContent());
 			// On récupère le prochain rdv
 			Appointement nextAppointement = nextAppointement();
 			// Et on regarde si c'est l'heure de partir

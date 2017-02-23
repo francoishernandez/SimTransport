@@ -14,6 +14,8 @@ public class Starter extends jade.core.Agent {
 	public Starter(){
 	}
 
+	private static int simulationTime = 10; //en ms
+	
 	private static Window f;
 	private static Panel pan;
 
@@ -79,6 +81,13 @@ public class Starter extends jade.core.Agent {
 				e.printStackTrace();
 			}	
 		}
+		
+		Clock c = new Clock(simulationTime); 
+		try {
+			this.getContainerController().acceptNewAgent("clock", c).start();
+		} catch (StaleProxyException e) {
+			e.printStackTrace();
+		}	
 
 		// AFFICHAGE
 

@@ -16,7 +16,6 @@ public class Person extends jade.core.Agent {
 	EntryPoint inPoint;
 	// On supposera les rdv triés temporellement (faudra juste faire attention à la création)
 	ArrayList<Appointement> schedule;
-	AID ID;
 	
 	Point localisation;
 	Path currentPath;
@@ -26,7 +25,6 @@ public class Person extends jade.core.Agent {
 	
 	public Person(EntryPoint in, ArrayList<Appointement> sched) {
 		nbPeople++;
-		ID = new AID("Person#"+nbPeople, false);
 		inPoint = in;
 		localisation = in;
 		schedule = sched;
@@ -52,27 +50,26 @@ public class Person extends jade.core.Agent {
 	
 	public void setup(){
 		// On prévient du lancement de la personne
-		System.out.println("Lancement de " + ID.getLocalName() + " à " + inPoint.getName());
+		System.out.println("Lancement de " + this.getAID().getLocalName() + " à " + inPoint.getName());
 		System.out.println("Schedule :" + this.schedule.toString());
-		/*
+		
 		// On lui ajoute les comportements initiaux
-		this.addBehaviour(new Trajet());
-		// On créée une DFAgentDescription pour le bus
+		// this.addBehaviour(new Trajet());
+		// On créée une DFAgentDescription pour la personne
 		DFAgentDescription dfd = new DFAgentDescription();
 		// Contenant son AID,
-		dfd.setName(aidID);
-		// Et son Service "Bus"
-		ServiceDescription bus = new ServiceDescription();
-		bus.setName("Bus#"+ID);
-		bus.setType("Bus");
-		dfd.addServices(bus);
+		dfd.setName(this.getAID());
+		// Et son Service "Person"
+		ServiceDescription service = new ServiceDescription();
+		service.setType("Person");
+		dfd.addServices(service);
 		// On ajoute finalement la description à DFService qui joue le rôle d'annuaire
 		try {
 			DFService.register(this, dfd);
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 	}
 
 	public Point getLocalisation() {
@@ -102,11 +99,5 @@ public class Person extends jade.core.Agent {
 	public ArrayList<Appointement> getSchedule() {
 		return schedule;
 	}
-
-	public AID getID() {
-		return ID;
-	}
-	
-	
 	
 }

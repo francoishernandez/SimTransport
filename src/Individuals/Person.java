@@ -20,6 +20,7 @@ public class Person extends jade.core.Agent {
 	Point localisation;
 	Path currentPath;
 	PersonState personState = PersonState.in_place;
+	MovingState movingState = MovingState.none;
 	
 	static int nbPeople = 0;
 	
@@ -78,6 +79,14 @@ public class Person extends jade.core.Agent {
 
 	public void setLocalisation(Point localisation) {
 		this.localisation = localisation;
+	}
+
+	public MovingState getMovingState() {
+		return movingState;
+	}
+
+	public void setMovingState(MovingState movingState) {
+		this.movingState = movingState;
 	}
 
 	public Path getCurrentPath() {

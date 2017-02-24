@@ -8,38 +8,64 @@ import jade.lang.acl.MessageTemplate;
 public class Moving extends jade.core.behaviours.Behaviour {
 	
 	private Point destination;
+	private int currentPathProgress;
+	private int currentPathWeight;
 	
 	public Moving(Point p){
 		destination = p;
+		setMovingState(MovingState.point);
 	}
 	
 	public void action() {
-		// On trouve le prochain chemin à emprunter (Djikstra impémenté dans Environnement)
-		Path nextPath = findNextPath();
-		Point nextPoint = nextPath.getB();
-		// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
-		// On s'engage donc sur la route
-		setCurrentPath(nextPath);
-		ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new finTrajet()));
-		if (m == null) {
-			block();
-		} else {
-			setCurrentPath(null);
-			setLocalisation(nextPoint);	
-			if (nextPoint == destination){
-				if (noMoreAppointement()){
-					setPersonState(PersonState.gone);
-				} else {
-					setPersonState(PersonState.in_place);
-					((Person)(this.myAgent)).addBehaviour(new inPlace());
+		switch (getMovingState()) {
+		
+		case point :
+			// On trouve le prochain chemin à emprunter (Djikstra impémenté dans Environnement)
+			Path nextPath = findNextPath();
+			Point nextPoint = nextPath.getB();
+			// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
+			// On s'engage donc sur la route
+			setCurrentPath(nextPath);
+			currentPathProgress = 0;
+			currentPathWeight = (int) nextPath.weight();
+			setMovingState(MovingState.path);
+			break;
+			
+		case path :
+			ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new FilterClockTick()));
+			if (m == null) {
+				block();
+			} else {
+				currentPathProgress++;
+				if (currentPathProgress == currentPathWeight){
+					setCurrentPath(null);
+					setLocalisation(nextPoint);
+					if (nextPoint == destination){
+						setMovingState(MovingState.none);
+						if (noMoreAppointement()){
+							setPersonState(PersonState.gone);
+						} else {
+							setPersonState(PersonState.in_place);
+							((Person)(this.myAgent)).addBehaviour(new inPlace());
+						}
+					}
 				}
 			}
-		}
+			break;
 			
+		}	
 	}
 	
 	public boolean done() {
 		return (getPersonState()==PersonState.in_place);
+	}
+	
+	public MovingState getMovingState(){
+		return ((Person)(this.myAgent)).getMovingState();
+	}
+
+	public void setMovingState(MovingState s){
+		((Person)(this.myAgent)).setMovingState(s);
 	}
 	
 	public PersonState getPersonState(){

@@ -24,6 +24,7 @@ public class inPlace extends Behaviour {
 				setPersonState(PersonState.moving);
 				Point destination = nextAppointement.getDestination();
 				((Person)(this.myAgent)).addBehaviour(new Moving(destination));
+				// et on supprime le rdv de l'agenda (rdv restants)
 				cleanAppointement();
 			}	
 		}

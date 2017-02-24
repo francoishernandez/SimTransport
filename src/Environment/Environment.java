@@ -11,6 +11,7 @@ public class Environment {
 	private ArrayList<Point> points;
 	private ArrayList<Path> paths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
+	private Clock clock;
 	
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
@@ -19,6 +20,12 @@ public class Environment {
 		return res;
 	}*/
 
+	public Environment(ArrayList<Point> points, ArrayList<Path> paths, Clock clock){
+		this.points = points;
+		this.paths = paths;
+		this.clock = clock;
+	}
+	
 	public Environment(ArrayList<Point> points, ArrayList<Path> paths){
 		this.points = points;
 		this.paths = paths;
@@ -46,12 +53,18 @@ public class Environment {
 	public ArrayList<Path> getPaths(){
 		return paths;
 	}
+	
+	public Clock getClock(){
+		return clock;
+	}
 
 	// détermination du prochain chemin a emprunter (à partir de Djikstra ci dessous)
 
 	
 	// implémentation de l'algorithme du plus court chemin de Djikstra
 
+	
+	// Rend la liste des points du chemin choisi
 	ArrayList<Point> findShortestPath(ArrayList<Point> points, ArrayList<Path> paths, Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
 		double[] D = new double[points.size()]; // tableau des poids
@@ -121,6 +134,20 @@ public class Environment {
 		}
 		return C;
 	}
+	
+	
+	// Rend la liste des chemins empruntés
+	public ArrayList<Path> shortestPath(ArrayList<Point> points, ArrayList<Path> paths, Point source, Point target){
+		ArrayList<Point> shortestPath = findShortestPath(points, paths, source, target);
+		double[][] weight = initializeWeight(points, paths); // matrice des poids
+		Path[][] pathsTab = initializePaths(points, paths, weight);
+		ArrayList<Path> selectedPaths = new ArrayList<Path>();
+		for (int i = 0; i<shortestPath.size()-1; i++){
+			selectedPaths.add(pathsTab[shortestPath.get(i).getID()][shortestPath.get(i+1).getID()]);
+		}
+		return selectedPaths;
+	}
+	
 
 	// initialisation du tableau de poids
 	public double[][] initializeWeight(ArrayList<Point> points, ArrayList<Path> paths){
@@ -130,8 +157,26 @@ public class Environment {
 			Arrays.fill(weight[i], Double.MAX_VALUE);
 		}
 		for (Path p : paths) {
-			weight[p.getA().getID()][p.getB().getID()] = p.weight();
+			if(weight[p.getA().getID()][p.getB().getID()] >= p.weight()){
+				weight[p.getA().getID()][p.getB().getID()] = p.weight(); // initialise la matrice de poids en considérant le chemin de poids minimal
+			}
 		}
 		return weight;
 	}
+	
+	// initialisation du tableau des chemins
+	public Path[][] initializePaths(ArrayList<Point> points, ArrayList<Path> paths, double[][] weight){
+		int n = points.size();
+		Path[][] pathsTab = new Path[n][n];
+		for (int i=0; i<n; i++){
+			Arrays.fill(pathsTab[i], null);
+		}
+		for (Path p : paths) {
+			if(weight[p.getA().getID()][p.getB().getID()] >= p.weight()){
+				pathsTab[p.getA().getID()][p.getB().getID()] = p;
+			}
+		}
+		return pathsTab;
+	}
+	
 }

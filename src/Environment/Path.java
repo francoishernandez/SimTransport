@@ -54,4 +54,8 @@ public abstract class Path {
 		B = b;
 	}
 
+	public String toString(){
+		return "["+A.getName()+","+B.getName()+"]";
+	}
+	
 }

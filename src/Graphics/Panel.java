@@ -114,8 +114,22 @@ public class Panel extends JPanel {
 			20, 20,
 			null);
 		}
-
-
+		
+		// AFFICHAGE DE L'HORLOGE
+		
+		int clockWidth = 1200;
+		int clockHeight = 500;
+		Font myFont = new Font ("Courier New", 1, 20);
+		Font defaultFont = bufferGraphics.getFont();
+		bufferGraphics.drawRect(0,0, (int)(clockWidth*ratio), (int)(clockHeight*ratio));
+		bufferGraphics.setFont(myFont);
+		FontMetrics metrics = bufferGraphics.getFontMetrics(myFont);
+		String currentTime = env.getClock().getCurrentTime().toString();
+		bufferGraphics.drawString(currentTime,
+				(int)(clockWidth*ratio/2 - metrics.stringWidth(currentTime)/2),
+				(int)(clockHeight*ratio/2) - metrics.getHeight()/2 + metrics.getAscent());
+		bufferGraphics.setFont(defaultFont);
+		
 		g.drawImage(offscreen, 0, 0, this);
 		repaint();
 

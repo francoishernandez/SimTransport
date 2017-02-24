@@ -23,11 +23,13 @@ public class Panel extends JPanel {
 
 	Environment env; // environnement en cours
 	ArrayList<Person> persons; // personnes évoluant dans l'environnement
+	Clock clock;
 	
 	// le constructeur permet de récupérer l'environnement et les personnes à son appel lors de la création de l'agent Starter
-	public Panel(Environment env, ArrayList<Person> persons){ 
+	public Panel(Environment env, ArrayList<Person> persons, Clock c){ 
 		this.env = env;
 		this.persons = persons;
+		this.clock = c;
 	}
 
 	public void init(){
@@ -124,7 +126,7 @@ public class Panel extends JPanel {
 		bufferGraphics.drawRect(0,0, (int)(clockWidth*ratio), (int)(clockHeight*ratio));
 		bufferGraphics.setFont(myFont);
 		FontMetrics metrics = bufferGraphics.getFontMetrics(myFont);
-		String currentTime = env.getClock().getCurrentTime().toString();
+		String currentTime = clock.getCurrentTime().toString();
 		bufferGraphics.drawString(currentTime,
 				(int)(clockWidth*ratio/2 - metrics.stringWidth(currentTime)/2),
 				(int)(clockHeight*ratio/2) - metrics.getHeight()/2 + metrics.getAscent());

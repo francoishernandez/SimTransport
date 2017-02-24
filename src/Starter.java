@@ -87,7 +87,7 @@ public class Starter extends jade.core.Agent {
 			e.printStackTrace();
 		}	
 		
-		Environment env = new Environment(points, paths, c);
+		Environment env = new Environment(points, paths);
 
 		// AFFICHAGE
 
@@ -100,7 +100,7 @@ public class Starter extends jade.core.Agent {
 						e.printStackTrace();
 					}
 
-					pan = new Panel(env, persons);
+					pan = new Panel(env, persons, c);
 
 					f.add(pan);
 				}

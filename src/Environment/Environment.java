@@ -11,7 +11,6 @@ public class Environment {
 	private ArrayList<Point> points;
 	private ArrayList<Path> paths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
-	private Clock clock;
 	
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
@@ -20,12 +19,6 @@ public class Environment {
 		return res;
 	}*/
 
-	public Environment(ArrayList<Point> points, ArrayList<Path> paths, Clock clock){
-		this.points = points;
-		this.paths = paths;
-		this.clock = clock;
-	}
-	
 	public Environment(ArrayList<Point> points, ArrayList<Path> paths){
 		this.points = points;
 		this.paths = paths;
@@ -52,10 +45,6 @@ public class Environment {
 
 	public ArrayList<Path> getPaths(){
 		return paths;
-	}
-	
-	public Clock getClock(){
-		return clock;
 	}
 
 	// détermination du prochain chemin a emprunter (à partir de Djikstra ci dessous)

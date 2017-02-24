@@ -70,7 +70,7 @@ public class test {
 		
 		env.findShortestPath(points, paths, A, E);
 		for(Path p : env.shortestPath(points, paths, A, E)){
-			System.out.println(p.toString());
+			System.out.println(p.getA().getID()+","+p.getB().getID());
 		};
 		
 		// AFFICHAGE

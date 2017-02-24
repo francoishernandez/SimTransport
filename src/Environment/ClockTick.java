@@ -23,17 +23,16 @@ public class ClockTick extends jade.core.behaviours.TickerBehaviour {
 		} else {
 			// Sinon on incrémente l'horloge et on annonce l'heure
 			((Clock)(this.myAgent)).incTime();
-			System.out.println(currentTime().toString());
 			
 			// on construit le message
 			ACLMessage m = new ACLMessage(1); // 1 pour les messages d'horloge
 			m.setContent(currentTime().toString());
 			// on recherche les destinataires selon une DFAgentDescription
 			DFAgentDescription dfd = new DFAgentDescription();
-			ServiceDescription bus = new ServiceDescription();
+			ServiceDescription service = new ServiceDescription();
 			// Les destinataires doivent avoir un service de type person
-			bus.setType("Person");
-			dfd.addServices(bus);
+			service.setType("Person");
+			dfd.addServices(service);
 			try {
 				// on récupère les destinataires possibles
 				DFAgentDescription[] destinataires = DFService.search(myAgent, dfd);

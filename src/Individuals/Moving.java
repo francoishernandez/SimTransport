@@ -10,10 +10,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	private Point destination;
 	private int currentPathProgress;
 	private int currentPathWeight;
+	private Point nextPoint;
 	
 	public Moving(Point p){
 		destination = p;
-		setMovingState(MovingState.point);
 	}
 	
 	public void action() {
@@ -22,7 +22,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		case point : // Dans le cas ou la personne est à une intersection
 			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement)
 			Path nextPath = ((Person) myAgent).env.shortestPath(getLocalisation(),destination).get(0);
-			Point nextPoint = nextPath.getB();
+			nextPoint = nextPath.getB();
 			// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
 			// On s'engage donc sur le segment
 			setCurrentPath(nextPath);

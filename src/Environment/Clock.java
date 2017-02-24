@@ -15,7 +15,7 @@ public class Clock extends jade.core.Agent {
 		// On prévient du lancement de l'horloge
 		System.out.println("Lancement de l'horloge.");
 		// On lui ajoute ses comportements
-		int period = (int) 1000*(simulationTime/(24*60)); // période réelle en ms
+		int period = (int) (1000*simulationTime/(24*60)); // période réelle en ms
 		this.addBehaviour(new ClockTick(this,period));
 	}
 	

@@ -57,13 +57,14 @@ public class Person extends jade.core.Agent {
 		System.out.println("Schedule :" + this.schedule.toString());
 		
 		// On lui ajoute les comportements initiaux
-		// this.addBehaviour(new Trajet());
+		this.addBehaviour(new inPlace());
 		// On créée une DFAgentDescription pour la personne
 		DFAgentDescription dfd = new DFAgentDescription();
 		// Contenant son AID,
 		dfd.setName(this.getAID());
 		// Et son Service "Person"
 		ServiceDescription service = new ServiceDescription();
+		service.setName("Person");
 		service.setType("Person");
 		dfd.addServices(service);
 		// On ajoute finalement la description à DFService qui joue le rôle d'annuaire

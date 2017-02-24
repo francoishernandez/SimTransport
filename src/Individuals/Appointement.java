@@ -4,6 +4,7 @@ import Environment.*;
 
 public class Appointement {
 
+	// Un rendez vous est constitué d'une heure de départ et d'une destination
 	Time departureTime;
 	Point destination;
 	

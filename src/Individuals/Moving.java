@@ -32,6 +32,9 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			// On récupère le poids du segment, qui correspond au nombre de minutes 
 			// nécessaires pour le parcourir
 			currentPathWeight = (int) nextPath.weight();
+			// PRINT :
+			System.out.println(intro()+" choix de "+ nextPath.toString() + 
+			", devrait prendre " + currentPathWeight + " minutes.");
 			break;
 			
 		case path : // Dans le cas où l'on se trouve sur un segment
@@ -48,6 +51,8 @@ public class Moving extends jade.core.behaviours.Behaviour {
 					setCurrentPath(null);
 					setMovingState(MovingState.point);
 					setLocalisation(nextPoint);
+					// PRINT :
+					System.out.println(intro()+" arrivée à "+ nextPoint.getName());
 					// Si on est arrivé à destination :
 					if (nextPoint == destination){
 						// on termine le trajet
@@ -60,6 +65,8 @@ public class Moving extends jade.core.behaviours.Behaviour {
 							setPersonState(PersonState.in_place);
 							((Person)(this.myAgent)).addBehaviour(new inPlace());
 						}
+						// PRINT :
+						System.out.println(intro()+" fin du trajet.");
 					}
 				}
 			}
@@ -70,6 +77,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	
 	public boolean done() {
 		return (getPersonState()==PersonState.in_place);
+	}
+	
+	public String intro() {
+		return this.myAgent.getAID().getLocalName() + " :";
 	}
 	
 	public MovingState getMovingState(){

@@ -23,6 +23,7 @@ public class ClockTick extends jade.core.behaviours.TickerBehaviour {
 		} else {
 			// Sinon on incrémente l'horloge et on annonce l'heure
 			((Clock)(this.myAgent)).incTime();
+			System.out.println(currentTime().toString());
 			
 			// on construit le message
 			ACLMessage m = new ACLMessage(1); // 1 pour les messages d'horloge

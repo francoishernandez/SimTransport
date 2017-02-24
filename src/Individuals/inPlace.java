@@ -26,12 +26,20 @@ public class inPlace extends Behaviour {
 				((Person)(this.myAgent)).addBehaviour(new Moving(destination));
 				// et on supprime le rdv de l'agenda (rdv restants)
 				cleanAppointement();
+				// PRINT :
+				System.out.println(intro()+" départ de "+
+				((Person)(this.myAgent)).localisation.getName()+ " vers " +
+				destination.getName());
 			}	
 		}
 	}
 	
 	public boolean done() {
 		return (getPersonState()!=PersonState.in_place);
+	}
+	
+	public String intro() {
+		return this.myAgent.getAID().getLocalName() + " :";
 	}
 	
 	Appointement nextAppointement() {

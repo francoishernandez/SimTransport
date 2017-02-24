@@ -18,44 +18,65 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Point A = new EntryPoint("A",1000,1000,0);
-		Point B = new EntryPoint("B",0,2000,0);
-		Point C = new Point(3000,0,0);
-		Point D = new InterestPoint("D",6000,5000,0);
-		Point E = new EntryPoint("E",8000,9000,0);
-		Point F = new Point(5000,3000,0);
-		Point G = new InterestPoint("G",1000,7000,0);
+		InterestPoint A = new InterestPoint("A",3000,2000,0);
+		InterestPoint B = new InterestPoint("B",2000,4000,0);
+		InterestPoint C = new InterestPoint("C",7000,5000,0);
+		InterestPoint D = new InterestPoint("D",2500,5000,0);
+		EntryPoint E1 = new EntryPoint("E1",8000,9000,0);
+		EntryPoint E2 = new EntryPoint("E2",9000,1000,0);
+		EntryPoint E3 = new EntryPoint("E3",1000,7000,0);
+		ArrayList<EntryPoint> pointsEntree = new ArrayList<EntryPoint>();
+		ArrayList<InterestPoint> pointsTravail = new ArrayList<InterestPoint>();
+		pointsTravail.add(A);
+		pointsTravail.add(B);
+		pointsTravail.add(C);
+		pointsTravail.add(D);
+		pointsEntree.add(E1);
+		pointsEntree.add(E2);
+		pointsEntree.add(E3);
+
 		ArrayList<Point> points = new ArrayList<Point>();
-		points.add(A);
-		points.add(B);
-		points.add(C);
-		points.add(D);
-		points.add(E);
-		points.add(F);
-		points.add(G);
+		points.addAll(pointsEntree);
+		points.addAll(pointsTravail);
+
+		FootPath E3B = new FootPath(E3,B);
+		FootPath BE3 = new FootPath(B,E3);
+		FootPath E3D = new FootPath(E3,D);
+		FootPath DE3 = new FootPath(D,E3);
+		FootPath BD = new FootPath(B,D);
+		FootPath DB = new FootPath(D,B);
+		FootPath E1C = new FootPath(E1,C);
+		FootPath CE1 = new FootPath(C,E1);
+		FootPath CD = new FootPath(C,D);
+		FootPath DC = new FootPath(D,C);
+		FootPath BA = new FootPath(B,A);
+		FootPath AB = new FootPath(A,B);
+		FootPath E2A = new FootPath(E2,A);
+		FootPath AE2 = new FootPath(A,E2);
+		FootPath E2C = new FootPath(E2,C);
+		FootPath CE2 = new FootPath(C,E2);
+		FootPath AC = new FootPath(A,C);
+		FootPath CA = new FootPath(C,A);
 		
-		
-		FootPath ab = new FootPath(A,B);
-		FootPath ac = new FootPath(A,C);
-		FootPath cf = new FootPath(C,F);
-		FootPath bf = new FootPath(B,F);
-		FootPath fd = new FootPath(F,D);
-		FootPath bg = new FootPath(B,G);
-		FootPath fg = new FootPath(F,G);
-		FootPath dg = new FootPath(D,G);
-		FootPath de = new FootPath(D,E);
-		FootPath ge = new FootPath(G,E);
 		ArrayList<Path> paths = new ArrayList<Path>();
-		paths.add(ab);
-		paths.add(ac);
-		paths.add(cf);
-		paths.add(bf);
-		paths.add(fd);
-		paths.add(bg);
-		paths.add(fg);
-		paths.add(dg);
-		paths.add(de);
-		paths.add(ge);
+		paths.add(E3B);
+		paths.add(BE3);
+		paths.add(E3D);
+		paths.add(DE3);
+		paths.add(BD);
+		paths.add(DB);
+		paths.add(E1C);
+		paths.add(CE1);
+		paths.add(CD);
+		paths.add(DC);
+		paths.add(BA);
+		paths.add(AB);
+		paths.add(E2A);
+		paths.add(AE2);
+		paths.add(E2C);
+		paths.add(CE2);
+		paths.add(AC);
+		paths.add(CA);
 		
 		Environment env = new Environment(points, paths);
 		env.display();
@@ -68,10 +89,14 @@ public class test {
 			}
 		}
 		
-		env.findShortestPath(points, paths, A, E);
-		for(Path p : env.shortestPath(points, paths, A, E)){
-			System.out.println(p.getA().getID()+","+p.getB().getID());
-		};
+		env.findShortestPath(A, E2);
+		for(Path p : env.shortestPath(A, E2)){
+			System.out.println(p.getA().toString()+","+p.getB().toString());
+		}
+		
+		/*for(Path p : env.shortestPath(A, E2)){
+			System.out.println(p.getA().toString()+","+p.getB().toString());
+		};*/
 		
 		// AFFICHAGE
 		

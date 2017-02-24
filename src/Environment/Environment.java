@@ -25,9 +25,9 @@ public class Environment {
 	}
 
 	public void display(){
-		System.out.println("Sommet \t\t Coordonnées");
+		System.out.println("Sommet \t\t Nom \t\t Coordonnées");
 		for (Point p : points){
-			System.out.println(p.getID()+" \t\t "+Integer.toString(p.getX())+", "+Integer.toString(p.getY())+", "+Integer.toString(p.getZ()));
+			System.out.println(p.getID()+" \t\t "+p.getName()+" \t\t "+Integer.toString(p.getX())+", "+Integer.toString(p.getY())+", "+Integer.toString(p.getZ()));
 		}
 	}
 
@@ -56,15 +56,18 @@ public class Environment {
 	// Rend la liste des points du chemin choisi
 	ArrayList<Point> findShortestPath( Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
-		double[] D = new double[points.size()]; // tableau des poids
-		Point[] P = new Point[points.size()]; // tableau des 'précédents'
-		ArrayList<Point> C = new ArrayList<Point>(points.size()); // liste des 'candidats'
-
 		int n = points.size(); // nombre de points
+		double[] D = new double[n]; // tableau des poids
+		Point[] P = new Point[n]; // tableau des 'précédents'
+		ArrayList<Point> C = new ArrayList<Point>(n); // liste des 'candidats'
+		Point[] Carray = new Point[n];
+
+		
 
 		// initialisation des tableaux
 		for (int i=0; i<n;i++) {
-			C.add(points.get(i).getID(),points.get(i));
+			Carray[points.get(i).getID()] = points.get(i);
+			//C.add(points.get(i).getID(),points.get(i));
 			//System.out.println("C["+points.get(i).getID()+"] : "+points.get(i).getID());
 			D[points.get(i).getID()] = weight[0][points.get(i).getID()];
 			//System.out.println("D["+points.get(i).getID()+"] : "+weight[0][points.get(i).getID()]);
@@ -72,6 +75,9 @@ public class Environment {
 				P[points.get(i).getID()] = source;
 				//System.out.println("P["+points.get(i).getID()+"] : "+source.getID());
 			}
+		}
+		for (int i = 0; i<n; i++){
+			C.add(Carray[i]);
 		}
 
 		// parcours du graphe
@@ -102,18 +108,26 @@ public class Environment {
 		
 		// le chemin est trouvé, utilisons C pour récupérer le résultat
 		
+		for (int i = 0; i<n; i++){
+			System.out.println("P["+i+"] "+P[i]);
+		}
+		
+		
 		C.clear();
 		int loc = target.getID();
 		C.add(target);
+		System.out.println("target : "+ C.get(0).getName());
 		
 		
 		// backtrack depuis la source en parcourant le tableau des précédents
 		while(P[loc] != source) {
 			if(P[loc] == null) {
 				// aucun chemin depuis la source
+				System.out.println("PAS DE CHEMIN");
 				return null;
 			}
 			C.add(0,P[loc]);
+			System.out.println("ADD : "+ P[loc]);
 			loc = P[loc].getID();
 		}
 		C.add(0, source);
@@ -133,6 +147,8 @@ public class Environment {
 		ArrayList<Path> selectedPaths = new ArrayList<Path>();
 		for (int i = 0; i<shortestPath.size()-1; i++){
 			selectedPaths.add(pathsTab[shortestPath.get(i).getID()][shortestPath.get(i+1).getID()]);
+			// PRINT
+			System.out.println(Integer.toString(shortestPath.get(i).getID())+","+Integer.toString(shortestPath.get(i+1).getID()));
 		}
 		return selectedPaths;
 	}

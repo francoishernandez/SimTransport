@@ -2,11 +2,14 @@ package Environment;
 
 public class FootPath extends Path {
 	
-	private static int factor = 10;
+	// Représente un chemin emprunté par des piétons
+	// Nous avons effectué le choix d'autoriser le parcours en montée, mais en ajoutant une difficulté en fonction de la pente
+		
+	
+	private static int factor = 10; // Un chemin piéton aura un poids 10 fois supérieur à un chemin pour voiture
 
 	public FootPath(Point A, Point B) {
 		super(A, B);
-		// TODO Auto-generated constructor stub
 	}
 	
 	// calcule un poids pour le chemin

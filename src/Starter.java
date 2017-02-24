@@ -68,8 +68,6 @@ public class Starter extends jade.core.Agent {
 		paths.add(AC);
 		
 		
-		Environment env = new Environment(points, paths);
-		
 		ArrayList<Person> persons = new ArrayList<Person>();
 
 		for (int i = 0; i < 10; i++){
@@ -88,6 +86,8 @@ public class Starter extends jade.core.Agent {
 		} catch (StaleProxyException e) {
 			e.printStackTrace();
 		}	
+		
+		Environment env = new Environment(points, paths, c);
 
 		// AFFICHAGE
 

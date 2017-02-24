@@ -69,9 +69,13 @@ public class test {
 		}
 		
 		env.findShortestPath(points, paths, A, E);
+		for(Path p : env.shortestPath(points, paths, A, E)){
+			System.out.println(p.toString());
+		};
 		
 		// AFFICHAGE
 		
+		/*
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				public void run() {
@@ -94,6 +98,7 @@ public class test {
 			System.err.println("Erreur a la creation de l'interface Swing.");
 			System.err.println(e);
 		}
+		*/
 		
 		
 

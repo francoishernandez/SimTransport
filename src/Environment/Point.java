@@ -9,6 +9,7 @@ public class Point {
 	private int y;
 	private int z; //altitude
 	private int id;
+	private String name;
 	
 	public Point(int x, int y, int z){
 		this.x = x;
@@ -52,6 +53,10 @@ public class Point {
 	
 	public String getName(){
 		return "Point quelconque";
+	}
+	
+	public String toString(){
+		return id+", "+name;
 	}
 	
 	

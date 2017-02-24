@@ -21,14 +21,16 @@ public class Person extends jade.core.Agent {
 	Path currentPath;
 	PersonState personState = PersonState.in_place;
 	MovingState movingState = MovingState.none;
+	Environment env;
 	
 	static int nbPeople = 0;
 	
-	public Person(EntryPoint in, ArrayList<Appointement> sched) {
+	public Person(EntryPoint in, ArrayList<Appointement> sched, Environment env) {
 		nbPeople++;
 		inPoint = in;
 		localisation = in;
 		schedule = sched;
+		this.env = env;
 	}
 	
 	static Random rand = new Random();
@@ -36,7 +38,7 @@ public class Person extends jade.core.Agent {
 	    return list.get(rand.nextInt(list.size()));
 	}
 	
-	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork){
+	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork, Environment env){
 		EntryPoint in = getRandomItem(possibleIn);
 		Point work = getRandomItem(possibleWork);
 		Time beginTime = Time.randomBegin();
@@ -46,7 +48,7 @@ public class Person extends jade.core.Agent {
 		ArrayList<Appointement> sched = new ArrayList<Appointement>();
 		sched.add(beginApp);
 		sched.add(endApp);
-		return new Person(in, sched);
+		return new Person(in, sched, env);
 	}
 	
 	public void setup(){

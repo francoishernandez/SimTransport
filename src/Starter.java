@@ -14,7 +14,7 @@ public class Starter extends jade.core.Agent {
 	public Starter(){
 	}
 
-	private static int simulationTime = 10; //en ms
+	private static int simulationTime = 100; //en s
 	
 	private static Window f;
 	private static Panel pan;
@@ -85,11 +85,12 @@ public class Starter extends jade.core.Agent {
 		paths.add(AC);
 		paths.add(CA);
 		
+		Environment env = new Environment(points, paths);
 		
 		ArrayList<Person> persons = new ArrayList<Person>();
 
 		for (int i = 0; i < 10; i++){
-			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsTravail);
+			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsTravail, env);
 			try {
 				this.getContainerController().acceptNewAgent("person"+(i+1), newPerson).start();
 				persons.add(newPerson);
@@ -104,8 +105,6 @@ public class Starter extends jade.core.Agent {
 		} catch (StaleProxyException e) {
 			e.printStackTrace();
 		}	
-		
-		Environment env = new Environment(points, paths);
 
 		// AFFICHAGE
 

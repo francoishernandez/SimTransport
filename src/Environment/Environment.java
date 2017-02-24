@@ -108,15 +108,9 @@ public class Environment {
 		
 		// le chemin est trouvé, utilisons C pour récupérer le résultat
 		
-		for (int i = 0; i<n; i++){
-			System.out.println("P["+i+"] "+P[i]);
-		}
-		
-		
 		C.clear();
 		int loc = target.getID();
 		C.add(target);
-		System.out.println("target : "+ C.get(0).getName());
 		
 		
 		// backtrack depuis la source en parcourant le tableau des précédents
@@ -127,13 +121,12 @@ public class Environment {
 				return null;
 			}
 			C.add(0,P[loc]);
-			System.out.println("ADD : "+ P[loc]);
 			loc = P[loc].getID();
 		}
 		C.add(0, source);
 		System.out.println("PLUS COURT CHEMIN");
 		for (int i=0; i<C.size(); i++){
-			System.out.println(C.get(i).getID());
+			System.out.println(C.get(i).getID()+","+C.get(i).getName());
 		}
 		return C;
 	}

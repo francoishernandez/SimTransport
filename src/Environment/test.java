@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 import Graphics.*;
+import Individuals.Person;
 
 public class test {
 	
@@ -90,9 +91,25 @@ public class test {
 		}
 		
 		env.findShortestPath(A, E2);
-		for(Path p : env.shortestPath(A, E2)){
+		env.findShortestPath(E2,D);
+		ArrayList<Path> sp = env.shortestPath(E2, D);
+		
+
+			for(int i=0; i<points.size(); i++){
+				for(int j=0; j<points.size(); j++){
+					if( i != j){
+					env.shortestPath(points.get(i), points.get(j));
+					}
+				}
+			}
+		
+		//Path nextPath = sp.get(0);
+		//System.out.println(nextPath.toString());
+		
+		//env.shortestPath(E2, E3);
+		/*for(Path p : env.shortestPath(E2, E3)){
 			System.out.println(p.getA().toString()+","+p.getB().toString());
-		}
+		}*/
 		
 		/*for(Path p : env.shortestPath(A, E2)){
 			System.out.println(p.getA().toString()+","+p.getB().toString());
@@ -110,7 +127,7 @@ public class test {
 						e.printStackTrace();
 					}
 
-					//pan = new Panel(env);
+					pan = new Panel(env);
 
 					f.add(pan);
 				}
@@ -124,6 +141,7 @@ public class test {
 			System.err.println(e);
 		}
 		*/
+		
 		
 		
 

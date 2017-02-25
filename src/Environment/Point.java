@@ -56,7 +56,7 @@ public class Point {
 	}
 	
 	public String toString(){
-		return id+", "+name;
+		return id+", "+getName();
 	}
 	
 	

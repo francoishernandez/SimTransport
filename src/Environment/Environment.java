@@ -11,7 +11,7 @@ public class Environment {
 	private ArrayList<Point> points;
 	private ArrayList<Path> paths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
-	
+
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
 		ArrayList<Point> res = new ArrayList<Point>();
@@ -49,10 +49,10 @@ public class Environment {
 
 	// détermination du prochain chemin a emprunter (à partir de Djikstra ci dessous)
 
-	
+
 	// implémentation de l'algorithme du plus court chemin de Djikstra
 
-	
+
 	// Rend la liste des points du chemin choisi
 	ArrayList<Point> findShortestPath( Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
@@ -62,14 +62,13 @@ public class Environment {
 		ArrayList<Point> C = new ArrayList<Point>(n); // liste des 'candidats'
 		Point[] Carray = new Point[n];
 
-		
+
 
 		// initialisation des tableaux
 		for (int i=0; i<n;i++) {
 			Carray[points.get(i).getID()] = points.get(i);
-			//C.add(points.get(i).getID(),points.get(i));
-			//System.out.println("C["+points.get(i).getID()+"] : "+points.get(i).getID());
-			D[points.get(i).getID()] = weight[0][points.get(i).getID()];
+			//System.out.println("C["+points.get(i).getID()+"] : "+Carray[points.get(i).getID()].getID());
+			D[points.get(i).getID()] = weight[source.getID()][points.get(i).getID()];
 			//System.out.println("D["+points.get(i).getID()+"] : "+weight[0][points.get(i).getID()]);
 			if(D[points.get(i).getID()] != Double.MAX_VALUE){
 				P[points.get(i).getID()] = source;
@@ -92,7 +91,7 @@ public class Environment {
 				}
 			}
 			C.remove(p);
-			
+
 			// vérifier qu'aucun autre chemin depuis ce point n'est plus court jusqu'à la source
 			for (int j=0; j<n-1; j++) {
 				if(D[p.getID()] != Double.MAX_VALUE
@@ -105,14 +104,15 @@ public class Environment {
 				}
 			}
 		}
-		
+
 		// le chemin est trouvé, utilisons C pour récupérer le résultat
-		
+
+
 		C.clear();
 		int loc = target.getID();
 		C.add(target);
-		
-		
+
+
 		// backtrack depuis la source en parcourant le tableau des précédents
 		while(P[loc] != source) {
 			if(P[loc] == null) {
@@ -124,28 +124,31 @@ public class Environment {
 			loc = P[loc].getID();
 		}
 		C.add(0, source);
-		System.out.println("PLUS COURT CHEMIN");
+		System.out.println("PLUS COURT CHEMIN ["+source.getName()+","+target.getName()+"]");
 		for (int i=0; i<C.size(); i++){
 			System.out.println(C.get(i).getID()+","+C.get(i).getName());
 		}
 		return C;
 	}
-	
-	
+
+
 	// Rend la liste des chemins empruntés
 	public ArrayList<Path> shortestPath(Point source, Point target){
 		ArrayList<Point> shortestPath = findShortestPath(source, target);
-		double[][] weight = initializeWeight(points, paths); // matrice des poids
-		Path[][] pathsTab = initializePaths(points, paths, weight);
-		ArrayList<Path> selectedPaths = new ArrayList<Path>();
-		for (int i = 0; i<shortestPath.size()-1; i++){
-			selectedPaths.add(pathsTab[shortestPath.get(i).getID()][shortestPath.get(i+1).getID()]);
-			// PRINT
-			System.out.println(Integer.toString(shortestPath.get(i).getID())+","+Integer.toString(shortestPath.get(i+1).getID()));
+		if (shortestPath != null) {
+			double[][] weight = initializeWeight(points, paths); // matrice des poids
+			Path[][] pathsTab = initializePaths(points, paths, weight);
+			ArrayList<Path> selectedPaths = new ArrayList<Path>();
+			for (int i = 0; i<shortestPath.size()-1; i++){
+				selectedPaths.add(pathsTab[shortestPath.get(i).getID()][shortestPath.get(i+1).getID()]);
+				// PRINT
+			}
+			return selectedPaths;
 		}
-		return selectedPaths;
+		else return null;
+
 	}
-	
+
 
 	// initialisation du tableau de poids
 	public double[][] initializeWeight(ArrayList<Point> points, ArrayList<Path> paths){
@@ -161,7 +164,7 @@ public class Environment {
 		}
 		return weight;
 	}
-	
+
 	// initialisation du tableau des chemins
 	public Path[][] initializePaths(ArrayList<Point> points, ArrayList<Path> paths, double[][] weight){
 		int n = points.size();
@@ -172,9 +175,10 @@ public class Environment {
 		for (Path p : paths) {
 			if(weight[p.getA().getID()][p.getB().getID()] >= p.weight()){
 				pathsTab[p.getA().getID()][p.getB().getID()] = p;
+
 			}
 		}
 		return pathsTab;
 	}
-	
+
 }

@@ -24,13 +24,18 @@ public class Panel extends JPanel {
 	Environment env; // environnement en cours
 	ArrayList<Person> persons; // personnes évoluant dans l'environnement
 	Clock clock;
-	
+
 	// le constructeur permet de récupérer l'environnement et les personnes à son appel lors de la création de l'agent Starter
 	public Panel(Environment env, ArrayList<Person> persons, Clock c){ 
 		this.env = env;
 		this.persons = persons;
 		this.clock = c;
 	}
+
+	public Panel(Environment env){ 
+		this.env = env;
+	}
+
 
 	public void init(){
 		dim = getSize();
@@ -52,7 +57,7 @@ public class Panel extends JPanel {
 		// Ajout d'un fond blanc
 		bufferGraphics.setColor(Color.WHITE);
 		bufferGraphics.fillRect(0, 0, size, size);
-		
+
 		int rpx = 5;
 		double ratio = ((double)test.windowSize) / test.simSize;
 
@@ -104,33 +109,37 @@ public class Panel extends JPanel {
 				//bufferGraphics.drawString(env.getPoints().get(i).getName(), (int)(env.getPoints().get(i).getX()*ratio) + 3*rpx, (int)(env.getPoints().get(i).getY()*ratio) + 3*rpx);
 			}			
 		}
-		
+
 		// DESSIN DES PERSONNES
-		
-		bufferGraphics.setColor(Color.BLACK);
-		ImageIcon img = new ImageIcon("images/person.png"); // chargement de l'icone représentant une personne
-		for (int i=0; i<persons.size(); i++){ // parcours de la liste des personnes évoluant dans l'environnement
-			bufferGraphics.drawImage(img.getImage(), 
-			(int)(persons.get(i).getLocalisation().getX()*ratio - 10),
-			(int)(persons.get(i).getLocalisation().getY()*ratio -10),
-			20, 20,
-			null);
+
+		if(persons !=null){
+			bufferGraphics.setColor(Color.BLACK);
+			ImageIcon img = new ImageIcon("images/person.png"); // chargement de l'icone représentant une personne
+			for (int i=0; i<persons.size(); i++){ // parcours de la liste des personnes évoluant dans l'environnement
+				bufferGraphics.drawImage(img.getImage(), 
+						(int)(persons.get(i).getLocalisation().getX()*ratio - 10),
+						(int)(persons.get(i).getLocalisation().getY()*ratio -10),
+						20, 20,
+						null);
+			}
 		}
-		
+
 		// AFFICHAGE DE L'HORLOGE
-		
-		int clockWidth = 1200;
-		int clockHeight = 500;
-		Font myFont = new Font ("Courier New", 1, 20);
-		Font defaultFont = bufferGraphics.getFont();
-		bufferGraphics.drawRect(0,0, (int)(clockWidth*ratio), (int)(clockHeight*ratio));
-		bufferGraphics.setFont(myFont);
-		FontMetrics metrics = bufferGraphics.getFontMetrics(myFont);
-		String currentTime = clock.getCurrentTime().toString();
-		bufferGraphics.drawString(currentTime,
-				(int)(clockWidth*ratio/2 - metrics.stringWidth(currentTime)/2),
-				(int)(clockHeight*ratio/2) - metrics.getHeight()/2 + metrics.getAscent());
-		bufferGraphics.setFont(defaultFont);
+
+		if(clock!=null){
+			int clockWidth = 1200;
+			int clockHeight = 500;
+			Font myFont = new Font ("Courier New", 1, 20);
+			Font defaultFont = bufferGraphics.getFont();
+			bufferGraphics.drawRect(0,0, (int)(clockWidth*ratio), (int)(clockHeight*ratio));
+			bufferGraphics.setFont(myFont);
+			FontMetrics metrics = bufferGraphics.getFontMetrics(myFont);
+			String currentTime = clock.getCurrentTime().toString();
+			bufferGraphics.drawString(currentTime,
+					(int)(clockWidth*ratio/2 - metrics.stringWidth(currentTime)/2),
+					(int)(clockHeight*ratio/2) - metrics.getHeight()/2 + metrics.getAscent());
+			bufferGraphics.setFont(defaultFont);
+		}
 		
 		g.drawImage(offscreen, 0, 0, this);
 		repaint();

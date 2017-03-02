@@ -20,8 +20,16 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		switch (getMovingState()) {
 		
 		case point : // Dans le cas ou la personne est à une intersection
+			// PRINT TEST :
+			System.out.println(((Person) myAgent).env.findShortestPath(getLocalisation(),destination));
 			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement)
 			Path nextPath = ((Person) myAgent).env.shortestPath(getLocalisation(),destination).get(0);
+			// On récupère le poids du segment, qui correspond au nombre de minutes 
+			// nécessaires pour le parcourir
+			currentPathWeight = (int) nextPath.weight();
+			// PRINT :
+			System.out.println(intro()+" choix de "+ nextPath.toString() + 
+			", devrait prendre " + currentPathWeight + " minutes.");
 			nextPoint = nextPath.getB();
 			// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
 			// On s'engage donc sur le segment
@@ -29,12 +37,6 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			setMovingState(MovingState.path);
 			// On initialise le nombre de minutes passées sur le segment à 0
 			currentPathProgress = 0;
-			// On récupère le poids du segment, qui correspond au nombre de minutes 
-			// nécessaires pour le parcourir
-			currentPathWeight = (int) nextPath.weight();
-			// PRINT :
-			System.out.println(intro()+" choix de "+ nextPath.toString() + 
-			", devrait prendre " + currentPathWeight + " minutes.");
 			break;
 			
 		case path : // Dans le cas où l'on se trouve sur un segment

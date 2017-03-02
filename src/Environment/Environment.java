@@ -54,7 +54,7 @@ public class Environment {
 
 
 	// Rend la liste des points du chemin choisi
-	ArrayList<Point> findShortestPath( Point source, Point target){
+	public ArrayList<Point> findShortestPath( Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
 		int n = points.size(); // nombre de points
 		double[] D = new double[n]; // tableau des poids

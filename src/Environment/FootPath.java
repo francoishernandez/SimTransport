@@ -6,8 +6,8 @@ public class FootPath extends Path {
 	// Nous avons effectué le choix d'autoriser le parcours en montée, mais en ajoutant une difficulté en fonction de la pente
 		
 	
-	private static int factor = 10; // Un chemin piéton aura un poids 10 fois supérieur à un chemin pour voiture
-
+	private static int speed = 5; // km/h sur du plat
+	
 	public FootPath(Point A, Point B) {
 		super(A, B);
 	}
@@ -15,9 +15,9 @@ public class FootPath extends Path {
 	// calcule un poids pour le chemin
 	public double weight() {
 		if(heightDiff()<=0) {
-			return length()*factor;
+			return (length()/1000)/(speed/60); // t = d / v
 		} else { // cas en montée
-			return length()*factor*Math.pow(slope(), 2); // difficulté accrue en montée (hypothèse non linéaire)
+			return (length()/1000)/(speed/60)*Math.pow(slope(), 2); // difficulté accrue en montée (hypothèse non linéaire)
 		}
 	}
 	

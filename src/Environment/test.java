@@ -33,6 +33,7 @@ public class test {
 		InterestPoint Safran = new InterestPoint("Safran",8930,5700,0);
 		InterestPoint Villebon = new InterestPoint("Villebon2",7950,7910,0);
 		InterestPoint ONERA = new InterestPoint("ONERA",6400,6800,0);
+		
 		ArrayList<InterestPoint> pointsInteret = new ArrayList<InterestPoint>();
 		pointsInteret.add(HEC);
 		pointsInteret.add(DGA);
@@ -59,6 +60,7 @@ public class test {
 		EntryPoint Igny = new EntryPoint("Igny",5310,4520,0);
 		EntryPoint Massy = new EntryPoint("Massy",9370,5030,0);
 		EntryPoint A10 = new EntryPoint("A10 Est",10000,7020,0);
+		
 		ArrayList<EntryPoint> pointsEntree = new ArrayList<EntryPoint>();
 		pointsEntree.add(RERno);
 		pointsEntree.add(RERso);
@@ -89,7 +91,7 @@ public class test {
 		Point p3 = new Point("3",2140,1920,0);
 		Point p4 = new Point("4",1480,2790,0);
 		Point p5 = new Point("5",1310,4990,0);
-		Point p6 = new Point("6",4250,3830,0);
+		Point p6 = new Point("6",4230,2810,0);
 		Point p7 = new Point("7",5320,2960,0);
 		Point p8 = new Point("8",5610,2780,0);
 		Point p9 = new Point("9",5790,1870,0);
@@ -154,12 +156,22 @@ public class test {
 		points.add(p25);
 		points.add(p26);
 
-		FootPath path1 = new FootPath(HEC,DGA);
-
 		ArrayList<Path> userPaths = new ArrayList<Path>();
-		userPaths.add(path1);
-
 		
+		FootPath footPath1 = new FootPath(L,X);
+		FootPath footPath2 = new FootPath(BsY,IUT);
+		FootPath footPath1return = new FootPath(X,L);
+		FootPath footPath2return = new FootPath(IUT,BsY);
+		
+		ArrayList<Path> footPaths = new ArrayList<Path>();
+		
+		footPaths.add(footPath1);
+		footPaths.add(footPath2);
+		footPaths.add(footPath1return);
+		footPaths.add(footPath2return);
+		
+		
+		userPaths.addAll(footPaths);
 		
 		RoadPath roadPath1 = new RoadPath(HEC,p3);
 		RoadPath roadPath2 = new RoadPath(DGA,p4);
@@ -202,7 +214,49 @@ public class test {
 		RoadPath roadPath39 = new RoadPath(p22,Villebon);
 		RoadPath roadPath40 = new RoadPath(p22,p20);
 		
+		RoadPath roadPath1return = new RoadPath(p3,HEC);
+		RoadPath roadPath2return = new RoadPath(p4,DGA);
+		RoadPath roadPath3return = new RoadPath(B,p7);
+		RoadPath roadPath4return = new RoadPath(p2,JeJ);
+		RoadPath roadPath5return = new RoadPath(V,p2);
+		RoadPath roadPath6return = new RoadPath(V,p7);
+		RoadPath roadPath7return = new RoadPath(p12,Igny);
+		RoadPath roadPath8return = new RoadPath(p17,Igny);
+		RoadPath roadPath9return = new RoadPath(p15,Igny);
+		RoadPath roadPath10return = new RoadPath(Igny,p12);
+		RoadPath roadPath11return = new RoadPath(X,p15);
+		RoadPath roadPath12return = new RoadPath(X,p16);
+		RoadPath roadPath13return = new RoadPath(EDF,X);
+		RoadPath roadPath14return = new RoadPath(Nano,X);
+		RoadPath roadPath15return = new RoadPath(EDF,Nano);
+		RoadPath roadPath16return = new RoadPath(Nano,p18);
+		RoadPath roadPath17return = new RoadPath(LaMart,p18);
+		RoadPath roadPath18return = new RoadPath(LaMart,p17);
+		RoadPath roadPath19return = new RoadPath(IUT,p18);
+		RoadPath roadPath20return = new RoadPath(Supelec,IUT);
+		RoadPath roadPath21return = new RoadPath(D306,Supelec);
+		RoadPath roadPath22return = new RoadPath(p23,p18);
+		RoadPath roadPath23return = new RoadPath(LG,p18);
+		RoadPath roadPath24return = new RoadPath(ParisSud,p18);
+		RoadPath roadPath25return = new RoadPath(OV,ParisSud);
+		RoadPath roadPath26return = new RoadPath(p24,ParisSud);
+		RoadPath roadPath27return = new RoadPath(p20,p24);
+		RoadPath roadPath28return = new RoadPath(p25,p15);
+		RoadPath roadPath29return = new RoadPath(p26,p25);
+		RoadPath roadPath30return = new RoadPath(ONERA,p25);
+		RoadPath roadPath31return = new RoadPath(PV,ONERA );
+		RoadPath roadPath32return = new RoadPath(P,p26);
+		RoadPath roadPath33return = new RoadPath(p21,p26);
+		RoadPath roadPath34return = new RoadPath(MP,p21);
+		RoadPath roadPath35return = new RoadPath(Safran,p21);
+		RoadPath roadPath36return = new RoadPath(MP,Safran);
+		RoadPath roadPath37return = new RoadPath(Massy,Safran);
+		RoadPath roadPath38return = new RoadPath(MV,Massy);
+		RoadPath roadPath39return = new RoadPath(Villebon,p22);
+		RoadPath roadPath40return = new RoadPath(p20,p22);
+		
 		ArrayList<Path> roadPaths = new ArrayList<Path>();
+		
 		roadPaths.add(roadPath1);
 		roadPaths.add(roadPath2);
 		roadPaths.add(roadPath3);
@@ -244,6 +298,47 @@ public class test {
 		roadPaths.add(roadPath39);
 		roadPaths.add(roadPath40);
 		
+		roadPaths.add(roadPath1return);
+		roadPaths.add(roadPath2return);
+		roadPaths.add(roadPath3return);
+		roadPaths.add(roadPath4return);
+		roadPaths.add(roadPath5return);
+		roadPaths.add(roadPath6return);
+		roadPaths.add(roadPath7return);
+		roadPaths.add(roadPath8return);
+		roadPaths.add(roadPath9return);
+		roadPaths.add(roadPath10return);
+		roadPaths.add(roadPath11return);
+		roadPaths.add(roadPath12return);
+		roadPaths.add(roadPath13return);
+		roadPaths.add(roadPath14return);
+		roadPaths.add(roadPath15return);
+		roadPaths.add(roadPath16return);
+		roadPaths.add(roadPath17return);
+		roadPaths.add(roadPath18return);
+		roadPaths.add(roadPath19return);
+		roadPaths.add(roadPath20return);
+		roadPaths.add(roadPath21return);
+		roadPaths.add(roadPath22return);
+		roadPaths.add(roadPath23return);
+		roadPaths.add(roadPath24return);
+		roadPaths.add(roadPath25return);
+		roadPaths.add(roadPath26return);
+		roadPaths.add(roadPath27return);
+		roadPaths.add(roadPath28return);
+		roadPaths.add(roadPath29return);
+		roadPaths.add(roadPath30return);
+		roadPaths.add(roadPath31return);
+		roadPaths.add(roadPath32return);
+		roadPaths.add(roadPath33return);
+		roadPaths.add(roadPath34return);
+		roadPaths.add(roadPath35return);
+		roadPaths.add(roadPath36return);
+		roadPaths.add(roadPath37return);
+		roadPaths.add(roadPath38return);
+		roadPaths.add(roadPath39return);
+		roadPaths.add(roadPath40return);
+		
 		HighwayPath highwayPath1 = new HighwayPath(D446,p1);
 		HighwayPath highwayPath2 = new HighwayPath(p1,p2);
 		HighwayPath highwayPath3 = new HighwayPath(p2,p3);
@@ -274,6 +369,37 @@ public class test {
 		HighwayPath highwayPath28 = new HighwayPath(p14,p21);
 		HighwayPath highwayPath29 = new HighwayPath(p21,p22);
 		HighwayPath highwayPath30 = new HighwayPath(p21,A10);
+		
+		HighwayPath highwayPath1return = new HighwayPath(p1,D446);
+		HighwayPath highwayPath2return = new HighwayPath(p2,p1);
+		HighwayPath highwayPath3return = new HighwayPath(p3,p2);
+		HighwayPath highwayPath4return = new HighwayPath(p4,p3);
+		HighwayPath highwayPath5return = new HighwayPath(p5,p4);
+		HighwayPath highwayPath6return = new HighwayPath(INSTN,p5);
+		HighwayPath highwayPath7return = new HighwayPath(D306,INSTN);
+		HighwayPath highwayPath8return = new HighwayPath(p6,p5);
+		HighwayPath highwayPath9return = new HighwayPath(p7,p6);
+		HighwayPath highwayPath10return = new HighwayPath(p8,p7);
+		HighwayPath highwayPath11return = new HighwayPath(p9,p8);
+		HighwayPath highwayPath12return = new HighwayPath(p10,p9);
+		HighwayPath highwayPath13return = new HighwayPath(p11,p10);
+		HighwayPath highwayPath14return = new HighwayPath(N118n,p11);
+		HighwayPath highwayPath15return = new HighwayPath(p12,p7);
+		HighwayPath highwayPath16return = new HighwayPath(p13,p12);
+		HighwayPath highwayPath17return = new HighwayPath(Vilgenis,p13);
+		HighwayPath highwayPath18return = new HighwayPath(p14,Vilgenis);
+		HighwayPath highwayPath19return = new HighwayPath(p15,p14);
+		HighwayPath highwayPath20return = new HighwayPath(p16,p15);
+		HighwayPath highwayPath21return = new HighwayPath(p17,p16);
+		HighwayPath highwayPath22return = new HighwayPath(p5,p17);
+		HighwayPath highwayPath23return = new HighwayPath(p18,p5);
+		HighwayPath highwayPath24return = new HighwayPath(p19,p18);
+		HighwayPath highwayPath25return = new HighwayPath(LG,p19);
+		HighwayPath highwayPath26return = new HighwayPath(p20,LG);
+		HighwayPath highwayPath27return = new HighwayPath(N118s,p20);
+		HighwayPath highwayPath28return = new HighwayPath(p21,p14);
+		HighwayPath highwayPath29return = new HighwayPath(p22,p21);
+		HighwayPath highwayPath30return = new HighwayPath(A10,p21);
 		
 		ArrayList<Path> highwayPaths = new ArrayList<Path>();
 		
@@ -308,21 +434,53 @@ public class test {
 		highwayPaths.add(highwayPath29);
 		highwayPaths.add(highwayPath30);
 		
-		ArrayList<Path> carPath = new ArrayList<Path>();
-		carPath.addAll(highwayPaths);
-		carPath.addAll(roadPaths);
+		highwayPaths.add(highwayPath1return);
+		highwayPaths.add(highwayPath2return);
+		highwayPaths.add(highwayPath3return);
+		highwayPaths.add(highwayPath4return);
+		highwayPaths.add(highwayPath5return);
+		highwayPaths.add(highwayPath6return);
+		highwayPaths.add(highwayPath7return);
+		highwayPaths.add(highwayPath8return);
+		highwayPaths.add(highwayPath9return);
+		highwayPaths.add(highwayPath10return);
+		highwayPaths.add(highwayPath11return);
+		highwayPaths.add(highwayPath12return);
+		highwayPaths.add(highwayPath13return);
+		highwayPaths.add(highwayPath14return);
+		highwayPaths.add(highwayPath15return);
+		highwayPaths.add(highwayPath16return);
+		highwayPaths.add(highwayPath17return);
+		highwayPaths.add(highwayPath18return);
+		highwayPaths.add(highwayPath19return);
+		highwayPaths.add(highwayPath20return);
+		highwayPaths.add(highwayPath21return);
+		highwayPaths.add(highwayPath22return);
+		highwayPaths.add(highwayPath23return);
+		highwayPaths.add(highwayPath24return);
+		highwayPaths.add(highwayPath25return);
+		highwayPaths.add(highwayPath26return);
+		highwayPaths.add(highwayPath27return);
+		highwayPaths.add(highwayPath28return);
+		highwayPaths.add(highwayPath29return);
+		highwayPaths.add(highwayPath30return);
+		
+		ArrayList<Path> carPaths = new ArrayList<Path>();
+		carPaths.addAll(highwayPaths);
+		carPaths.addAll(roadPaths);
 
-		Environment env = new Environment(points, roadPaths, userPaths);
+		Environment env = new Environment(points, carPaths, userPaths);
 		env.display();
 
-		/*double[][] weight = env.initializeWeight(points,paths);
+		double[][] weight = env.initializeWeight(points,carPaths);
 		System.out.println("i \t\t j \t\t weight");
 		for(int i=0; i<points.size(); i++){
 			for(int j=0; j<points.size(); j++){
 				System.out.println(i + " \t\t " + j + " \t\t " + weight[i][j]);
 			}
 		}
-
+		
+		/*
 		env.findShortestUserPath(A, E2);
 		env.findShortestUserPath(E2,D);
 		ArrayList<Path> sp = env.shortestUserPath(E2, D);

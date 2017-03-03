@@ -87,7 +87,14 @@ public class Panel extends JPanel {
 
 		for (int i=0; i<env.getPaths().size(); i++){ // On parcourt la liste des chemins de l'environnement
 			Path p = env.getPaths().get(i);
-			bufferGraphics.setColor(Color.BLACK);
+			// différentes couleurs suivant les types
+			if(p instanceof RoadPath) { 
+				bufferGraphics.setColor(Color.BLACK);
+			} else if(p instanceof HighwayPath) { 
+				bufferGraphics.setColor(Color.RED);
+			} else if(p instanceof FootPath) { 
+				bufferGraphics.setColor(Color.GREEN);
+			} else { bufferGraphics.setColor(Color.BLACK); }
 			// dessin du chemin de A vers B pour chaque chemin
 			bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
 					(int) (p.getA().getY()*ratio), 

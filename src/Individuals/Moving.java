@@ -20,8 +20,6 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		switch (getMovingState()) {
 		
 		case point : // Dans le cas ou la personne est à une intersection
-			// PRINT TEST :
-			System.out.println(((Person) myAgent).env.findShortestPath(getLocalisation(),destination));
 			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement)
 			Path nextPath = ((Person) myAgent).env.shortestPath(getLocalisation(),destination).get(0);
 			// On récupère le poids du segment, qui correspond au nombre de minutes 

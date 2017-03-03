@@ -13,7 +13,7 @@ public class CarPath extends Path {
 
 	// calcule un poids pour le chemin
 	public double weight() {
-		return (length()/1000)/(speed/60); // t = d / v
+		return (length()/1000)/((double)speed/60); // t = d / v
 	}
 
 }

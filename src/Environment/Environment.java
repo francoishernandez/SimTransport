@@ -124,9 +124,9 @@ public class Environment {
 			loc = P[loc].getID();
 		}
 		C.add(0, source);
-		System.out.println("PLUS COURT CHEMIN ["+source.getName()+","+target.getName()+"]");
+		//System.out.println("PLUS COURT CHEMIN ["+source.getName()+","+target.getName()+"]");
 		for (int i=0; i<C.size(); i++){
-			System.out.println(C.get(i).getID()+","+C.get(i).getName());
+			//System.out.println(C.get(i).getID()+","+C.get(i).getName());
 		}
 		return C;
 	}

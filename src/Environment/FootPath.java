@@ -15,9 +15,9 @@ public class FootPath extends Path {
 	// calcule un poids pour le chemin
 	public double weight() {
 		if(heightDiff()<=0) {
-			return (length()/1000)/(speed/60); // t = d / v
+			return (length()/1000)/((double)speed/60); // t = d / v
 		} else { // cas en montée
-			return (length()/1000)/(speed/60)*Math.pow(slope(), 2); // difficulté accrue en montée (hypothèse non linéaire)
+			return (length()/1000)/((double)speed/60)*Math.pow(slope(), 2); // difficulté accrue en montée (hypothèse non linéaire)
 		}
 	}
 	

@@ -88,7 +88,7 @@ public class Starter extends jade.core.Agent {
 		Environment env = new Environment(points, paths);
 		
 		ArrayList<Person> persons = new ArrayList<Person>();
-
+		
 		for (int i = 0; i < 10; i++){
 			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsTravail, env);
 			try {
@@ -117,7 +117,7 @@ public class Starter extends jade.core.Agent {
 						e.printStackTrace();
 					}
 
-					pan = new Panel(env, persons, c);
+					pan = new Panel(env, persons, c, windowSize, simSize);
 
 					f.add(pan);
 				}

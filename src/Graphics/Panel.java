@@ -20,16 +20,20 @@ public class Panel extends JPanel {
 	Graphics bufferGraphics;
 	Image offscreen;
 	Dimension dim;
+	int windowSize;
+	int simSize;
 
 	Environment env; // environnement en cours
 	ArrayList<Person> persons; // personnes évoluant dans l'environnement
 	Clock clock;
 
 	// le constructeur permet de récupérer l'environnement et les personnes à son appel lors de la création de l'agent Starter
-	public Panel(Environment env, ArrayList<Person> persons, Clock c){ 
+	public Panel(Environment env, ArrayList<Person> persons, Clock c, int windowSize, int simSize){ 
 		this.env = env;
 		this.persons = persons;
 		this.clock = c;
+		this.windowSize = windowSize;
+		this.simSize = simSize;
 	}
 
 	public Panel(Environment env){ 
@@ -59,7 +63,17 @@ public class Panel extends JPanel {
 		bufferGraphics.fillRect(0, 0, size, size);
 
 		int rpx = 5;
-		double ratio = ((double)test.windowSize) / test.simSize;
+		double ratio = ((double) windowSize) / simSize;
+
+		// AFFICHAGE DU BACKGROUND
+
+		ImageIcon bkg = new ImageIcon("images/background.png"); // chargement de l'icone représentant une personne
+		bufferGraphics.drawImage(bkg.getImage(), 
+				0,
+				-22, // l'image est coupée en bas sinon
+				windowSize,windowSize,
+				null);
+
 
 		// DESSIN DES CHEMINS
 
@@ -140,7 +154,7 @@ public class Panel extends JPanel {
 					(int)(clockHeight*ratio/2) - metrics.getHeight()/2 + metrics.getAscent());
 			bufferGraphics.setFont(defaultFont);
 		}
-		
+
 		g.drawImage(offscreen, 0, 0, this);
 		repaint();
 

@@ -1,13 +1,13 @@
 package Environment;
 
-public class CarPath extends Path {
+public class RoadPath extends Path {
 	
 	// Représente un chemin emprunté par des vélos
 	// La difficulté ne varie pas en fonction de la pente
 	
-	private static int speed = 50; // km/h sur route non embouteillée 
+	private static int speed = 40; // km/h en moyenne sur route non embouteillée 
 
-	public CarPath(Point A, Point B) {
+	public RoadPath(Point A, Point B) {
 		super(A, B);
 	}
 

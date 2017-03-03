@@ -155,7 +155,7 @@ public class test {
 		points.add(p26);
 
 		FootPath path1 = new FootPath(HEC,DGA);
-		CarPath path2 = new CarPath(Supelec,IUT);
+		RoadPath path2 = new RoadPath(Supelec,IUT);
 
 		ArrayList<Path> userPaths = new ArrayList<Path>();
 		userPaths.add(path1);

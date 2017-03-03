@@ -24,7 +24,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			Path nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
 			// On récupère le poids du segment, qui correspond au nombre de minutes 
 			// nécessaires pour le parcourir
-			currentPathWeight = (int) nextPath.weight();
+			currentPathWeight =  Math.max((int)nextPath.weight(), 1);
 			// PRINT :
 			System.out.println(intro()+" choix de "+ nextPath.toString() + 
 			", devrait prendre " + currentPathWeight + " minutes.");

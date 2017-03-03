@@ -15,6 +15,7 @@ public class Starter extends jade.core.Agent {
 	}
 
 	private static int simulationTime = 100; //en s
+	private static int nbPersons = 1000;
 	
 	private static Window f;
 	private static Panel pan;
@@ -56,12 +57,12 @@ public class Starter extends jade.core.Agent {
 		pointsInteret.add(Villebon);
 		pointsInteret.add(ONERA);
 		
-		EntryPoint RERno = new EntryPoint("RER Nord-Ouest",0,200,0);
-		EntryPoint RERso = new EntryPoint("RER Sud-Ouest",0,8640,0);
+		//EntryPoint RERno = new EntryPoint("RER Nord-Ouest",0,200,0);
+		//EntryPoint RERso = new EntryPoint("RER Sud-Ouest",0,8640,0);
 		EntryPoint D446 = new EntryPoint("D446 Nord",490,0,0);
 		EntryPoint N118n = new EntryPoint("N118 Nord",5670,0,0);
 		EntryPoint N118s = new EntryPoint("N118 Sud",3250,10000,0);
-		EntryPoint RERe = new EntryPoint("RER Est",10000,3540,0);
+		//EntryPoint RERe = new EntryPoint("RER Est",10000,3540,0);
 		EntryPoint D306 = new EntryPoint("D306 Ouest",0,6970,0);
 		EntryPoint Igny = new EntryPoint("Igny",5310,4520,0);
 		EntryPoint Massy = new EntryPoint("Massy",9370,5030,0);
@@ -479,7 +480,7 @@ public class Starter extends jade.core.Agent {
 		
 		ArrayList<Person> persons = new ArrayList<Person>();
 		
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < nbPersons; i++){
 			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env);
 			try {
 				this.getContainerController().acceptNewAgent("person"+(i+1), newPerson).start();

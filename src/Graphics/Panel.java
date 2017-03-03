@@ -36,8 +36,10 @@ public class Panel extends JPanel {
 		this.simSize = simSize;
 	}
 
-	public Panel(Environment env){ 
+	public Panel(Environment env, int windowSize, int simSize){ 
 		this.env = env;
+		this.windowSize = windowSize;
+		this.simSize = simSize;
 	}
 
 

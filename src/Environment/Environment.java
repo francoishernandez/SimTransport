@@ -9,7 +9,8 @@ import java.util.Collections;
 public class Environment {
 
 	private ArrayList<Point> points;
-	private ArrayList<Path> paths;
+	private ArrayList<Path> carPaths;
+	private ArrayList<Path> userPaths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
 
 	// retourne le chemin le plus court d'un point A à un point B
@@ -19,9 +20,10 @@ public class Environment {
 		return res;
 	}*/
 
-	public Environment(ArrayList<Point> points, ArrayList<Path> paths){
+	public Environment(ArrayList<Point> points, ArrayList<Path> carPaths, ArrayList<Path> userPaths){
 		this.points = points;
-		this.paths = paths;
+		this.carPaths = carPaths;
+		this.userPaths = userPaths;
 	}
 
 	public void display(){
@@ -35,8 +37,12 @@ public class Environment {
 		points.add(p);
 	}
 
-	public void addPath(Path p){
-		paths.add(p);
+	public void addUserPath(Path p){
+		userPaths.add(p);
+	}
+	
+	public void addCarPath(Path p){
+		carPaths.add(p);
 	}
 
 	public ArrayList<Point> getPoints(){
@@ -44,7 +50,19 @@ public class Environment {
 	}
 
 	public ArrayList<Path> getPaths(){
+		ArrayList<Path> paths = new ArrayList<Path>();
+		paths.addAll(userPaths);
+		paths.addAll(carPaths);
 		return paths;
+		
+	}
+	
+	public ArrayList<Path> getUserPaths(){
+		return userPaths;
+	}
+	
+	public ArrayList<Path> getCarPath(){
+		return carPaths;
 	}
 
 	// détermination du prochain chemin a emprunter (à partir de Djikstra ci dessous)
@@ -53,8 +71,16 @@ public class Environment {
 	// implémentation de l'algorithme du plus court chemin de Djikstra
 
 
+	public ArrayList<Point> findShortestCarPath(Point source, Point target){
+		return findShortestPath(carPaths,source,target);
+	}
+	
+	public ArrayList<Point> findShortestUserPath(Point source, Point target){
+		return findShortestPath(userPaths,source,target);
+	}
+	
 	// Rend la liste des points du chemin choisi
-	public ArrayList<Point> findShortestPath( Point source, Point target){
+	public ArrayList<Point> findShortestPath( ArrayList<Path> paths, Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
 		int n = points.size(); // nombre de points
 		double[] D = new double[n]; // tableau des poids
@@ -80,7 +106,7 @@ public class Environment {
 		}
 
 		// parcours du graphe
-		for (int i=0; i<n-1; i++) {
+		for (int i=0; i<n; i++) {
 			// trouver le chemin de poids minimal parmi les candidats
 			double w = Double.MAX_VALUE;
 			Point p = source;
@@ -93,7 +119,7 @@ public class Environment {
 			C.remove(p);
 
 			// vérifier qu'aucun autre chemin depuis ce point n'est plus court jusqu'à la source
-			for (int j=0; j<n-1; j++) {
+			for (int j=0; j<n; j++) {
 				if(D[p.getID()] != Double.MAX_VALUE
 						&& weight[p.getID()][j] != Double.MAX_VALUE
 						&& D[p.getID()]+weight[p.getID()][j]<D[j]
@@ -117,7 +143,7 @@ public class Environment {
 		while(P[loc] != source) {
 			if(P[loc] == null) {
 				// aucun chemin depuis la source
-				System.out.println("PAS DE CHEMIN");
+				System.out.println("PAS DE CHEMIN ["+source.getName()+","+target.getName()+"]");
 				return null;
 			}
 			C.add(0,P[loc]);
@@ -131,17 +157,24 @@ public class Environment {
 		return C;
 	}
 
+	
+	public ArrayList<Path> shortestCarPath(Point source, Point target){
+		return shortestPath(carPaths,source,target);
+	}
+	
+	public ArrayList<Path> shortestUserPath(Point source, Point target){
+		return shortestPath(userPaths,source,target);
+	}
 
 	// Rend la liste des chemins empruntés
-	public ArrayList<Path> shortestPath(Point source, Point target){
-		ArrayList<Point> shortestPath = findShortestPath(source, target);
+	public ArrayList<Path> shortestPath(ArrayList<Path> paths, Point source, Point target){
+		ArrayList<Point> shortestPath = findShortestPath(paths, source, target);
 		if (shortestPath != null) {
 			double[][] weight = initializeWeight(points, paths); // matrice des poids
 			Path[][] pathsTab = initializePaths(points, paths, weight);
 			ArrayList<Path> selectedPaths = new ArrayList<Path>();
 			for (int i = 0; i<shortestPath.size()-1; i++){
 				selectedPaths.add(pathsTab[shortestPath.get(i).getID()][shortestPath.get(i+1).getID()]);
-				// PRINT
 			}
 			return selectedPaths;
 		}

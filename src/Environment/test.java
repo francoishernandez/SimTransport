@@ -9,16 +9,16 @@ import Graphics.*;
 import Individuals.Person;
 
 public class test {
-	
+
 	private static Window f;
 	private static Panel pan;
-	
+
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
 	public static int simSize = 10000; // taille en metres de la simulation
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		InterestPoint A = new InterestPoint("A",3000,2000,0);
 		InterestPoint B = new InterestPoint("B",2000,4000,0);
 		InterestPoint C = new InterestPoint("C",7000,5000,0);
@@ -58,7 +58,7 @@ public class test {
 		FootPath CE2 = new FootPath(C,E2);
 		FootPath AC = new FootPath(A,C);
 		FootPath CA = new FootPath(C,A);
-		
+
 		ArrayList<Path> paths = new ArrayList<Path>();
 		paths.add(E3B);
 		paths.add(BE3);
@@ -79,9 +79,13 @@ public class test {
 		paths.add(AC);
 		paths.add(CA);
 		
-		Environment env = new Environment(points, paths);
+		ArrayList<Path> carPaths = new ArrayList<Path>();
+		CarPath carTest = new CarPath(E1,A);
+		carPaths.add(carTest);
+
+		Environment env = new Environment(points, carPaths, paths);
 		env.display();
-		
+
 		double[][] weight = env.initializeWeight(points,paths);
 		System.out.println("i \t\t j \t\t weight");
 		for(int i=0; i<points.size(); i++){
@@ -89,35 +93,36 @@ public class test {
 				System.out.println(i + " \t\t " + j + " \t\t " + weight[i][j]);
 			}
 		}
-		
-		env.findShortestPath(A, E2);
-		env.findShortestPath(E2,D);
-		ArrayList<Path> sp = env.shortestPath(E2, D);
-		
 
-			for(int i=0; i<points.size(); i++){
-				for(int j=0; j<points.size(); j++){
-					if( i != j){
-					env.shortestPath(points.get(i), points.get(j));
-					}
+		env.findShortestUserPath(A, E2);
+		env.findShortestUserPath(E2,D);
+		ArrayList<Path> sp = env.shortestUserPath(E2, D);
+
+
+		for(int i=0; i<points.size(); i++){
+			for(int j=0; j<points.size(); j++){
+				if( i != j){
+					env.shortestUserPath(points.get(i), points.get(j));
 				}
 			}
-		
+		}
+
+
 		//Path nextPath = sp.get(0);
 		//System.out.println(nextPath.toString());
-		
+
 		//env.shortestPath(E2, E3);
 		/*for(Path p : env.shortestPath(E2, E3)){
 			System.out.println(p.getA().toString()+","+p.getB().toString());
 		}*/
-		
+
 		/*for(Path p : env.shortestPath(A, E2)){
 			System.out.println(p.getA().toString()+","+p.getB().toString());
 		};*/
-		
+
 		// AFFICHAGE
+
 		
-		/*
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				public void run() {
@@ -127,23 +132,23 @@ public class test {
 						e.printStackTrace();
 					}
 
-					pan = new Panel(env);
+					pan = new Panel(env, windowSize, simSize);
 
 					f.add(pan);
 				}
 			});
 		}
-		
-		
+
+
 
 		catch(Exception e){
 			System.err.println("Erreur a la creation de l'interface Swing.");
 			System.err.println(e);
 		}
-		*/
 		
-		
-		
+
+
+
 
 	}
 

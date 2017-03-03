@@ -19,7 +19,7 @@ public class Window extends JFrame {
 		
 		this.setVisible(true);
 		
-		this.setPreferredSize(new Dimension(test.windowSize,test.windowSize));
+		this.setPreferredSize(new Dimension(test.windowSize,test.windowSize+22));
 		
 		this.setResizable(false);
 		

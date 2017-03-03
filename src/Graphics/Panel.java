@@ -72,9 +72,15 @@ public class Panel extends JPanel {
 		ImageIcon bkg = new ImageIcon("images/background.png"); // chargement de l'icone représentant une personne
 		bufferGraphics.drawImage(bkg.getImage(), 
 				0,
-				-22, // l'image est coupée en bas sinon
+				0,
 				windowSize,windowSize,
 				null);
+
+		// Ajout d'un alpha
+		int alpha = 127; // 50% transparent
+		Color myColor = new Color(255, 255, 255, alpha);
+		bufferGraphics.setColor(myColor);
+		bufferGraphics.fillRect(0, 0, size, size);
 
 
 		// DESSIN DES CHEMINS

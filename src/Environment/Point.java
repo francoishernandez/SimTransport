@@ -11,7 +11,8 @@ public class Point {
 	private int id;
 	private String name;
 	
-	public Point(int x, int y, int z){
+	public Point(String name, int x, int y, int z){
+		this.name = name;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -52,7 +53,7 @@ public class Point {
 	}
 	
 	public String getName(){
-		return "Point quelconque";
+		return this.name;
 	}
 	
 	public String toString(){

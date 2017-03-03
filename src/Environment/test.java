@@ -84,7 +84,32 @@ public class test {
 		Point B = new Point("RER Bièvres",5170,2660,0);
 		Point I = new Point("RER Igny",6280,3910,0);
 		
-
+		Point p1 = new Point("1",130,600,0);
+		Point p2 = new Point("2",2190,1610,0);
+		Point p3 = new Point("3",2140,1920,0);
+		Point p4 = new Point("4",1480,2790,0);
+		Point p5 = new Point("5",1310,4990,0);
+		Point p6 = new Point("6",4250,3830,0);
+		Point p7 = new Point("7",5320,2960,0);
+		Point p8 = new Point("8",5610,2780,0);
+		Point p9 = new Point("9",5790,1870,0);
+		Point p10 = new Point("10",6150,1330,0);
+		Point p11 = new Point("11",6160,550,0);
+		Point p12 = new Point("12",5890,4080,0);
+		Point p13 = new Point("13",6540,4790,0);
+		Point p14 = new Point("14",7230,5600,0);
+		Point p15 = new Point("15",5770,6230,0);
+		Point p16 = new Point("16",4280,6130,0);
+		Point p17 = new Point("17",2440,5180,0);
+		Point p18 = new Point("18",1990,6620,0);
+		Point p19 = new Point("19",2990,7140,0);
+		Point p20 = new Point("20",3460,9070,0);
+		Point p21 = new Point("21",8050,6240,0);
+		Point p22 = new Point("22",7480,8290,0);
+		Point p23 = new Point("23",2820,7790,0);
+		Point p24 = new Point("24",2630,9250,0);
+		Point p25 = new Point("25",6680,6620,0);
+		Point p26 = new Point("26",7560,6080,0);
 
 		ArrayList<Point> points = new ArrayList<Point>();
 		points.addAll(pointsEntree);
@@ -102,6 +127,32 @@ public class test {
 		points.add(B);
 		points.add(I);
 
+		points.add(p1);
+		points.add(p2);
+		points.add(p3);
+		points.add(p4);
+		points.add(p5);
+		points.add(p6);
+		points.add(p7);
+		points.add(p8);
+		points.add(p9);
+		points.add(p10);
+		points.add(p11);
+		points.add(p12);
+		points.add(p13);
+		points.add(p14);
+		points.add(p15);
+		points.add(p16);
+		points.add(p17);
+		points.add(p18);
+		points.add(p19);
+		points.add(p20);
+		points.add(p21);
+		points.add(p22);
+		points.add(p23);
+		points.add(p24);
+		points.add(p25);
+		points.add(p26);
 
 		FootPath path1 = new FootPath(HEC,DGA);
 		CarPath path2 = new CarPath(Supelec,IUT);

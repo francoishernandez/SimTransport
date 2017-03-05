@@ -1,18 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Thin Sectioned Essay
-% LaTeX Template
-% Version 1.0 (3/8/13)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original Author:
-% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
-% Vel (vel@latextemplates.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
+% RAPPORT DE CEI // TNP CONSULTANTS // ETP ADVISOR
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
@@ -21,9 +8,26 @@
 
 \documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
 
+\renewcommand{\contentsname}{Table des matières}
+\renewcommand{\listfigurename}{Table des figures}
+
+\usepackage{hyperref}
+
+\usepackage[babel=true]{csquotes}
+
 \usepackage{standalone}
 
-\usepackage[a4paper,left=3cm,right=3cm]{geometry}
+\usepackage{changepage}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+%\usepackage[a4paper,left=2.5cm,right=2.5cm]{geometry}
+
+\addtolength{\hoffset}{-1cm}
+\addtolength{\textwidth}{2cm}
+\addtolength{\topmargin}{-1.5cm}
+\addtolength{\textheight}{2cm}
 
 \usepackage{indentfirst}
 %\usepackage[utf8]{inputenc}
@@ -33,6 +37,62 @@
 \usepackage{enumerate}
 
 \usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+
+\renewcommand{\thesection}{\Roman{section}}
+\usepackage{titlesec}
+%\titlespacing\section{0pt}{20pt plus 4pt minus 2pt}{-5pt plus 2pt minus 2pt}
+
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+%\titlespacing{\chapter}{0}{0*}{0*}{}
+%\titlespacing{\section}{2ex}{0*}{0*}{}
+\usepackage{colortbl}
+\usepackage{multirow}
+
+%\newdimen\saveskip % Un registre pour garder la valeur actuelle de \leftskip
+\newdimen\chapterskip
+\newdimen\sectskip
+\newdimen\subsectskip
+\newdimen\subsubsectskip
+
+%\saveskip=\leftskip
+\chapterskip=10pt     % Espacement pour les chapitres
+\sectskip=4ex        % Pour les sections
+\subsectskip=10ex    % etc.
+\subsubsectskip=18ex
+
+% Reprise de ton code ici, mais en appelant les valeurs définies plus haut
+
+\setcounter{secnumdepth}{3} % On affiche une numérotation sur une profondeur de 3
+%\setcounter{tocdepth}{3} % La table des matières va a une profondeur de 3
+% Alignement des titres :
+%\titlespacing{\chapter} {\chapterskip} {*0} {*0} {}
+%\titlespacing{\section} {\sectskip} {*0} {*0} {}
+%\titlespacing{\subsection} {\subsectskip} {*0} {*0} {}
+%\titlespacing{\subsubsection} {\subsubsectskip} {*0} {*0} {}
+
+% Et ici, on surcharge les commandes \chapter, \section, etc.,
+% afin de modifier \leftskip.
+
+\setcounter{tocdepth}{3}
+
+\renewcommand{\thesection}{\Roman{section}}
+
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1em}
+
+%----------------------------------------------------------------------------------------
+%	FIGURES ET IMAGES
+%----------------------------------------------------------------------------------------
+
 \usepackage{graphicx} % Required for including pictures
 \usepackage{wrapfig} % Allows in-line images
 
@@ -44,64 +104,9 @@
 \usepackage{tkz-graph}
 \usetikzlibrary{shapes.multipart}
 
-\renewcommand{\thesection}{\Roman{section}}
-\usepackage{titlesec}
-%\titlespacing\section{0pt}{20pt plus 4pt minus 2pt}{-5pt plus 2pt minus 2pt}
-
-\usepackage{listings}
-\usepackage{textcomp}
-\usepackage{xcolor}
-\lstset{
-language=Java,
-basicstyle=\normalsize, % ou \c ca==> basicstyle=\scriptsize,
-upquote=true,
-aboveskip={1.2\baselineskip},
-columns=fullflexible,
-showstringspaces=false,
-extendedchars=true,
-breaklines=true,
-showtabs=false,
-showspaces=false,
-showstringspaces=false,
-identifierstyle=\ttfamily,
-keywordstyle=\color[rgb]{0,0,1},
-commentstyle=\color[rgb]{0.133,0.545,0.133},
-stringstyle=\color[rgb]{0.627,0.126,0.941},
-}
-
-\lstset{% This applies to ALL lstlisting
-    backgroundcolor=\color{yellow!10},%
-    numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt,%
-    }%
-
-% Applies only when you use it
-\lstdefinestyle{MyLang}{
-    basicstyle=\small\ttfamily\color{magenta},%
-    breaklines=true,%                                      allow line breaks
-    moredelim=[s][\color{green!50!black}\ttfamily]{'}{'},% single quotes in green
-    moredelim=*[s][\color{black}\ttfamily]{options}{\}},%  options in black (until trailing })
-    commentstyle={\color{gray}\itshape},%                  gray italics for comments
-    morecomment=[l]{//},%                                  define // comment
-    emph={%
-        STRING%                                            literal strings listed here
-        },emphstyle={\color{blue}\ttfamily},%              and formatted in blue
-    alsoletter={:,|,;},%
-    morekeywords={:,|,;},%                                 define the special characters
-    keywordstyle={\color{black}},%                         and format them in black
-}
-
-\lstdefinestyle{Pyth}{
-	language=Python
-}
-
-
-\usepackage{mathpazo} % Use the Palatino font
-\usepackage[T1]{fontenc} % Required for accented characters
-\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
-
-\makeatletter
-\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
-\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
 
 \renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
 \begin{flushright} % Right align
@@ -116,9 +121,7 @@ stringstyle=\color[rgb]{0.627,0.126,0.941},
 \end{flushright}
 }
 
-%----------------------------------------------------------------------------------------
-%	TITLE
-%----------------------------------------------------------------------------------------
+%-----------
 
 \title{\textbf{Introduction aux Systèmes Multi-Agents}\\ % Title
 Projet : SimTransport} % Subtitle
@@ -160,16 +163,108 @@ Un Système Multi-Agents est un système composé d'un ensemble d'agents, situés da
 
 Ce projet a pour objectif de construire une simulation des transports sur le plateau de Saclay. Pour cela, on utilisera la plateforme Jade. La plateforme Jade est une plateforme répartie d'agents s'exécutant de manière asynchrone (chaque agent est une thread). Chaque agent définit ses actions à l'aide de comportements qu'il exécute les uns après les autres. La programmation de ces comportements se fait de manière à les "entrelacer' dans l'exécution de l'agent. Dans ces comportements, les agents peuvent envoyer et recevoir des messages, mais ils peuvent aussi déclencher d'autre comportements ou même créer d'autres agents.\\
 
+Le but du projet est de simuler et d'étudier des politiques d'aménagement des transports à l'aide d'un simulateur multi-agent. Nous adoptons une modélisation très simplifiée pour étudier quelques hypothèses et mesurer l'impact des paramètres sur la simulation.
+
 
 %------------------------------------------------
 \pagebreak
 \section{Implémentation}
 
+Le programme comporte les packages suivants :
+\begin{itemize}
+\item \texttt{Environment} : contient les différents éléments de l'environnement dans lequel se déroulera la simulation ;
+\item \texttt{Graphics} : contient les différentes classes associées à la représentation graphique de la simulation ;
+\item \texttt{Individuals} : contient les différentes classes et comportements liés aux individus.
+\end{itemize}
+
+
 \subsection{Objets et structure du programme}
+
+Avant même de considérer la partie simulation multi-agents, il faut créer la structure du programme permettant de simuler le problème. La structure choisie est détaillée ci-après.
+
+\subsubsection{Points}
+
+Afin de représenter les différents points utiles à notre simulation, nous créons les classes suivantes :
+\begin{itemize}
+\item \texttt{Point} : point "classique" ne représentant pas de lieu particulier, comporte des coordonnées (\texttt{x}, \texttt{y}, \texttt{z}), un \texttt{id} entier et un nom \texttt{name} ainsi que les différents getters et setters utiles ;
+\item \texttt{EntryPoint} : point "source" à partir duquel les individus entreront dans la simulation, hérite de \texttt{Point} ;
+\item \texttt{InterestPoint} : point "d'intérêt" auquel les individus désireront se rendre, hérite de \texttt{Point}.
+\end{itemize}
+
+\subsubsection{Chemins}
+
+Nous représentons aussi différents types de chemins. Pour cela, nous avons fait le choix d'un typage fort des chemins. Nous aurons un objet par type de chemin et par sens (de A vers B). Ainsi, par exemple, pour un chemin qui peut être emprunté par des piétons et des vélos, dans les deux sens, il y aura quatre objets. Les classes sont donc définies de la manière suivante :
+\begin{itemize}
+\item \texttt{Path} : classe mère dont hériteront tous les chemins 'typés', comporte un point \texttt{A} source et un point \texttt{B} destination, les getters et setters associés ainsi que différentes méthodes permettant de récupérer la distance (dans l'espace et projetée sur le plan), le dénivelé et la pente ;
+\item \texttt{FootPath} : chemin piéton héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 5km/h, et prenant en compte la difficulté accrue pour un dénivelé positif) ;
+\item \texttt{BikePath} : chemin cycliste héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 15 km/h prenant en compte la difficulté accrue pour un dénivelé positif) ;
+\item \texttt{RoadPath} : chemin routier (agglomération) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 40 km/h) ;
+\item \texttt{HighwayPath} : chemin routier (nationale) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 90 km/h) ;
+\end{itemize}
+
+\subsubsection{Temps}
+
+Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et de pouvoir implémenter une horloge pour notre problème. Cette classe comporte deux attributs byte \texttt{hours} et \texttt{minutes}, ainsi que leurs getters. Elle comporte aussi les méthodes suivantes :
+\begin{itemize}
+\item \texttt{incMinute(byte m)} : incrémente l'heure de \texttt{m} minutes ;
+\item \texttt{equals(Time toCompare)} : retourne un booléen vrai si \texttt{this} et \texttt{toCompare} sont égaux ;
+\item \texttt{randomBegin()} : retourne une heure aléatoire de départ du point d'entrée, distribuée selon une gaussienne autour de 10h du matin, entre 2h et 20h, et les minutes sont déterminées aléatoirement ;
+\item \texttt{randomEnd(Time begin)} : retourne une heure aléatoire de départ du travail, distribuée selon une gaussienne autour de 18h, comprise entre l'heure d'arrivée plus deux heures et minuit, et les minutes sont déterminées aléatoirement.
+\end{itemize}
+
+\subsubsection{Environnement}
+
+Afin de représenter l'environnement global de notre simulation, nous avons créé une classe \texttt{Environment} qui sera instanciée une unique fois et contiendra les différents éléments du problème.
+
+\paragraph{Attributs}
+
+Cette classe contient les différents éléments de la simulation :
+\begin{itemize}
+\item \texttt{points} : une \texttt{ArrayList} d'objets \texttt{Point} (classe mère et sous-classes) comprenant l'ensemble des points considérés ;
+\item \texttt{carPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers en voiture (\texttt{RoadPath} et \texttt{HighwayPath}) ;
+\item \texttt{userPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers non motorisés (\texttt{FootPath}, \texttt{BikePath} et TRANSPORTS EN COMMUN).
+\end{itemize}
+
+\paragraph{Méthodes}
+
+En plus des getters et setters usuels, cette classe contient également les méthodes permettant d'implémenter un algorithme de Djikstra afin de retourner le plus court chemin d'un point A à un point B sur le graphe des points de l'environnement.
+\begin{itemize}
+\item \texttt{initializeWeights} : retourne, à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>}, la matrice des poids minimal entre les points, c'est à dire la matrice de taille \texttt{n}x\texttt{n} avec \texttt{n} le nombre de points, contenant l'éventuel poids minimal (s'il existe un chemin) entre deux points ;
+\item \texttt{initializePaths} : retourne,  à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>} et d'une matrice de poids (\texttt{double[][]}, la matrice des éventuels chemins de poids minimal entre les points ;
+\item \texttt{findShortestPath} : implémente, à partir d'une \texttt{ArrayList<Point>}, d'une \texttt{ArrayList<Path>}, d'un point \texttt{source} et d'un point \texttt{target}, l'algorithme de Djikstra et retourne une \texttt{ArrayList<Point>} contenant les points formant le plus court chemin entre deux points ;
+\item \texttt{shortestPath} : récupère la liste des chemins formant le plus court chemin, à partir des méthodes \texttt{findShortestPath} et \texttt{initializePaths} ;
+\item \texttt{findShortestCarPath} : retourne les points formant le plus court chemin pour un usager automobiliste ;
+\item \texttt{findShortestUserPath} : retourne les points formant le plus court chemin pour un usager non motorisé ;
+\item \texttt{shortestCarPath} : retourne les chemins formant le plus court chemin pour un usager automobiliste ;
+\item \texttt{shortestUserPath} : retourne les chemins formant le plus court chemin pour un usager non motorisé.
+
+\end{itemize}
+
 
 \subsection{Agents et comportements}
 
+\subsubsection{Horloge}
+
+LÉO
+
+\subsubsection{Individus}
+
+LÉO
+
+\pagebreak 
 \subsection{Interface graphique}
+
+Afin d'avoir une représentation graphique claire des différents points, chemins, et des évènements de la simulation, nous avons choisi de définir une interface graphique à l'aide des outils \texttt{Swing}. Cela consiste en deux classes \texttt{Window} et \texttt{Panel}. \texttt{Window} hérite de la classe \texttt{JFrame} et définit les caractéristiques de la fenêtre qui contiendra le \texttt{Panel}. \texttt{Panel} hérite de la classe \texttt{JPanel} et contient les méthodes associées au dessin des représentations. La méthode \texttt{paintComponent} dessine les différents éléments dans un \texttt{bufferGraphics}, attribut d'une image. L'horloge est également affichée.\\
+
+Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le problème, nous avons choisi de nous baser sur une carte réelle (Google Maps) pour définir nos points et chemins.\\
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{plateau.png}
+\caption{Représentation graphique de la simulation}
+\end{center}
+\end{figure}
+
 
 
 %------------------------------------------------

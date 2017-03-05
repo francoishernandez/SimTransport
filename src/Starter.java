@@ -15,7 +15,7 @@ public class Starter extends jade.core.Agent {
 	}
 
 	private static int simulationTime = 100; //en s
-	private static int nbPersons = 1000;
+	private static int nbPersons = 10;
 	
 	private static Window f;
 	private static Panel pan;

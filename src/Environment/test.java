@@ -472,6 +472,7 @@ public class test {
 		Environment env = new Environment(points, carPaths, userPaths);
 		env.display();
 
+		/*
 		double[][] weight = env.initializeWeight(points,carPaths);
 		System.out.println("i \t\t j \t\t weight");
 		for(int i=0; i<points.size(); i++){
@@ -479,9 +480,12 @@ public class test {
 				System.out.println(i + " \t\t " + j + " \t\t " + weight[i][j]);
 			}
 		}
+		*/
+		
+		
+		env.shortestCarPath(Igny, INSTN);
 		
 		/*
-		env.findShortestUserPath(A, E2);
 		env.findShortestUserPath(E2,D);
 		ArrayList<Path> sp = env.shortestUserPath(E2, D);
 
@@ -510,7 +514,7 @@ public class test {
 
 		// AFFICHAGE
 
-
+		/*
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				public void run() {
@@ -533,7 +537,8 @@ public class test {
 			System.err.println("Erreur a la creation de l'interface Swing.");
 			System.err.println(e);
 		}
-
+		
+		*/
 
 
 

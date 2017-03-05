@@ -1,0 +1,195 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage{standalone}
+
+\usepackage[a4paper,left=3cm,right=3cm]{geometry}
+
+\usepackage{indentfirst}
+%\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{color}
+
+\usepackage{enumerate}
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usepackage{tkz-graph}
+\usetikzlibrary{shapes.multipart}
+
+\renewcommand{\thesection}{\Roman{section}}
+\usepackage{titlesec}
+%\titlespacing\section{0pt}{20pt plus 4pt minus 2pt}{-5pt plus 2pt minus 2pt}
+
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\lstset{
+language=Java,
+basicstyle=\normalsize, % ou \c ca==> basicstyle=\scriptsize,
+upquote=true,
+aboveskip={1.2\baselineskip},
+columns=fullflexible,
+showstringspaces=false,
+extendedchars=true,
+breaklines=true,
+showtabs=false,
+showspaces=false,
+showstringspaces=false,
+identifierstyle=\ttfamily,
+keywordstyle=\color[rgb]{0,0,1},
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+\lstset{% This applies to ALL lstlisting
+    backgroundcolor=\color{yellow!10},%
+    numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt,%
+    }%
+
+% Applies only when you use it
+\lstdefinestyle{MyLang}{
+    basicstyle=\small\ttfamily\color{magenta},%
+    breaklines=true,%                                      allow line breaks
+    moredelim=[s][\color{green!50!black}\ttfamily]{'}{'},% single quotes in green
+    moredelim=*[s][\color{black}\ttfamily]{options}{\}},%  options in black (until trailing })
+    commentstyle={\color{gray}\itshape},%                  gray italics for comments
+    morecomment=[l]{//},%                                  define // comment
+    emph={%
+        STRING%                                            literal strings listed here
+        },emphstyle={\color{blue}\ttfamily},%              and formatted in blue
+    alsoletter={:,|,;},%
+    morekeywords={:,|,;},%                                 define the special characters
+    keywordstyle={\color{black}},%                         and format them in black
+}
+
+\lstdefinestyle{Pyth}{
+	language=Python
+}
+
+
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{flushright} % Right align
+{\LARGE\@title} % Increase the font size of the title
+
+\vspace{50pt} % Some vertical space between the title and author name
+
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{-20pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Introduction aux Systèmes Multi-Agents}\\ % Title
+Projet : SimTransport} % Subtitle
+
+\author{\textsc{Fran\c cois Hernandez - L\'eo Pons} % Author
+\\{\textit{CentraleSup\'elec}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title section
+
+\pagebreak
+\tableofcontents
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT AND KEYWORDS
+%----------------------------------------------------------------------------------------
+
+%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+
+
+
+\vspace{30pt} % Some vertical space between the abstract and first section
+
+%----------------------------------------------------------------------------------------
+%	ESSAY BODY
+%----------------------------------------------------------------------------------------
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+Un Système Multi-Agents est un système composé d'un ensemble d'agents, situés dans un certain environnement et interagissant selon certaines relations. Un agent est une entité caractérisée par le fait qu'elle est, au moins partiellement, autonome. Le fonctionnement du système est défini par le fonctionnement des agents, le système central ne fait qu'office d'environnement d'évolution et de communication des différents agents. On parle d'intelligence artificielle distribuée.\\
+
+Ce projet a pour objectif de construire une simulation des transports sur le plateau de Saclay. Pour cela, on utilisera la plateforme Jade. La plateforme Jade est une plateforme répartie d'agents s'exécutant de manière asynchrone (chaque agent est une thread). Chaque agent définit ses actions à l'aide de comportements qu'il exécute les uns après les autres. La programmation de ces comportements se fait de manière à les "entrelacer' dans l'exécution de l'agent. Dans ces comportements, les agents peuvent envoyer et recevoir des messages, mais ils peuvent aussi déclencher d'autre comportements ou même créer d'autres agents.\\
+
+
+%------------------------------------------------
+\pagebreak
+\section{Implémentation}
+
+\subsection{Objets et structure du programme}
+
+\subsection{Agents et comportements}
+
+\subsection{Interface graphique}
+
+
+%------------------------------------------------
+\pagebreak
+
+\section{Principaux paramètres de la simulation}
+
+%------------------------------------------------
+\pagebreak
+
+\section{Simulation de différentes politiques d'aménagement}
+
+
+%------------------------------------------------
+
+%\pagebreak
+%\section*{Conclusion}
+%\addcontentsline{toc}{section}{Conclusion}
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

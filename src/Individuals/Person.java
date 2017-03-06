@@ -111,5 +111,9 @@ public class Person extends jade.core.Agent {
 	public ArrayList<Appointement> getSchedule() {
 		return schedule;
 	}
+
+	public Environment getEnv() {
+		return env;
+	}
 	
 }

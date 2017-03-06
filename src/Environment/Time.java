@@ -7,14 +7,16 @@ public class Time {
 	// La simulation se déroule sur une journée
 	byte hours;
 	byte minutes;
+	byte seconds;
 	
 	public Time(byte h, byte m){
 		hours = h;
 		minutes = m;
+		seconds = (byte) 0;
 	}
 	
 	public boolean equals(Time toCompare){
-		return ( (hours==toCompare.getHours())&&(minutes==toCompare.getMinutes()) );
+		return ( (hours==toCompare.getHours())&&(minutes==toCompare.getMinutes())&&(seconds==toCompare.getSeconds()) );
 	}
 	
 	// POUR LA GENERATION ALEATOIRES DE PERSONNES ALLER-RETOUR
@@ -42,12 +44,23 @@ public class Time {
 	}
 	
 	public String toString(){
-		if (minutes == 0){
-		return hours + "h00";
-		} 
-		else {
-		return hours + "h" + minutes;
-		}
+		String mString;
+		String sString;
+		
+		if (seconds == 0){
+		sString = "00";
+		} else { sString = ""+seconds; }
+		
+		if (minutes < 10){
+		mString = "0"+minutes;
+		} else { mString = ""+minutes; }
+
+		return hours + "h" + mString + "m" + sString + "s";
+	
+	}
+
+	public byte getSeconds() {
+		return seconds;
 	}
 
 	public byte getHours() {
@@ -64,10 +77,19 @@ public class Time {
 		hours += r;
 	}
 	
+	public void incQuarter(byte s){
+		byte r = (byte) ((seconds + s) / 60);
+		seconds = (byte) ((seconds + s) % 60);
+		if (r != (byte) 0){
+			this.incMinute(r);
+		}
+	}
+	
 	public void stringToTime(String s){
-		String[] splited = s.split("h");
+		String[] splited = s.split("[a-z]");
 		hours = Byte.parseByte(splited[0]);
 		minutes = Byte.parseByte(splited[1]);
+		seconds = Byte.parseByte(splited[2]);
 	}
 	
 	

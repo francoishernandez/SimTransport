@@ -9,7 +9,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	
 	private Point destination;
 	private int currentPathProgress;
-	private int currentPathWeight;
+	private int timeNeeded;
 	private Point nextPoint;
 	
 	public Moving(Point p){
@@ -22,18 +22,19 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		case point : // Dans le cas ou la personne est à une intersection
 			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement)
 			Path nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
-			// On récupère le poids du segment, qui correspond au nombre de minutes 
+			// On récupère le poids du segment, qui correspond au nombre de secondes 
 			// nécessaires pour le parcourir
-			currentPathWeight =  Math.max((int)nextPath.weight(), 1);
+			int currentPathWeight =  Math.max((int)(60*nextPath.weight()), 1);
+			timeNeeded = (int) ( stepLength() * Math.ceil((double)currentPathWeight/(double)stepLength()) );
 			// PRINT :
 			System.out.println(intro()+" choix de "+ nextPath.toString() + 
-			", devrait prendre " + currentPathWeight + " minutes.");
+			", devrait prendre " + timeNeeded/60 + " minutes et " + timeNeeded%60  +" secondes.");
 			nextPoint = nextPath.getB();
 			// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
 			// On s'engage donc sur le segment
 			setCurrentPath(nextPath);
 			setMovingState(MovingState.path);
-			// On initialise le nombre de minutes passées sur le segment à 0
+			// On initialise le nombre de secondes passées sur le segment à 0
 			currentPathProgress = 0;
 			break;
 			
@@ -43,10 +44,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			if (m == null) {
 				block();
 			} else {
-				// à chaque minute passée, on incrémente donc le compteur
-				currentPathProgress++;
+				// à chaque stepLength passée, on incrémente donc le compteur
+				currentPathProgress+=stepLength();
 				// Quand suffisament de minutes se sont écoulées :
-				if (currentPathProgress == currentPathWeight){
+				if (currentPathProgress == timeNeeded){
 					// On termine le parcours du segment et on se place à l'intersection
 					setCurrentPath(null);
 					setMovingState(MovingState.point);
@@ -113,6 +114,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	
 	public boolean noMoreAppointement(){
 		return ((Person)(this.myAgent)).getSchedule().isEmpty();
+	}
+	
+	public int stepLength(){
+		return ((Person)(this.myAgent)).getEnv().getStepLength();
 	}
 	
 }

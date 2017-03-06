@@ -12,6 +12,7 @@ public class test {
 
 	private static Window f;
 	private static Panel pan;
+	private static int stepLength = 15; //en s
 
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
 	public static int simSize = 10000; // taille en metres de la simulation
@@ -469,7 +470,7 @@ public class test {
 		carPaths.addAll(highwayPaths);
 		carPaths.addAll(roadPaths);
 
-		Environment env = new Environment(points, carPaths, userPaths);
+		Environment env = new Environment(points, carPaths, userPaths, stepLength);
 		env.display();
 
 		/*

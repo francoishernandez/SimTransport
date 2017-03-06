@@ -15,7 +15,9 @@ public class Starter extends jade.core.Agent {
 	}
 
 	private static int simulationTime = 100; //en s
+	private static int stepLength = 15; //en s
 	private static int nbPersons = 10;
+	private static int startHour = 2; 
 	
 	private static Window f;
 	private static Panel pan;
@@ -476,7 +478,7 @@ public class Starter extends jade.core.Agent {
 		carPaths.addAll(highwayPaths);
 		carPaths.addAll(roadPaths);
 
-		Environment env = new Environment(points, carPaths, userPaths);
+		Environment env = new Environment(points, carPaths, userPaths, stepLength);
 		
 		ArrayList<Person> persons = new ArrayList<Person>();
 		
@@ -490,7 +492,7 @@ public class Starter extends jade.core.Agent {
 			}	
 		}
 		
-		Clock c = new Clock(simulationTime); 
+		Clock c = new Clock(simulationTime, stepLength, startHour); 
 		try {
 			this.getContainerController().acceptNewAgent("clock", c).start();
 		} catch (StaleProxyException e) {

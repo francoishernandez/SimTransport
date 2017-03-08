@@ -15,8 +15,10 @@ public class BikePath extends Path {
 		public double weight() {
 			if(heightDiff()<=0) {
 				return (length()/1000)/((double)speed/60); // t = d / v
-			} else { // cas en montée
-				return (length()/1000)/((double)speed/60)*Math.pow(slope(), 3); // difficulté accrue en montée (hypothèse non linéaire)
+			} else { // cas en montée :
+				// difficulté accrue en hypothèse non linéaire
+				return ((length()/1000)/((double)speed/60))*(1+Math.pow(slope()*10, 2)); 
+				// Ce qui donne par exemple 2 fois plus dur à 10% et 5 fois plus dur à 20%
 			}
 		}
 	

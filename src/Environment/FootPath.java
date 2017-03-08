@@ -12,12 +12,14 @@ public class FootPath extends Path {
 		super(A, B);
 	}
 	
-	// calcule un poids pour le chemin
+	// calcule un poids (en minutes) pour le chemin
 	public double weight() {
 		if(heightDiff()<=0) {
 			return (length()/1000)/((double)speed/60); // t = d / v
 		} else { // cas en montée
-			return (length()/1000)/((double)speed/60)*Math.pow(slope(), 2); // difficulté accrue en montée (hypothèse non linéaire)
+			// difficulté accrue en hypothèse non linéaire
+			return ((length()/1000)/((double)speed/60))*(1+Math.pow(slope()*4, 2)); 
+			// Ce qui donne par exemple 2 fois plus dur à 25% et 5 fois plus dur à 50%
 		}
 	}
 	

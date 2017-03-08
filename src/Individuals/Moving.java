@@ -30,17 +30,18 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			System.out.println(intro()+" choix de "+ nextPath.toString() + 
 			", devrait prendre " + timeNeeded/60 + " minutes et " + timeNeeded%60  +" secondes.");
 			nextPoint = nextPath.getB();
-			// On traite pour l'instant le cas où la capacité des routes n'a pas de limite
-			// On s'engage donc sur le segment
+			// On s'engage sur le segment
 			setCurrentPath(nextPath);
 			setMovingState(MovingState.path);
+			// On met à jour le compteur d'utilisateurs du segment
+			userIn(nextPath);
 			// On initialise le nombre de secondes passées sur le segment à 0
 			currentPathProgress = 0;
 			break;
 			
 		case path : // Dans le cas où l'on se trouve sur un segment
 			// On attend les ticks de minutes
-			ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new FilterClockTick()));
+			ACLMessage m = myAgent.receive(new MessageTemplate(new FilterClockTick()));
 			if (m == null) {
 				block();
 			} else {
@@ -48,6 +49,8 @@ public class Moving extends jade.core.behaviours.Behaviour {
 				currentPathProgress+=stepLength();
 				// Quand suffisament de minutes se sont écoulées :
 				if (currentPathProgress == timeNeeded){
+					// On sort du chemin, donc on met à jour le compteur d'utilisateurs du segment
+					userOut(getCurrentPath());
 					// On termine le parcours du segment et on se place à l'intersection
 					setCurrentPath(null);
 					setMovingState(MovingState.point);
@@ -104,6 +107,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		((Person)(this.myAgent)).setLocalisation(p);
 	}
 	
+	public Path getCurrentPath(){
+		return ((Person)(this.myAgent)).getCurrentPath();
+	}
+	
 	public void setCurrentPath(Path p){
 		((Person)(this.myAgent)).setCurrentPath(p);
 	}
@@ -118,6 +125,13 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	
 	public int stepLength(){
 		return ((Person)(this.myAgent)).getEnv().getStepLength();
+	}
+	
+	public void userIn(Path p){
+		p.usersIn(((Person)(this.myAgent)).getEnv().getRealUsersPerPerson());
+	}
+	public void userOut(Path p){
+		p.usersOut(((Person)(this.myAgent)).getEnv().getRealUsersPerPerson());
 	}
 	
 }

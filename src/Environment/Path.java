@@ -4,14 +4,18 @@ public abstract class Path {
 
 	private Point A;
 	private Point B;
+	// Le nombre d'utilisateurs actuellement sur le chemin
+	private int currentUsers;
+	
 
 
 	public Path(Point A, Point B){
 		this.A = A;
 		this.B = B;
+		currentUsers = 0;
 	}
 
-	// récupère la distance "réelle" dans l'espace
+	// récupère la distance "réelle" dans l'espace en mètres
 	public double length(){
 		return Math.sqrt(
 				Math.pow(B.getX()-A.getX(),2)
@@ -36,6 +40,19 @@ public abstract class Path {
 	// récupère la pente
 	public double slope(){
 		return heightDiff()/planDist(); 
+	}
+	
+	// récupère la densité actuelle en utilisateurs par km
+	public int currentDensity(){
+		return (int) (currentUsers * 1000 / length());
+	}
+	
+	// Modificateurs du compteur d'utilisateurs :
+	public void usersIn(int in){
+		currentUsers+=in;
+	}
+	public void usersOut(int out){
+		currentUsers-=out;
 	}
 	
 	public Point getA() {

@@ -16,8 +16,12 @@ public class Starter extends jade.core.Agent {
 
 	private static int simulationTime = 100; //en s
 	private static int stepLength = 15; //en s
-	private static int nbPersons = 10;
 	private static int startHour = 2; 
+	
+	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent représenter plusieurs personnes réelles
+	// pour alléger la simulation. Ceci intervient dans l'encombrement des routes.
+	private static int nbPersons = 10;
+	private static int realUsersPerPerson = 10;
 	
 	private static Window f;
 	private static Panel pan;
@@ -478,7 +482,7 @@ public class Starter extends jade.core.Agent {
 		carPaths.addAll(highwayPaths);
 		carPaths.addAll(roadPaths);
 
-		Environment env = new Environment(points, carPaths, userPaths, stepLength);
+		Environment env = new Environment(points, carPaths, userPaths, stepLength, realUsersPerPerson);
 		
 		ArrayList<Person> persons = new ArrayList<Person>();
 		

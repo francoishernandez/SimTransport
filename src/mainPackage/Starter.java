@@ -19,6 +19,8 @@ public class Starter extends jade.core.Agent {
 	public Starter() {
 	}
 	
+	// Lancer dans Run Configurations, Main class : jade.Boot, Program arguments : -local-host 127.0.0.1 -agents "starter:mainPackage.Starter"
+	
 	/////////////////////////////////// PARAMETRES ///////////////////////////////////
 	
 	

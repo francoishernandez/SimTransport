@@ -2,6 +2,7 @@ package Individuals;
 import java.io.IOException;
 
 import Environment.*;
+import Environment.Paths.Path;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 

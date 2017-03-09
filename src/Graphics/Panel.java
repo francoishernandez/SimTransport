@@ -11,6 +11,10 @@ import javax.swing.*;
 import Environment.*;
 import Environment.Point;
 import Environment.test;
+import Environment.Paths.FootPath;
+import Environment.Paths.HighwayPath;
+import Environment.Paths.Path;
+import Environment.Paths.RoadPath;
 import Individuals.Person;
 
 // La classe Panel contient les méthodes d'affichage des différents éléments de la simulation

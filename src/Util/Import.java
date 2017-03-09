@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Environment.*;
+import Environment.Paths.FootPath;
+import Environment.Paths.HighwayPath;
+import Environment.Paths.Path;
+import Environment.Paths.RoadPath;
 
 public class Import {
 	

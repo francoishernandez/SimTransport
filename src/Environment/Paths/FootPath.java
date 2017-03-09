@@ -1,4 +1,6 @@
-package Environment;
+package Environment.Paths;
+
+import Environment.Point;
 
 public class FootPath extends Path {
 	

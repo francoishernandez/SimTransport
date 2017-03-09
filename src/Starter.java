@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 import Environment.*;
+import Environment.Paths.Path;
 import Graphics.Panel;
 import Graphics.Window;
 import Individuals.*;
@@ -16,14 +17,14 @@ public class Starter extends jade.core.Agent {
 	public Starter() {
 	}
 
-	private static int simulationTime = 2000; //en s
+	private static int simulationTime = 500; //en s pour une journée complète
 	private static int stepLength = 15; //en s
 	private static int startHour = 10; 
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent représenter plusieurs personnes réelles
 	// pour alléger la simulation. Ceci intervient dans l'encombrement des routes.
 	private static int nbPersons = 100;
-	private static int realUsersPerPerson = 10;
+	private static int realUsersPerPerson = 20;
 	
 	// Heures génération aléatoire des schedules :
 	private static int centerBeginTime = 10; 

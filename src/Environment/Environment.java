@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import Environment.Paths.Path;
+
 // classe contenant le graphe représentant les différents points et chemins
 
 public class Environment {

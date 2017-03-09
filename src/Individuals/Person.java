@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import Environment.*;
+import Environment.Paths.Path;
 import jade.core.AID;
 import jade.domain.DFService;
 import jade.domain.FIPAException;

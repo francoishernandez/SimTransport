@@ -2,6 +2,8 @@ package Environment;
 
 import java.util.ArrayList;
 
+import Environment.Paths.Path;
+
 // Décrit le trajet d'un point A à un point B
 
 public class Journey {

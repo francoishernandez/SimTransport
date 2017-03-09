@@ -5,6 +5,7 @@ import Environment.*;
 import Environment.Paths.Path;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import mainPackage.Starter;
 
 public class Moving extends jade.core.behaviours.Behaviour {
 	
@@ -21,8 +22,14 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		switch (getMovingState()) {
 		
 		case point : // Dans le cas ou la personne est à une intersection
-			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement)
-			Path nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
+			// On trouve le prochain segment à emprunter (Djikstra impémenté dans Environnement) suivant le choix initial de transport
+			Path nextPath;
+			switch(getTransportChoice()) {
+			case car :
+				nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
+			default :
+				nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
+			}
 			// On récupère le poids du segment, qui correspond au nombre de secondes 
 			// nécessaires pour le parcourir
 			int currentPathWeight =  Math.max((int)(60*nextPath.weight()), 1);
@@ -68,7 +75,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 						} else {
 							// Sinon, on relance son comportement d'attente du prochain rdv
 							setPersonState(PersonState.in_place);
-							((Person)(this.myAgent)).addBehaviour(new inPlace());
+							((Person)(this.myAgent)).addBehaviour(new InPlace());
 						}
 						// PRINT :
 						System.out.println(intro()+" fin du trajet.");
@@ -112,6 +119,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		return ((Person)(this.myAgent)).getCurrentPath();
 	}
 	
+	public TransportChoice getTransportChoice(){
+		return ((Person)(this.myAgent)).getTransportChoice();
+	}
+	
 	public void setCurrentPath(Path p){
 		((Person)(this.myAgent)).setCurrentPath(p);
 	}
@@ -125,14 +136,14 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	}
 	
 	public int stepLength(){
-		return ((Person)(this.myAgent)).getEnv().getStepLength();
+		return Starter.getStepLength();
 	}
 	
 	public void userIn(Path p){
-		p.usersIn(((Person)(this.myAgent)).getEnv().getRealUsersPerPerson());
+		p.usersIn(Starter.getRealUsersPerPerson());
 	}
 	public void userOut(Path p){
-		p.usersOut(((Person)(this.myAgent)).getEnv().getRealUsersPerPerson());
+		p.usersOut(Starter.getRealUsersPerPerson());
 	}
 	
 }

@@ -34,7 +34,7 @@ public class Import {
 		points.addAll(getPoints());
 		points.addAll(getPointsRER());
 		userPaths.addAll(getFootPaths());
-		userPaths.addAll(getBikePaths());
+		//userPaths.addAll(getBikePaths());
 		carPaths.addAll(getRoadPaths());
 		carPaths.addAll(getHighwayPaths());
 	};
@@ -264,6 +264,7 @@ public class Import {
 		return paths;
 	}
 	
+	/*
 	// Importe les chemins cyclistes
 		public ArrayList<Path> getBikePaths() throws IOException {
 			ArrayList<Path> paths = new ArrayList<Path>();
@@ -292,13 +293,15 @@ public class Import {
 			
 			br.close();
 			
-			/*for (Path p: paths){
+			for (Path p: paths){
 				System.out.println(p.toString());
-			}*/
+			}
 
 			return paths;
 		}
-	
+		*/
+
+
 	// GETTERS DES LISTES D'OBJETS
 	
 	public ArrayList<EntryPoint> getPointsEntree(){

@@ -1,0 +1,16 @@
+A,B,lineID
+MP,p21,1
+p21,p14,1
+p14,p15,1
+p15,X,1
+X,Nano,1
+Nano,p18,1
+p18,IUT,1
+IUT,Supelec,1
+Supelec,D306,1
+LG,p18,2
+p18,p5,2
+p5,p4,2
+p4,p3,2
+p3,p2,2
+p2,JeJ,2

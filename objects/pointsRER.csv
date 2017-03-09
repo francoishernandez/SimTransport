@@ -1,13 +1,13 @@
 ID,Name,X,Y,Z
-MV,RER Massy-Verrières,9380,4500,0
-MP,RER Massy-Palaiseau,8390,5570,0
-P,RER Palaiseau,7410,6380,0
-PV,RER Palaiseau-Villebon,6740,7530,0
-L,RER Lozère,4880,7680,0
-LG,RER Le Guichet,3430,7790,0
-OV,RER Orsay-Ville,2270,8630,0
-BsY,RER Bures-Sur-Yvette,550,8920,0
-JeJ,RER Jouy-en-Josas,1650,1260,0
-V,RER Vauboyen,3440,1780,0
-B,RER Bièvres,5170,2660,0
-I,RER Igny,6280,3910,0
+MV,RER Massy-Verrières,9380,4500,75
+MP,RER Massy-Palaiseau,8390,5570,84
+P,RER Palaiseau,7410,6380,93
+PV,RER Palaiseau-Villebon,6740,7530,87
+L,RER Lozère,4880,7680,84
+LG,RER Le Guichet,3430,7790,76
+OV,RER Orsay-Ville,2650,8630,75
+BsY,RER Bures-Sur-Yvette,550,8920,85
+JeJ,RER Jouy-en-Josas,1650,1260,90
+V,RER Vauboyen,3440,1780,84
+B,RER Bièvres,5170,2660,77
+I,RER Igny,6280,3910,74

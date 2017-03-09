@@ -1,4 +1,4 @@
-package Environment;
+package Environment.Points;
 
 // Classe représentant les points d'intérêt de l'environnement
 

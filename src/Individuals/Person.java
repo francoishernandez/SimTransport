@@ -5,6 +5,9 @@ import java.util.Random;
 
 import Environment.*;
 import Environment.Paths.Path;
+import Environment.Points.InterestPoint;
+import Environment.Points.Point;
+import Environment.Points.PreEntryPoint;
 import jade.core.AID;
 import jade.domain.DFService;
 import jade.domain.FIPAException;

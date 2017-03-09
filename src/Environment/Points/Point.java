@@ -1,4 +1,4 @@
-package Environment;
+package Environment.Points;
 
 
 public class Point {

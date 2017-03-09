@@ -1,6 +1,6 @@
-package Environment;
+package Environment.Points;
 
-import Environment.Point;
+import Environment.Points.Point;
 
 // Classe représentant les points de pré-entrée.
 // Ces points servent à distribuer les utilisateurs sur différents points d'entrée.

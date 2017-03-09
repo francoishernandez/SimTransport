@@ -9,6 +9,10 @@ import java.util.Map;
 
 import Environment.*;
 import Environment.Paths.*;
+import Environment.Points.EntryPoint;
+import Environment.Points.InterestPoint;
+import Environment.Points.Point;
+import Environment.Points.PreEntryPoint;
 
 // Cette classe comporte une méthode d'import par type d'objet.
 // Ces imports sont effectués depuis les fichiers .csv du dossier 'objects'.
@@ -349,41 +353,6 @@ public class Import {
 		}*/
 
 		br.close();
-		return paths;
-	}
-
-	// Importe les chemins cyclistes
-	public ArrayList<Path> getBikePaths() throws IOException {
-		ArrayList<Path> paths = new ArrayList<Path>();
-		System.out.println("IN GETBIKEPATH");
-		FileReader filer = new FileReader("objects/bikePaths.csv");
-		// NOMBRE DE LIGNES
-		int lines = 0;
-		BufferedReader reader = new BufferedReader(filer);
-		while(reader.readLine()!=null) lines++;
-		reader.close();
-		// LECTURE DU FICHIER
-		FileReader fr = new FileReader("objects/bikePaths.csv");
-		BufferedReader br = new BufferedReader(fr);
-		br.readLine(); // éliminer la ligne d'entête
-		while (lines>1) {
-			String[] line = br.readLine().split(",");
-			String pointAID = line[0];
-			String pointBID = line[1];
-			BikePath path = new BikePath(pointsMap.get(pointAID), pointsMap.get(pointBID));
-			//System.out.println(path.toString());
-			BikePath pathReturn = new BikePath(pointsMap.get(pointBID), pointsMap.get(pointAID));
-			paths.add(path);
-			paths.add(pathReturn);
-			lines--;
-		}
-
-		br.close();
-
-		/*for (Path p: paths){
-				System.out.println(p.toString());
-			}*/
-
 		return paths;
 	}
 

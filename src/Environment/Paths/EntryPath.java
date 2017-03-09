@@ -1,6 +1,6 @@
 package Environment.Paths;
 
-import Environment.Point;
+import Environment.Points.Point;
 
 public class EntryPath extends Path {
 

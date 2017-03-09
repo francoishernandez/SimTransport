@@ -8,6 +8,9 @@ import javax.swing.SwingUtilities;
 
 import Environment.*;
 import Environment.Paths.Path;
+import Environment.Points.InterestPoint;
+import Environment.Points.Point;
+import Environment.Points.PreEntryPoint;
 import Graphics.Panel;
 import Graphics.Window;
 import Individuals.*;
@@ -32,7 +35,7 @@ public class Starter extends jade.core.Agent {
 	// représenter plusieurs personnes réelles pour alléger la simulation. 
 	// Ceci intervient dans l'encombrement des routes.
 	public static int nbPersons = 100;
-	public static int realUsersPerPerson = 20;
+	public static int realUsersPerPerson = 100;
 	
 	// Heures génération aléatoire des schedules :
 	public static int centerBeginTime = 10; 
@@ -43,7 +46,7 @@ public class Starter extends jade.core.Agent {
 	// Affichage
 	public static boolean showSimulation = true;
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
-	public static int verbose = 1; 
+	public static int verbose = 2; 
 	// 0 : rien
 	// 1 : Lancement des personnes et départs/arrivées
 	// 2 : 1 + détail des trajets
@@ -83,7 +86,7 @@ public class Starter extends jade.core.Agent {
 
 		
 		for (int i = 0; i < nbPersons; i++){
-			Person newPerson = Person.rand_AllerRetour(pointsPreEntree, pointsInteret, env, TransportChoice.car);
+			Person newPerson = Person.rand_AllerRetour(pointsPreEntree, pointsInteret, env, TransportChoice.publicTransport);
 			try {
 				this.getContainerController().acceptNewAgent("person" + (i + 1), newPerson).start();
 				persons.add(newPerson);

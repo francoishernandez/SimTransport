@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import Environment.*;
 import Environment.Paths.*;
+import Environment.Points.EntryPoint;
+import Environment.Points.InterestPoint;
 import Individuals.Person;
 
 // La classe Panel contient les méthodes d'affichage des différents éléments de la simulation
@@ -156,7 +158,7 @@ public class Panel extends JPanel {
 		for (int i=0; i<env.getPoints().size(); i++){ // On parcourt la liste des points de l'environnement
 			//Point p = env.getPoints().get(i);
 			if(env.getPoints().get(i) instanceof EntryPoint) { // il s'agit d'un point d'entrée
-				bufferGraphics.setColor(Color.CYAN);
+				bufferGraphics.setColor(Color.MAGENTA);
 				rpx = 5;
 				// dessin du point, centré sur la position
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,

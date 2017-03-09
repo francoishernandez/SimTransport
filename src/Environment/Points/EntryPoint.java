@@ -1,6 +1,6 @@
-package Environment;
+package Environment.Points;
 
-import Environment.Point;
+import Environment.Points.Point;
 
 // Classe représentant les points d'entrée dans l'environnement (le plateau)
 

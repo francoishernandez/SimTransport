@@ -1,6 +1,7 @@
 package Individuals;
 
 import Environment.*;
+import Environment.Points.Point;
 
 public class Appointement {
 

@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import Environment.*;
 import Environment.Paths.Path;
+import Environment.Points.Point;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import mainPackage.Starter;

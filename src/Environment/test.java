@@ -8,6 +8,7 @@ import Util.Import;
 import javax.swing.SwingUtilities;
 
 import Environment.Paths.Path;
+import Environment.Points.Point;
 import Graphics.*;
 import Individuals.Person;
 

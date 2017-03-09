@@ -23,31 +23,34 @@ public class Starter extends jade.core.Agent {
 	
 	/////////////////////////////////// PARAMETRES ///////////////////////////////////
 	
-	
 
-	private static int simulationTime = 500; // en s pour une journée complète
-	private static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis violents)
-	private static int startHour = 10; // heure de début de la simulation
+	public static int simulationTime = 500; // en s pour une journée complète
+	public static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis violents)
+	public static int startHour = 10; // heure de début de la simulation
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent 
 	// représenter plusieurs personnes réelles pour alléger la simulation. 
 	// Ceci intervient dans l'encombrement des routes.
-	private static int nbPersons = 100;
-	private static int realUsersPerPerson = 20;
+	public static int nbPersons = 100;
+	public static int realUsersPerPerson = 20;
 	
 	// Heures génération aléatoire des schedules :
-	private static int centerBeginTime = 10; 
-	private static double sigmaBeginTime = 4;
-	private static int centerEndTime = 18; 
-	private static double sigmaEndTime = 4;
+	public static int centerBeginTime = 10; 
+	public static double sigmaBeginTime = 4;
+	public static int centerEndTime = 18; 
+	public static double sigmaEndTime = 4;
 
 	// Affichage
 	public static boolean showSimulation = true;
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
-	
-	
+	public static int verbose = 1; 
+	// 0 : rien
+	// 1 : Lancement des personnes et départs/arrivées
+	// 2 : 1 + détail des trajets
+
 	
 	/////////////////////////////////// FIN PARAMETRES ///////////////////////////////////
+
 	
 	private static Window f;
 	private static Panel pan;
@@ -125,30 +128,6 @@ public class Starter extends jade.core.Agent {
 		
 		
 
-	}
-
-	public static int getStepLength() {
-		return stepLength;
-	}
-
-	public static int getRealUsersPerPerson() {
-		return realUsersPerPerson;
-	}
-
-	public static int getCenterBeginTime() {
-		return centerBeginTime;
-	}
-
-	public static double getSigmaBeginTime() {
-		return sigmaBeginTime;
-	}
-
-	public static int getCenterEndTime() {
-		return centerEndTime;
-	}
-
-	public static double getSigmaEndTime() {
-		return sigmaEndTime;
 	}
 	
 

@@ -15,7 +15,7 @@ import mainPackage.Starter;
 public class Person extends jade.core.Agent {
 	
 
-	EntryPoint inPoint;
+	PreEntryPoint inPoint;
 	// On supposera les rdv triés temporellement (faudra juste faire attention à la création)
 	ArrayList<Appointement> schedule;
 	
@@ -30,7 +30,7 @@ public class Person extends jade.core.Agent {
 	
 	static int nbPeople = 0;
 	
-	public Person(EntryPoint in, ArrayList<Appointement> sched, Environment env, TransportChoice transportChoice) {
+	public Person(PreEntryPoint in, ArrayList<Appointement> sched, Environment env, TransportChoice transportChoice) {
 		nbPeople++;
 		inPoint = in;
 		localisation = in;
@@ -44,8 +44,8 @@ public class Person extends jade.core.Agent {
 	    return list.get(rand.nextInt(list.size()));
 	}
 	
-	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork, Environment env, TransportChoice transportChoice){
-		EntryPoint in = getRandomItem(possibleIn);
+	public static Person rand_AllerRetour(ArrayList<PreEntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork, Environment env, TransportChoice transportChoice){
+		PreEntryPoint in = getRandomItem(possibleIn);
 		Point work = getRandomItem(possibleWork);
 		Time beginTime = Time.randomBegin();
 		Time endTime = Time.randomEnd(beginTime);

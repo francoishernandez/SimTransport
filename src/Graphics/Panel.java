@@ -9,12 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Environment.*;
-import Environment.Point;
-import Environment.test;
-import Environment.Paths.FootPath;
-import Environment.Paths.HighwayPath;
-import Environment.Paths.Path;
-import Environment.Paths.RoadPath;
+import Environment.Paths.*;
 import Individuals.Person;
 
 // La classe Panel contient les méthodes d'affichage des différents éléments de la simulation
@@ -130,22 +125,30 @@ public class Panel extends JPanel {
 			}
 			
 			// Tracé du chemin à proprement parler
-			// différentes couleurs suivant les types
-			if(p instanceof RoadPath) { 
-				bufferGraphics.setColor(Color.BLACK);
-				((Graphics2D) bufferGraphics).setStroke(defaultStroke);
-			} else if(p instanceof HighwayPath) { 
-				bufferGraphics.setColor(Color.BLACK);
-				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(3));
-			} else if(p instanceof FootPath) { 
-				bufferGraphics.setColor(Color.GREEN);
-				((Graphics2D) bufferGraphics).setStroke(defaultStroke);
-			} else { bufferGraphics.setColor(Color.BLACK); ((Graphics2D) bufferGraphics).setStroke(defaultStroke);}
-			// dessin du chemin de A vers B pour chaque chemin
-			bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
-					(int) (p.getA().getY()*ratio), 
-					(int) (p.getB().getX()*ratio), 
-					(int) (p.getB().getY()*ratio));
+			if (!(p instanceof EntryPath)) { // On ne trace pas les EntryPath (abstraits)
+				// différentes couleurs suivant les types
+				if(p instanceof RoadPath) { 
+					bufferGraphics.setColor(Color.BLACK);
+					((Graphics2D) bufferGraphics).setStroke(defaultStroke);
+				} else if(p instanceof HighwayPath) { 
+					bufferGraphics.setColor(Color.BLACK);
+					((Graphics2D) bufferGraphics).setStroke(new BasicStroke(3));
+				} else if(p instanceof RerPath) { 
+					bufferGraphics.setColor(Color.BLUE);
+					((Graphics2D) bufferGraphics).setStroke(new BasicStroke(4));
+				} else if(p instanceof BusPath) { 
+					bufferGraphics.setColor(new Color(0, 0, 1, 0.1f));
+					((Graphics2D) bufferGraphics).setStroke(new BasicStroke(8));
+				} else if(p instanceof FootPath) { 
+					bufferGraphics.setColor(Color.GREEN);
+					((Graphics2D) bufferGraphics).setStroke(defaultStroke);
+				} else { bufferGraphics.setColor(Color.BLACK); ((Graphics2D) bufferGraphics).setStroke(defaultStroke);}
+				// dessin du chemin de A vers B pour chaque chemin
+				bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
+						(int) (p.getA().getY()*ratio), 
+						(int) (p.getB().getX()*ratio), 
+						(int) (p.getB().getY()*ratio));
+			}
 		}
 
 		// DESSIN DES POINTS
@@ -153,7 +156,7 @@ public class Panel extends JPanel {
 		for (int i=0; i<env.getPoints().size(); i++){ // On parcourt la liste des points de l'environnement
 			//Point p = env.getPoints().get(i);
 			if(env.getPoints().get(i) instanceof EntryPoint) { // il s'agit d'un point d'entrée
-				bufferGraphics.setColor(Color.RED);
+				bufferGraphics.setColor(Color.CYAN);
 				rpx = 5;
 				// dessin du point, centré sur la position
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,
@@ -164,7 +167,7 @@ public class Panel extends JPanel {
 						(int)(env.getPoints().get(i).getX()*ratio) + 3*rpx, 
 						(int)(env.getPoints().get(i).getY()*ratio) + 3*rpx);
 			} else if (env.getPoints().get(i) instanceof InterestPoint) { // il s'agit d'un point d'intérêt
-				bufferGraphics.setColor(Color.BLUE);
+				bufferGraphics.setColor(Color.RED);
 				rpx = 4;
 				// dessin du point, centré sur la position
 				bufferGraphics.fillOval((int)(env.getPoints().get(i).getX()*ratio) - rpx,

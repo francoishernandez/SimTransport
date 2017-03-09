@@ -1,5 +1,5 @@
 A,B,lineID
-MP,p21,1
+A10,p21,1
 p21,p14,1
 p14,p15,1
 p15,X,1
@@ -8,6 +8,8 @@ Nano,p18,1
 p18,IUT,1
 IUT,Supelec,1
 Supelec,D306,1
+N118s,p20,2
+p20,LG,2
 LG,p18,2
 p18,p5,2
 p5,p4,2

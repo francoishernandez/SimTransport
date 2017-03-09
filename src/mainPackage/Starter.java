@@ -72,7 +72,7 @@ public class Starter extends jade.core.Agent {
 		ArrayList<Path> carPaths = im.getCarPaths();
 		ArrayList<Path> userPaths = im.getUserPaths();
 		
-		ArrayList<EntryPoint> pointsEntree = im.getPointsEntree();
+		ArrayList<PreEntryPoint> pointsPreEntree = im.getPointsPreEntree();
 		ArrayList<InterestPoint> pointsInteret = im.getPointsInteret();
 		
 		// CREATION DE L'ENVIRONNEMENT A PARTIR DES OBJETS
@@ -83,7 +83,7 @@ public class Starter extends jade.core.Agent {
 
 		
 		for (int i = 0; i < nbPersons; i++){
-			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env, TransportChoice.car);
+			Person newPerson = Person.rand_AllerRetour(pointsPreEntree, pointsInteret, env, TransportChoice.car);
 			try {
 				this.getContainerController().acceptNewAgent("person" + (i + 1), newPerson).start();
 				persons.add(newPerson);

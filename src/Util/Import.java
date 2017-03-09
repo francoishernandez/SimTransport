@@ -20,6 +20,7 @@ public class Import {
 	ArrayList<Point> points = new ArrayList<Point>();
 	ArrayList<Path> userPaths = new ArrayList<Path>();
 	ArrayList<Path> carPaths = new ArrayList<Path>();
+	ArrayList<PreEntryPoint> pointsPreEntree = new ArrayList<PreEntryPoint>();
 	ArrayList<EntryPoint> pointsEntree = new ArrayList<EntryPoint>();
 	ArrayList<InterestPoint> pointsInteret = new ArrayList<InterestPoint>();
 
@@ -27,18 +28,21 @@ public class Import {
 	private Map<String, Point> pointsMap = new HashMap<String, Point>();
 
 	public Import() throws IOException {
+		pointsPreEntree = getPreEntryPoints();
+		points.addAll(pointsPreEntree);
 		pointsEntree = getEntryPoints();
 		points.addAll(pointsEntree);
 		pointsInteret = getInterestPoints();
 		points.addAll(pointsInteret);
 		points.addAll(getPoints());
 		points.addAll(getPointsRER());
-		userPaths.addAll(getFootPaths());
-		userPaths.addAll(getBikePaths());
-		userPaths.addAll(getBusPaths());
-		userPaths.addAll(getRerPaths());
 		carPaths.addAll(getRoadPaths());
 		carPaths.addAll(getHighwayPaths());
+		carPaths.addAll(getEntryPaths());
+		userPaths.addAll(getFootPaths());
+		userPaths.addAll(getEntryPaths());
+		userPaths.addAll(getBusPaths());
+		userPaths.addAll(getRerPaths());
 	};
 
 
@@ -74,6 +78,34 @@ public class Import {
 		return points;
 	}
 
+	// Importe les points de pré-entrée
+		public ArrayList<PreEntryPoint> getPreEntryPoints() throws IOException {
+			ArrayList<PreEntryPoint> points = new ArrayList<PreEntryPoint>();
+			System.out.println("IN GETENTRYPOINTS");
+			FileReader filer = new FileReader("objects/preEntryPoints.csv");
+			// NOMBRE DE LIGNES
+			int lines = 0;
+			BufferedReader reader = new BufferedReader(filer);
+			while(reader.readLine()!=null) lines++;
+			reader.close();
+			// LECTURE DU FICHIER
+			FileReader fr = new FileReader("objects/preEntryPoints.csv");
+			BufferedReader br = new BufferedReader(fr);
+			br.readLine(); // éliminer la ligne d'entête
+			while (lines>1) {
+				String[] line = br.readLine().split(",");
+				String pointID = line[0];
+				String pointName = line[1];
+				PreEntryPoint point = new PreEntryPoint(pointName);
+				points.add(point);
+				pointsMap.put(pointID, point);
+				lines--;
+			}
+
+			br.close();
+
+			return points;
+		}
 
 	// Importe les points d'entrée
 	public ArrayList<EntryPoint> getEntryPoints() throws IOException {
@@ -171,6 +203,37 @@ public class Import {
 		return points;
 	}
 
+	//Importe les chemins d'entrée (abstraits)
+	public ArrayList<EntryPath> getEntryPaths() throws IOException {
+		ArrayList<EntryPath> paths = new ArrayList<EntryPath>();
+		System.out.println("IN GETENTRYPATH");
+		FileReader filer = new FileReader("objects/entryPaths.csv");
+		// NOMBRE DE LIGNES
+		int lines = 0;
+		BufferedReader reader = new BufferedReader(filer);
+		while(reader.readLine()!=null) lines++;
+		reader.close();
+		// LECTURE DU FICHIER
+		FileReader fr = new FileReader("objects/entryPaths.csv");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine(); // éliminer la ligne d'entête
+		while (lines>1) {
+			String[] line = br.readLine().split(",");
+			String pointAID = line[0];
+			String pointBID = line[1];
+			EntryPath path = new EntryPath(pointsMap.get(pointAID), pointsMap.get(pointBID));
+			EntryPath pathReturn = new EntryPath(pointsMap.get(pointBID), pointsMap.get(pointAID));
+			paths.add(path);
+			paths.add(pathReturn);
+			lines--;
+		}
+
+		br.close();
+
+		return paths;
+	}
+	
+	
 	// Importe les chemins autoroute
 	public ArrayList<HighwayPath> getHighwayPaths() throws IOException {
 		ArrayList<HighwayPath> paths = new ArrayList<HighwayPath>();
@@ -285,6 +348,7 @@ public class Import {
 			System.out.println(p.toString());
 		}*/
 
+		br.close();
 		return paths;
 	}
 
@@ -390,8 +454,8 @@ public class Import {
 
 	// GETTERS DES LISTES D'OBJETS
 
-	public ArrayList<EntryPoint> getPointsEntree(){
-		return pointsEntree;
+	public ArrayList<PreEntryPoint> getPointsPreEntree(){
+		return pointsPreEntree;
 	}
 
 	public ArrayList<InterestPoint> getPointsInteret(){

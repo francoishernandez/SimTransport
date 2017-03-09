@@ -27,16 +27,29 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			switch(getTransportChoice()) {
 			case car :
 				nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
-			default :
+				break;
+			case publicTransport :
+				nextPath = ((Person) myAgent).env.shortestPublicTransportPath(getLocalisation(),destination).get(0);
+				break;
+			default : // cette ligne n'est jamais atteinte, mais sinon eclipse râle
 				nextPath = ((Person) myAgent).env.shortestCarPath(getLocalisation(),destination).get(0);
 			}
 			// On récupère le poids du segment, qui correspond au nombre de secondes 
 			// nécessaires pour le parcourir
 			int currentPathWeight =  Math.max((int)(60*nextPath.weight()), 1);
-			timeNeeded = (int) ( stepLength() * Math.ceil((double)currentPathWeight/(double)stepLength()) );
 			// PRINT :
 			System.out.println(intro()+" choix de "+ nextPath.toString() + 
-			", devrait prendre " + timeNeeded/60 + " minutes et " + timeNeeded%60  +" secondes.");
+			", devrait prendre " + currentPathWeight/60 + " minutes et " + currentPathWeight%60  +" secondes.");
+			// Pour le transport en commun, on ajoute le temps d'attente moyen en cas de nouvelle ligne
+			if (nextPath.getLineID() != getCurrentLineID()){
+				currentPathWeight += nextPath.getMeanWaitingTime()*60;
+				// et on met à jour la nouvelle ligne
+				setCurrentLineID(nextPath.getLineID());
+				// PRINT :
+				System.out.println(intro()+" change de ligne et attend ainsi " + nextPath.getMeanWaitingTime() + " minutes.");	
+			}
+			// Transformation pour arrondir à la step de temps supérieure
+			timeNeeded = (int) ( stepLength() * Math.ceil((double)currentPathWeight/(double)stepLength()) );
 			nextPoint = nextPath.getB();
 			// On s'engage sur le segment
 			setCurrentPath(nextPath);
@@ -69,6 +82,8 @@ public class Moving extends jade.core.behaviours.Behaviour {
 					if (nextPoint == destination){
 						// on termine le trajet
 						setMovingState(MovingState.none);
+						// on fait sortir la personne de tout transport en commun dans laquelle elle serait
+						setCurrentLineID(0);
 						if (noMoreAppointement()){
 							// Si la personne n'a plus de rdv, elle est sortie du plateau
 							setPersonState(PersonState.gone);
@@ -119,6 +134,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		return ((Person)(this.myAgent)).getCurrentPath();
 	}
 	
+	public int getCurrentLineID(){
+		return ((Person)(this.myAgent)).getCurrentLineID();
+	}
+	
 	public TransportChoice getTransportChoice(){
 		return ((Person)(this.myAgent)).getTransportChoice();
 	}
@@ -129,6 +148,10 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	
 	public void setPersonState(PersonState p){
 		((Person)(this.myAgent)).setPersonState(p);
+	}
+	
+	public void setCurrentLineID(int ID){
+		((Person)(this.myAgent)).setCurrentLineID(ID);
 	}
 	
 	public boolean noMoreAppointement(){

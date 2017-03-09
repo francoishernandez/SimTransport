@@ -24,7 +24,7 @@ public class Starter extends jade.core.Agent {
 	
 
 	private static int simulationTime = 500; // en s pour une journée complète
-	private static int stepLength = 15; // en s
+	private static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis violents)
 	private static int startHour = 10; // heure de début de la simulation
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent 

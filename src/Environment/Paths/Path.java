@@ -8,8 +8,10 @@ public abstract class Path {
 	private Point B;
 	// Le nombre d'utilisateurs actuellement sur le chemin
 	private int currentUsers;
-	
-
+	// le numéro de la ligne intervient pour les transports en commun.
+	// Il est laissé à 0 pour le reste des chemins.
+	// Il interviendra dans Moving pour rajouter un temps d'attente aux changements de ligne
+	protected int lineID = 0;
 
 	public Path(Point A, Point B){
 		this.A = A;
@@ -75,6 +77,16 @@ public abstract class Path {
 
 	public String toString(){
 		return "["+A.getName()+","+B.getName()+"]";
+	}
+
+	public int getLineID() {
+		return lineID;
+	}
+	
+	public int getMeanWaitingTime() { 
+		// Par défaut, renvoie 0. Des valeurs strictement positives sont
+		// renvoyées pour les transports en commun
+		return 0;
 	}
 	
 }

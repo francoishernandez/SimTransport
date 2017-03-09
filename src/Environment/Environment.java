@@ -12,7 +12,7 @@ public class Environment {
 
 	private ArrayList<Point> points;
 	private ArrayList<Path> carPaths;
-	private ArrayList<Path> userPaths;
+	private ArrayList<Path> publicTransportPaths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
 	
 	// retourne le chemin le plus court d'un point A à un point B
@@ -25,7 +25,7 @@ public class Environment {
 	public Environment(ArrayList<Point> points, ArrayList<Path> carPaths, ArrayList<Path> userPaths){
 		this.points = points;
 		this.carPaths = carPaths;
-		this.userPaths = userPaths;
+		this.publicTransportPaths = userPaths;
 	}
 
 	public void display(){
@@ -40,7 +40,7 @@ public class Environment {
 	}
 
 	public void addUserPath(Path p){
-		userPaths.add(p);
+		publicTransportPaths.add(p);
 	}
 	
 	public void addCarPath(Path p){
@@ -53,14 +53,14 @@ public class Environment {
 
 	public ArrayList<Path> getPaths(){
 		ArrayList<Path> paths = new ArrayList<Path>();
-		paths.addAll(userPaths);
+		paths.addAll(publicTransportPaths);
 		paths.addAll(carPaths);
 		return paths;
 		
 	}
 	
 	public ArrayList<Path> getUserPaths(){
-		return userPaths;
+		return publicTransportPaths;
 	}
 	
 	public ArrayList<Path> getCarPath(){
@@ -73,17 +73,9 @@ public class Environment {
 
 	// implémentation de l'algorithme du plus court chemin de Djikstra
 
-
-	public ArrayList<Point> findShortestCarPath(Point source, Point target){
-		return findShortestPath(carPaths,source,target);
-	}
-	
-	public ArrayList<Point> findShortestUserPath(Point source, Point target){
-		return findShortestPath(userPaths,source,target);
-	}
 	
 	// Rend la liste des points du chemin choisi
-	public ArrayList<Point> findShortestPath( ArrayList<Path> paths, Point source, Point target){
+	public ArrayList<Point> shortestPathPointList( ArrayList<Path> paths, Point source, Point target){
 		double[][] weight = initializeWeight(points, paths); // matrice des poids
 		int n = points.size(); // nombre de points
 		double[] D = new double[n]; // tableau des poids
@@ -165,13 +157,13 @@ public class Environment {
 		return shortestPath(carPaths,source,target);
 	}
 	
-	public ArrayList<Path> shortestUserPath(Point source, Point target){
-		return shortestPath(userPaths,source,target);
+	public ArrayList<Path> shortestPublicTransportPath(Point source, Point target){
+		return shortestPath(publicTransportPaths,source,target);
 	}
 
 	// Rend la liste des chemins empruntés
 	public ArrayList<Path> shortestPath(ArrayList<Path> paths, Point source, Point target){
-		ArrayList<Point> shortestPath = findShortestPath(paths, source, target);
+		ArrayList<Point> shortestPath = shortestPathPointList(paths, source, target);
 		if (shortestPath != null) {
 			double[][] weight = initializeWeight(points, paths); // matrice des poids
 			Path[][] pathsTab = initializePaths(points, paths, weight);

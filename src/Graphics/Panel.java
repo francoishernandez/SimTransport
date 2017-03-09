@@ -84,17 +84,59 @@ public class Panel extends JPanel {
 
 
 		// DESSIN DES CHEMINS
+		
+		Stroke defaultStroke = new BasicStroke(0);
 
 		for (int i=0; i<env.getPaths().size(); i++){ // On parcourt la liste des chemins de l'environnement
 			Path p = env.getPaths().get(i);
+			
+			// Tracé de l'utilisation des routes (voitures) en premier car le chemin est tracé par dessus
+			if(p instanceof RoadPath){
+				int density = p.currentDensity();
+				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
+				double rapport = ((double)density)/((double)((RoadPath)p).getCriticalDensity());
+				if (rapport<1){
+					bufferGraphics.setColor(Color.GREEN);
+				} else if (rapport<1.5){
+					bufferGraphics.setColor(Color.ORANGE);
+				} else {
+					bufferGraphics.setColor(Color.RED);
+				}
+				bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
+						(int) (p.getA().getY()*ratio), 
+						(int) (p.getB().getX()*ratio), 
+						(int) (p.getB().getY()*ratio));
+			}
+			
+			if(p instanceof HighwayPath){
+				int density = p.currentDensity();
+				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
+				double rapport = ((double)density)/((double)((HighwayPath)p).getCriticalDensity());
+				if (rapport<1){
+					bufferGraphics.setColor(Color.GREEN);
+				} else if (rapport<1.5){
+					bufferGraphics.setColor(Color.ORANGE);
+				} else {
+					bufferGraphics.setColor(Color.RED);
+				}
+				bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
+						(int) (p.getA().getY()*ratio), 
+						(int) (p.getB().getX()*ratio), 
+						(int) (p.getB().getY()*ratio));
+			}
+			
+			// Tracé du chemin à proprement parler
 			// différentes couleurs suivant les types
 			if(p instanceof RoadPath) { 
 				bufferGraphics.setColor(Color.BLACK);
+				((Graphics2D) bufferGraphics).setStroke(defaultStroke);
 			} else if(p instanceof HighwayPath) { 
-				bufferGraphics.setColor(Color.RED);
+				bufferGraphics.setColor(Color.BLACK);
+				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(3));
 			} else if(p instanceof FootPath) { 
 				bufferGraphics.setColor(Color.GREEN);
-			} else { bufferGraphics.setColor(Color.BLACK); }
+				((Graphics2D) bufferGraphics).setStroke(defaultStroke);
+			} else { bufferGraphics.setColor(Color.BLACK); ((Graphics2D) bufferGraphics).setStroke(defaultStroke);}
 			// dessin du chemin de A vers B pour chaque chemin
 			bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
 					(int) (p.getA().getY()*ratio), 
@@ -156,7 +198,7 @@ public class Panel extends JPanel {
 		// AFFICHAGE DE L'HORLOGE
 
 		if(clock!=null){
-			int clockWidth = 1200;
+			int clockWidth = 1600;
 			int clockHeight = 500;
 			Font myFont = new Font ("Courier New", 1, 20);
 			Font defaultFont = bufferGraphics.getFont();

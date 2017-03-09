@@ -38,11 +38,12 @@ public class Person extends jade.core.Agent {
 	    return list.get(rand.nextInt(list.size()));
 	}
 	
-	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork, Environment env){
+	public static Person rand_AllerRetour(ArrayList<EntryPoint> possibleIn, ArrayList<InterestPoint> possibleWork, Environment env, 
+			int centerBeginTime, double sigmaBeginTime, int centerEndTime, double sigmaEndTime){
 		EntryPoint in = getRandomItem(possibleIn);
 		Point work = getRandomItem(possibleWork);
-		Time beginTime = Time.randomBegin();
-		Time endTime = Time.randomEnd(beginTime);
+		Time beginTime = Time.randomBegin(centerBeginTime,sigmaBeginTime);
+		Time endTime = Time.randomEnd(beginTime, centerEndTime, sigmaEndTime);
 		Appointement beginApp = new Appointement(beginTime,work);
 		Appointement endApp = new Appointement(endTime,in);
 		ArrayList<Appointement> sched = new ArrayList<Appointement>();

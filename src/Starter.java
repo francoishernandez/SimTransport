@@ -14,14 +14,20 @@ public class Starter extends jade.core.Agent {
 	public Starter(){
 	}
 
-	private static int simulationTime = 100; //en s
+	private static int simulationTime = 2000; //en s
 	private static int stepLength = 15; //en s
-	private static int startHour = 2; 
+	private static int startHour = 10; 
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent représenter plusieurs personnes réelles
 	// pour alléger la simulation. Ceci intervient dans l'encombrement des routes.
-	private static int nbPersons = 10;
+	private static int nbPersons = 2000;
 	private static int realUsersPerPerson = 10;
+	
+	// Heures génération aléatoire des schedules :
+	private static int centerBeginTime = 10; 
+	private static double sigmaBeginTime = 4;
+	private static int centerEndTime = 18; 
+	private static double sigmaEndTime = 4;
 	
 	private static Window f;
 	private static Panel pan;
@@ -487,7 +493,7 @@ public class Starter extends jade.core.Agent {
 		ArrayList<Person> persons = new ArrayList<Person>();
 		
 		for (int i = 0; i < nbPersons; i++){
-			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env);
+			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env, centerBeginTime, sigmaBeginTime, centerEndTime, sigmaEndTime);
 			try {
 				this.getContainerController().acceptNewAgent("person"+(i+1), newPerson).start();
 				persons.add(newPerson);

@@ -18,9 +18,14 @@ public class HighwayPath extends Path {
 			return (length()/1000)/((double)speed/60); // t = d / v
 		} else { // cas embouteillé
 			// durée accrue en hypothèse non linéaire
-			return ((length()/1000)/((double)speed/60))*Math.pow((currentDensity()/criticalDensity), 3); 
+			return ((length()/1000)/((double)speed/60))*Math.pow(((double)currentDensity()/(double)criticalDensity), 3); 
 			// Ce qui donne par exemple 2 fois plus long pour une densité de 125%; 3.5 fois plus long à 150%; 8 fois plus long à 200%
 		}
 	}
 
+	public static int getCriticalDensity() {
+		return criticalDensity;
+	}
+	
+	
 }

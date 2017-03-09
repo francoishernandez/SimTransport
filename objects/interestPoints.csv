@@ -1,15 +1,15 @@
 ID,Nom,X,Y,Z
-HEC,HEC,1750,1950,0
-DGA,DGA Essais Propulseurs,2120,3010,0
-INSTN,INSTN,790,5720,0
-Supelec,Supélec,1230,7310,0
-IUT,IUT Orsay,1860,7100,0
-LaMart,La Martinière,2790,6170,0
-ParisSud,Université Paris-Sud,2300,8590,0
-X,l'X,4530,6840,0
-Nano,Nano-Innov,3650,6970,0
-EDF,EDF,3740,6600,0
-Vilgenis,Parc de Vilgénis,7180,4910,0
-Safran,Safran,8930,5700,0
-Villebon,Villebon 2,7950,7910,0
-ONERA,ONERA,6400,6800,0
+HEC,HEC,1750,1950,149
+DGA,DGA Essais Propulseurs,2120,3010,156
+INSTN,INSTN,790,5720,157
+Supelec,Supélec,1230,7310,165
+IUT,IUT Orsay,1860,7100,154
+LaMart,La Martinière,2790,6170,158
+ParisSud,Université Paris-Sud,2300,8620,72
+X,l'X,4530,6840,157
+Nano,Nano-Innov,3650,6970,158
+EDF,EDF,3740,6600,156
+Vilgenis,Parc de Vilgénis,7180,4910,80
+Safran,Safran,8930,5700,91
+Villebon,Villebon 2,7950,7910,57
+ONERA,ONERA,6400,6800,152

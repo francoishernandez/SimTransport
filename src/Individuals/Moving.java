@@ -38,18 +38,18 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			// nécessaires pour le parcourir
 			int currentPathWeight =  Math.max((int)(60*nextPath.weight()), 1);
 			// PRINT :
-			System.out.println(intro()+" choix de "+ nextPath.toString() + 
-			", devrait prendre " + currentPathWeight/60 + " minutes et " + currentPathWeight%60  +" secondes.");
+			if (Starter.verbose>=2){ System.out.println(intro()+" Choix de "+ nextPath.toString() + 
+			", devrait prendre " + currentPathWeight/60 + " minutes et " + currentPathWeight%60  +" secondes."); }
 			// Pour le transport en commun, on ajoute le temps d'attente moyen en cas de nouvelle ligne
 			if (nextPath.getLineID() != getCurrentLineID()){
 				currentPathWeight += nextPath.getMeanWaitingTime()*60;
 				// et on met à jour la nouvelle ligne
 				setCurrentLineID(nextPath.getLineID());
 				// PRINT :
-				System.out.println(intro()+" change de ligne et attend ainsi " + nextPath.getMeanWaitingTime() + " minutes.");	
+				if (Starter.verbose>=2){ System.out.println(intro()+" Change de ligne et attend ainsi " + nextPath.getMeanWaitingTime() + " minutes.");	}
 			}
 			// Transformation pour arrondir à la step de temps supérieure
-			timeNeeded = (int) ( stepLength() * Math.ceil((double)currentPathWeight/(double)stepLength()) );
+			timeNeeded = (int) ( Starter.stepLength * Math.ceil((double)currentPathWeight/(double)Starter.stepLength) );
 			nextPoint = nextPath.getB();
 			// On s'engage sur le segment
 			setCurrentPath(nextPath);
@@ -67,7 +67,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 				block();
 			} else {
 				// à chaque stepLength passée, on incrémente donc le compteur
-				currentPathProgress+=stepLength();
+				currentPathProgress+=Starter.stepLength;
 				// Quand suffisament de minutes se sont écoulées :
 				if (currentPathProgress == timeNeeded){
 					// On sort du chemin, donc on met à jour le compteur d'utilisateurs du segment
@@ -77,7 +77,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 					setMovingState(MovingState.point);
 					setLocalisation(nextPoint);
 					// PRINT :
-					System.out.println(intro()+" arrivée à "+ nextPoint.getName());
+					if (Starter.verbose>=2){ System.out.println(intro()+" Arrivée à "+ nextPoint.getName()); }
 					// Si on est arrivé à destination :
 					if (nextPoint == destination){
 						// on termine le trajet
@@ -93,7 +93,7 @@ public class Moving extends jade.core.behaviours.Behaviour {
 							((Person)(this.myAgent)).addBehaviour(new InPlace());
 						}
 						// PRINT :
-						System.out.println(intro()+" fin du trajet.");
+						if (Starter.verbose>=1){ System.out.println(intro()+" Arrivée à " + destination.getName() +", fin du trajet."); }
 					}
 				}
 			}
@@ -158,15 +158,11 @@ public class Moving extends jade.core.behaviours.Behaviour {
 		return ((Person)(this.myAgent)).getSchedule().isEmpty();
 	}
 	
-	public int stepLength(){
-		return Starter.getStepLength();
-	}
-	
 	public void userIn(Path p){
-		p.usersIn(Starter.getRealUsersPerPerson());
+		p.usersIn(Starter.realUsersPerPerson);
 	}
 	public void userOut(Path p){
-		p.usersOut(Starter.getRealUsersPerPerson());
+		p.usersOut(Starter.realUsersPerPerson);
 	}
 	
 }

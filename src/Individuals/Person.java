@@ -10,6 +10,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import mainPackage.Starter;
 
 public class Person extends jade.core.Agent {
 	
@@ -58,8 +59,8 @@ public class Person extends jade.core.Agent {
 	
 	public void setup(){
 		// On prévient du lancement de la personne
-		System.out.println("Lancement de " + this.getAID().getLocalName() + " à " + inPoint.getName());
-		System.out.println("Schedule :" + this.schedule.toString());
+		if (Starter.verbose>=1){ System.out.println("Lancement de " + this.getAID().getLocalName() + " à " + inPoint.getName()); }
+		if (Starter.verbose>=2){ System.out.println("Emploi du temps de " + this.getAID().getLocalName() + " : " + this.schedule.toString()); }
 		
 		// On lui ajoute les comportements initiaux
 		this.addBehaviour(new InPlace());

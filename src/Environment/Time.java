@@ -27,7 +27,7 @@ public class Time {
 	// Génère une heure alétoire de départ du point d'entrée 
 	public static Time randomBegin(){
 		// L'heure de début est distribuée autour de 10h du matin
-		int randhour = (int)Math.floor(rand.nextGaussian()*Starter.getSigmaBeginTime()+Starter.getCenterBeginTime());
+		int randhour = (int)Math.floor(rand.nextGaussian()*Starter.sigmaBeginTime+Starter.centerBeginTime);
 		// Elle est comprise entre 2h et 20h
 		byte hours = (byte)Math.max(Math.min(randhour, 20), 2);
 		// Les minutes sont déterminées aléatoirement
@@ -37,7 +37,7 @@ public class Time {
 	// Génère une heure aléatoire de départ du travail (en fonction de l'heure de commencement)
 	public static Time randomEnd(Time begin){
 		// L'heure de départ est distribuée autour de 18h
-		int randhour = (int)Math.floor(rand.nextGaussian()*Starter.getSigmaEndTime()+Starter.getCenterEndTime());
+		int randhour = (int)Math.floor(rand.nextGaussian()*Starter.sigmaEndTime+Starter.centerEndTime);
 		// Elle est comprise entre l'heure d'arrivée + 2h (sans compter les minutes) et 24h (minuit)
 		byte hours = (byte)Math.max(Math.min(randhour, 24), 2+begin.hours);
 		// Les minutes sont déterminées aléatoirement

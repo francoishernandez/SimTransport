@@ -4,6 +4,7 @@ import Environment.*;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import mainPackage.Starter;
 
 public class InPlace extends Behaviour {
 
@@ -28,9 +29,9 @@ public class InPlace extends Behaviour {
 				// et on supprime le rdv de l'agenda (rdv restants)
 				cleanAppointement();
 				// PRINT :
-				System.out.println(intro()+" départ de "+
+				if (Starter.verbose>=1){ System.out.println(intro()+" Départ de "+
 				((Person)(this.myAgent)).localisation.getName()+ " vers " +
-				destination.getName());
+				destination.getName()); }
 			}	
 		}
 	}

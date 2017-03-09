@@ -31,57 +31,14 @@ public class test {
 			System.out.println("FAIL");
 		}
 		
-		/*
-		ArrayList<InterestPoint> pointsInteret = null;
-		ArrayList<EntryPoint> pointsEntree = null;
-		ArrayList<Point> points = null;
-		ArrayList<Point> pointsRER = null;
-		ArrayList<Path> footPaths = new ArrayList<Path>();
-		ArrayList<HighwayPath> highwayPaths;
-		ArrayList<RoadPath> roadPaths;
 		
-		ArrayList<Path> userPaths = new ArrayList<Path>();
-		ArrayList<Path> carPaths = new ArrayList<Path>();
-		
-		
-		try {
-			pointsInteret = im.getInterestPoints();
-			pointsEntree = im.getEntryPoints();
-			pointsRER = im.getPointsRER();
-			points = im.getPoints();
-			footPaths = im.getFootPaths();
-			highwayPaths = im.getHighwayPaths();
-			roadPaths = im.getRoadPaths();
-			userPaths.addAll(footPaths);
-			carPaths.addAll(highwayPaths);
-			carPaths.addAll(roadPaths);
-			
-		} catch (IOException e1) {
-			System.err.println("Couldn't load objects");
-		}
-		
-		/*
-		Map<String,Point> pointsMap = im.getPointsMap();
-		System.out.println("COUCOU");
-		for (String name: pointsMap.keySet()){
-			System.out.println(name+" : "+pointsMap.get(name).toString());
-		}
-		
-		
-		
-
-		points.addAll(pointsEntree);
-		points.addAll(pointsInteret);
-		points.addAll(pointsRER);
-	
-		*/
 
 		ArrayList<Point> points = im.getAllPoints();
 		
 		ArrayList<Path> carPaths = im.getCarPaths();
 		ArrayList<Path> userPaths = im.getUserPaths();
 
-		Environment env = new Environment(points, carPaths, userPaths, stepLength, realUsersPerPerson);
+		Environment env = new Environment(points, carPaths, userPaths);
 		//env.display();
 		
 		/*

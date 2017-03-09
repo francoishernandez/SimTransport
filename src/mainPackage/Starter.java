@@ -1,3 +1,5 @@
+package mainPackage;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,13 +18,18 @@ public class Starter extends jade.core.Agent {
 
 	public Starter() {
 	}
-
-	private static int simulationTime = 500; //en s pour une journée complète
-	private static int stepLength = 15; //en s
-	private static int startHour = 10; 
 	
-	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent représenter plusieurs personnes réelles
-	// pour alléger la simulation. Ceci intervient dans l'encombrement des routes.
+	/////////////////////////////////// PARAMETRES ///////////////////////////////////
+	
+	
+
+	private static int simulationTime = 500; // en s pour une journée complète
+	private static int stepLength = 15; // en s
+	private static int startHour = 10; // heure de début de la simulation
+	
+	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent 
+	// représenter plusieurs personnes réelles pour alléger la simulation. 
+	// Ceci intervient dans l'encombrement des routes.
 	private static int nbPersons = 100;
 	private static int realUsersPerPerson = 20;
 	
@@ -31,12 +38,17 @@ public class Starter extends jade.core.Agent {
 	private static double sigmaBeginTime = 4;
 	private static int centerEndTime = 18; 
 	private static double sigmaEndTime = 4;
+
+	// Affichage
+	public static boolean showSimulation = true;
+	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
+	
+	
+	
+	/////////////////////////////////// FIN PARAMETRES ///////////////////////////////////
 	
 	private static Window f;
 	private static Panel pan;
-
-	public static int windowSize = 700; // taille de la fenêtre en pixels
-										// (représente 10km)
 	public static int simSize = 10000; // taille en metres de la simulation
 
 	// Dans le setup du starter on crée et lance tous les agents désirés
@@ -60,13 +72,13 @@ public class Starter extends jade.core.Agent {
 		
 		// CREATION DE L'ENVIRONNEMENT A PARTIR DES OBJETS
 
-		Environment env = new Environment(points, carPaths, userPaths, stepLength, realUsersPerPerson);
+		Environment env = new Environment(points, carPaths, userPaths);
 
 		ArrayList<Person> persons = new ArrayList<Person>();
 
 		
 		for (int i = 0; i < nbPersons; i++){
-			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env, centerBeginTime, sigmaBeginTime, centerEndTime, sigmaEndTime);
+			Person newPerson = Person.rand_AllerRetour(pointsEntree, pointsInteret, env, TransportChoice.car);
 			try {
 				this.getContainerController().acceptNewAgent("person" + (i + 1), newPerson).start();
 				persons.add(newPerson);
@@ -84,25 +96,58 @@ public class Starter extends jade.core.Agent {
 
 		// AFFICHAGE
 
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				public void run() {
-					try {
-						f = new Window();
-					} catch (IOException e) {
-						e.printStackTrace();
+		if (showSimulation) {
+		
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run() {
+						try {
+							f = new Window();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+	
+						pan = new Panel(env, persons, c, windowSize, simSize);
+	
+						f.add(pan);
 					}
-
-					pan = new Panel(env, persons, c, windowSize, simSize);
-
-					f.add(pan);
-				}
-			});
-		} catch (Exception e) {
-			System.err.println("Erreur a la creation de l'interface Swing.");
-			System.err.println(e);
+				});
+			} catch (Exception e) {
+				System.err.println("Erreur a la creation de l'interface Swing.");
+				System.err.println(e);
+			}
+			
 		}
+		
+		
+		
+		
 
 	}
+
+	public static int getStepLength() {
+		return stepLength;
+	}
+
+	public static int getRealUsersPerPerson() {
+		return realUsersPerPerson;
+	}
+
+	public static int getCenterBeginTime() {
+		return centerBeginTime;
+	}
+
+	public static double getSigmaBeginTime() {
+		return sigmaBeginTime;
+	}
+
+	public static int getCenterEndTime() {
+		return centerEndTime;
+	}
+
+	public static double getSigmaEndTime() {
+		return sigmaEndTime;
+	}
+	
 
 }

@@ -5,7 +5,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class inPlace extends Behaviour {
+public class InPlace extends Behaviour {
 
 	public void action() {
 		// on regarde les messages de l'horloge

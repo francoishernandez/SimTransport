@@ -14,8 +14,6 @@ public class Environment {
 	private ArrayList<Path> carPaths;
 	private ArrayList<Path> userPaths;
 	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
-	private static int stepLength;
-	private static int realUsersPerPerson;
 	
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
@@ -24,12 +22,10 @@ public class Environment {
 		return res;
 	}*/
 
-	public Environment(ArrayList<Point> points, ArrayList<Path> carPaths, ArrayList<Path> userPaths, int stepLength, int realUsersPerPerson){
+	public Environment(ArrayList<Point> points, ArrayList<Path> carPaths, ArrayList<Path> userPaths){
 		this.points = points;
 		this.carPaths = carPaths;
 		this.userPaths = userPaths;
-		this.stepLength = stepLength;
-		this.realUsersPerPerson = realUsersPerPerson;
 	}
 
 	public void display(){
@@ -69,10 +65,6 @@ public class Environment {
 	
 	public ArrayList<Path> getCarPath(){
 		return carPaths;
-	}
-	
-	public static int getRealUsersPerPerson() {
-		return realUsersPerPerson;
 	}
 
 
@@ -223,10 +215,6 @@ public class Environment {
 			}
 		}
 		return pathsTab;
-	}
-
-	public int getStepLength() {
-		return stepLength;
 	}
 	
 	

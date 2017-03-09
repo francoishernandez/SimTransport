@@ -24,6 +24,8 @@ public class Person extends jade.core.Agent {
 	MovingState movingState = MovingState.none;
 	TransportChoice transportChoice;
 	Environment env;
+	// ligne de transport en commun actuelle, 0 quand pas dans un tranport en commun
+	int currentLineID = 0;
 	
 	static int nbPeople = 0;
 	
@@ -122,6 +124,16 @@ public class Person extends jade.core.Agent {
 	public TransportChoice getTransportChoice() {
 		return transportChoice;
 	}
+
+	public int getCurrentLineID() {
+		return currentLineID;
+	}
+
+	public void setCurrentLineID(int currentLineID) {
+		this.currentLineID = currentLineID;
+	}
+	
+	
 	
 	
 	

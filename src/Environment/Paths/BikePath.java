@@ -4,6 +4,8 @@ import Environment.Point;
 
 public class BikePath extends Path {
 	
+	/////////////////////////////////////////// Finalement non utilisé dans nos simulations ////////////////////////////////////////////////
+	
 	// Représente un chemin emprunté par des vélos
 	// Nous avons effectué le choix d'autoriser le parcours en montée, mais en ajoutant une difficulté en fonction de la pente
 	

@@ -13,6 +13,7 @@ import Environment.Paths.*;
 import Environment.Points.EntryPoint;
 import Environment.Points.InterestPoint;
 import Individuals.Person;
+import Individuals.PersonState;
 
 // La classe Panel contient les méthodes d'affichage des différents éléments de la simulation
 // Elle sera ajoutée à une instance de la classe Window lors de la création de l'agent Starter
@@ -196,11 +197,13 @@ public class Panel extends JPanel {
 			bufferGraphics.setColor(Color.BLACK);
 			ImageIcon img = new ImageIcon("images/person.png"); // chargement de l'icone représentant une personne
 			for (int i=0; i<persons.size(); i++){ // parcours de la liste des personnes évoluant dans l'environnement
-				bufferGraphics.drawImage(img.getImage(), 
-						(int)(persons.get(i).getLocalisation().getX()*ratio - 10),
-						(int)(persons.get(i).getLocalisation().getY()*ratio -10),
-						20, 20,
-						null);
+				if (persons.get(i).getPersonState()==PersonState.moving){
+					bufferGraphics.drawImage(img.getImage(), 
+							(int)(persons.get(i).getLocalisation().getX()*ratio - 10),
+							(int)(persons.get(i).getLocalisation().getY()*ratio -10),
+							20, 20,
+							null);
+				}
 			}
 		}
 

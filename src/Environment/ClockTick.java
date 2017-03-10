@@ -6,6 +6,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import mainPackage.Starter;
 
 public class ClockTick extends jade.core.behaviours.TickerBehaviour {
 
@@ -17,9 +18,12 @@ public class ClockTick extends jade.core.behaviours.TickerBehaviour {
 	
 	protected void onTick() {
 		if (((Clock)(this.myAgent)).isMidgnight()){
-			// si il est minuit on arrête le comportement
+			// si il est minuit on lance une nouvelle journée auprès du starter
+			ACLMessage m = new ACLMessage(2);
+			m.addReceiver(Starter.aidStarter);
+			myAgent.send(m);
+			// et on arrête ce comportement là
 			stop();
-			// ARRETER LES AUTRES AGENTS ?
 		} else {
 			// Sinon on incrémente l'horloge et on annonce l'heure
 			((Clock)(this.myAgent)).incTime();

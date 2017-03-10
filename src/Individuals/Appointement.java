@@ -9,6 +9,11 @@ public class Appointement {
 	Time departureTime;
 	Point destination;
 	
+	public Appointement clone(){
+		Time d = departureTime.clone();
+		return new Appointement(d,destination);
+	}
+	
 	public Appointement(Time departure, Point dest){
 		departureTime = departure;
 		destination = dest;

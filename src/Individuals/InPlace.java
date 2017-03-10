@@ -11,7 +11,7 @@ public class InPlace extends Behaviour {
 
 	public void action() {
 		// on regarde les messages de l'horloge
-		ACLMessage m = ((Person) myAgent).receive(new MessageTemplate(new FilterClockTick()));
+		ACLMessage m = myAgent.receive(new MessageTemplate(new FilterClockTick()));
 		if (m == null) {
 			block();
 		} else {

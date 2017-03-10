@@ -24,16 +24,16 @@ import jade.wrapper.StaleProxyException;
 
 public class Starter extends jade.core.Agent {
 
-	public Starter() {
-	}
+	public Starter() {}
 	
 	// Lancer dans Run Configurations, Main class : jade.Boot, Program arguments : -local-host 127.0.0.1 -agents "starter:mainPackage.Starter"
 	
 	/////////////////////////////////// PARAMETRES ///////////////////////////////////
 	
 	public static int simulationTime = 50; // en s pour une journée complète
-	public static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis violents)
-	public static int startHour = 10; // heure de début de la simulation
+	public static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis hasardeux)
+	public static int startHour = 2; // heure de début de la simulation (2 recommandée pour une 
+	// simulation sur plusieurs jours, sinon risque d'oublier des départs et donc de fausser les scores)
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent 
 	// représenter plusieurs personnes réelles pour alléger la simulation. 
@@ -92,9 +92,8 @@ public class Starter extends jade.core.Agent {
 	
 	private static int currentDay = 0;
 	
-	private Clock clock;
+	
 	private ArrayList<Person> personsSauv;
-	private ArrayList<Person> currentPersons;
 	
 	// On utilise un AID public pour l'envoi des messages de nouvelle journée
 	public static AID aidStarter; 
@@ -124,6 +123,7 @@ public class Starter extends jade.core.Agent {
 
 		env = new Environment(points, carPaths, userPaths);
 
+		// On utilisera les mêmes personnes sur les différentes journées
 		personsSauv = new ArrayList<Person>();
 
 		// Création des personnes (le choix de leur mode de transport et leur lancement sera
@@ -199,18 +199,14 @@ public class Starter extends jade.core.Agent {
 	public int getCurrentDay() {
 		return currentDay;
 	}
-
-	public void setCurrentPersons(ArrayList<Person> currentPersons) {
-		this.currentPersons = currentPersons;
-	}
 	
 	public void printScores() {
 		System.out.println("Nombre d'utilisateurs ayant choisi la voiture : " + nbPeopleCar);
 		System.out.println("Nombre d'utilisateurs ayant choisi les transports en commun : " + nbPeoplePublicTransport);
 		System.out.println("Temps total passé en voiture (en s) : " + timeUsedCars);
 		System.out.println("Temps total passé en transports en commun (en s) : " + timeUsedPublicTransport);
-		System.out.println("Temps moyen passé en voiture : " + timeUsedCars/nbPeopleCar);
-		System.out.println("Temps moyen passé en transports en commun : " + timeUsedPublicTransport/nbPeoplePublicTransport);
+		System.out.println("Temps moyen passé en voiture : " + timeUsedCars/Math.max(nbPeopleCar, 1));
+		System.out.println("Temps moyen passé en transports en commun : " + timeUsedPublicTransport/Math.max(nbPeoplePublicTransport, 1));
 	}
 	
 	

@@ -28,36 +28,42 @@ public class Days extends Behaviour {
 			block();
 		} else {
 
+			// On récupère le nouveau carFactor
 			double currentCarFactor = Starter.carFactor();
-			
-			if (getCurrentDay()>0){
-				
+			// Si nous ne sommes pas la première journée, on print les résultats de la précédente et on reset le système
+			if (getCurrentDay()>0){ 
 				// PRINT
 				if (Starter.verbose>=0){ 
 					System.out.println("\n ############################# BILAN JOURNEE " +  getCurrentDay() + " ############################# \n");
 					((Starter)this.myAgent).printScores();
 					System.out.println("Nouveau carFactor : "+ currentCarFactor);
 				}
-				
 				// Reset des Agents
 				((Starter)this.myAgent).reset();
 				currentPersons.clear();
 			}
 			
+			// On incrémente le compteur de journée
 			((Starter)this.myAgent).incCurrentDay();
 			
+			// Si il reste une journée à effectuer, on relance le système :
 			if (!((Starter)this.myAgent).noMoreDays()) {
 			
 				//PRINT :
 				if (Starter.verbose>=1){ System.out.println("\n ############################# DEBUT JOURNEE " + 
 				getCurrentDay() + " ############################# \n"); }
 				
-	
+				// On crée l'horloge
 				Clock c = new Clock(Starter.simulationTime, Starter.stepLength, Starter.startHour);
+				// Offset pour le nommage des agents
 				int offset = (getCurrentDay()-1)*getPersonsSauv().size();
+				
+				// On crée les agents de la journée à partir de la liste de personnes du starter
 				for (int i = 0; i < getPersonsSauv().size(); i++) {
 					try {
+						// On détermine les nouveaux choix de transport
 						getPersonsSauv().get(i).chooseTransportMode(currentCarFactor);
+						// Et on incrémente les compteurs associés
 						switch (getPersonsSauv().get(i).getTransportChoice()) {
 						case car :
 							((Starter)this.myAgent).incNbPeopleCar();
@@ -66,15 +72,18 @@ public class Days extends Behaviour {
 							((Starter)this.myAgent).incNbPeoplePublicTransport();
 							break;
 						}
+						// On ne veut pas abimer les personnes de la liste originale du starter,
+						// on fait donc une copie en profondeur
 						Person newPersonCopy =  new Person(getPersonsSauv().get(i));
+						// On lance l'agent
 						((Starter)this.myAgent).getContainerController().acceptNewAgent("person" + (i + 1 + offset), newPersonCopy).start();
 						currentPersons.add(newPersonCopy);
-						((Starter)this.myAgent).setCurrentPersons(currentPersons);
 					} catch (StaleProxyException e) {
 						e.printStackTrace();
 					}			
 				}
 				try {
+					// On lance l'horloge
 					((Starter)this.myAgent).getContainerController().acceptNewAgent("clock"+getCurrentDay(), c).start();
 				} catch (StaleProxyException e) {
 					e.printStackTrace();

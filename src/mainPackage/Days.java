@@ -31,70 +31,80 @@ public class Days extends Behaviour {
 			double currentCarFactor = Starter.carFactor();
 			
 			if (getCurrentDay()>0){
+				
+				// PRINT
+				if (Starter.verbose>=0){ 
+					System.out.println("\n ############################# BILAN JOURNEE " +  getCurrentDay() + " ############################# \n");
+					((Starter)this.myAgent).printScores();
+					System.out.println("Nouveau carFactor : "+ currentCarFactor);
+				}
+				
+				// Reset des Agents
 				((Starter)this.myAgent).reset();
 				currentPersons.clear();
 			}
 			
 			((Starter)this.myAgent).incCurrentDay();
 			
-			//PRINT :
-			if (Starter.verbose>=1){ System.out.println("\n ############################# DEBUT JOURNEE " + 
-			getCurrentDay() + " ############################# \n"); }
+			if (!((Starter)this.myAgent).noMoreDays()) {
 			
-			
-
-			Clock c = new Clock(Starter.simulationTime, Starter.stepLength, Starter.startHour);
-			int offset = (getCurrentDay()-1)*getPersonsSauv().size();
-			for (int i = 0; i < getPersonsSauv().size(); i++) {
+				//PRINT :
+				if (Starter.verbose>=1){ System.out.println("\n ############################# DEBUT JOURNEE " + 
+				getCurrentDay() + " ############################# \n"); }
+				
+	
+				Clock c = new Clock(Starter.simulationTime, Starter.stepLength, Starter.startHour);
+				int offset = (getCurrentDay()-1)*getPersonsSauv().size();
+				for (int i = 0; i < getPersonsSauv().size(); i++) {
+					try {
+						getPersonsSauv().get(i).chooseTransportMode(currentCarFactor);
+						switch (getPersonsSauv().get(i).getTransportChoice()) {
+						case car :
+							((Starter)this.myAgent).incNbPeopleCar();
+							break;
+						case publicTransport :
+							((Starter)this.myAgent).incNbPeoplePublicTransport();
+							break;
+						}
+						Person newPersonCopy =  new Person(getPersonsSauv().get(i));
+						((Starter)this.myAgent).getContainerController().acceptNewAgent("person" + (i + 1 + offset), newPersonCopy).start();
+						currentPersons.add(newPersonCopy);
+						((Starter)this.myAgent).setCurrentPersons(currentPersons);
+					} catch (StaleProxyException e) {
+						e.printStackTrace();
+					}			
+				}
 				try {
-					getPersonsSauv().get(i).chooseTransportMode(currentCarFactor);
-					switch (getPersonsSauv().get(i).getTransportChoice()) {
-					case car :
-						((Starter)this.myAgent).incNbPeopleCar();
-						break;
-					case publicTransport :
-						((Starter)this.myAgent).incNbPeoplePublicTransport();
-						break;
-					}
-					Person newPersonCopy =  new Person(getPersonsSauv().get(i));
-					((Starter)this.myAgent).getContainerController().acceptNewAgent("person" + (i + 1 + offset), newPersonCopy).start();
-					currentPersons.add(newPersonCopy);
-					((Starter)this.myAgent).setCurrentPersons(currentPersons);
+					((Starter)this.myAgent).getContainerController().acceptNewAgent("clock"+getCurrentDay(), c).start();
 				} catch (StaleProxyException e) {
 					e.printStackTrace();
-				}			
-			}
-			try {
-				((Starter)this.myAgent).getContainerController().acceptNewAgent("clock"+getCurrentDay(), c).start();
-			} catch (StaleProxyException e) {
-				e.printStackTrace();
-			}
-			
-			// AFFICHAGE
-
-			if (Starter.showSimulation) {
-			
-				try {
-					SwingUtilities.invokeAndWait(new Runnable() {
-						public void run() {
-							try {
-								Starter.f = new Window();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-		
-							Starter.pan = new Panel(Starter.env, currentPersons, c, Starter.windowSize, Starter.simSize);
-		
-							Starter.f.add(Starter.pan);
-						}
-					});
-				} catch (Exception e) {
-					System.err.println("Erreur a la creation de l'interface Swing.");
-					System.err.println(e);
 				}
 				
+				// AFFICHAGE
+	
+				if (Starter.showSimulation) {
+				
+					try {
+						SwingUtilities.invokeAndWait(new Runnable() {
+							public void run() {
+								try {
+									Starter.f = new Window();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+			
+								Starter.pan = new Panel(Starter.env, currentPersons, c, Starter.windowSize, Starter.simSize);
+			
+								Starter.f.add(Starter.pan);
+							}
+						});
+					} catch (Exception e) {
+						System.err.println("Erreur a la creation de l'interface Swing.");
+						System.err.println(e);
+					}
+					
+				}
 			}
-		
 		}
 	}
 

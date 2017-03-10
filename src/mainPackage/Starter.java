@@ -50,9 +50,10 @@ public class Starter extends jade.core.Agent {
 	// Affichage
 	public static boolean showSimulation = true;
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
-	public static int verbose = 1; 
-	// 0 : rien
-	// 1 : Lancement des personnes et départs/arrivées
+	public static int verbose = 0; 
+	// -1 : rien
+	// 0 : Bilan des journées
+	// 1 : 0 + Lancement des personnes et départs/arrivées + imports
 	// 2 : 1 + détail des trajets
 	
 	/////////////////////////////////// MODELE DE DECISION ///////////////////////////////////
@@ -68,13 +69,16 @@ public class Starter extends jade.core.Agent {
 		if (currentDay==0) {
 			return carFactorInit;
 		} else {
-			return 0;
+			// Simple ratio du temps moyen (plus c'est rapide, plus c'est choisi)
+			// Mais le modèle peut bien sûr être perfectionné
+			return (double)(timeUsedPublicTransport/Math.max(nbPeoplePublicTransport, 1))/
+					(double)((timeUsedCars/Math.max(nbPeopleCar, 1))+(timeUsedPublicTransport/Math.max(nbPeoplePublicTransport, 1)));
 		}
 	}
 	
 	// Ces valeurs correpondent aux résultats de la journée précédente
-	public static int timeUsedCars = 0;
-	public static int timeUsedPublicTransport = 0;
+	public static int timeUsedCars = 0; //en s
+	public static int timeUsedPublicTransport = 0; //en s
 	private static int nbPeopleCar = 0;
 	private static int nbPeoplePublicTransport = 0;
 	
@@ -135,17 +139,16 @@ public class Starter extends jade.core.Agent {
 		// Lancer le premier jour
 		ACLMessage m = new ACLMessage(2); // 2 pour un nouveau jour
 		m.addReceiver(this.getAID());
-		this.send(m);
-
-		
-		
-		
-		
+		this.send(m);	
 
 	}
 	
+	
+	
+	
+	
 	public boolean noMoreDays(){
-		return currentDay == totalDays;
+		return currentDay == totalDays+1;
 	}
 	
 	public void incCurrentDay(){
@@ -201,7 +204,14 @@ public class Starter extends jade.core.Agent {
 		this.currentPersons = currentPersons;
 	}
 	
-	
+	public void printScores() {
+		System.out.println("Nombre d'utilisateurs ayant choisi la voiture : " + nbPeopleCar);
+		System.out.println("Nombre d'utilisateurs ayant choisi les transports en commun : " + nbPeoplePublicTransport);
+		System.out.println("Temps total passé en voiture (en s) : " + timeUsedCars);
+		System.out.println("Temps total passé en transports en commun (en s) : " + timeUsedPublicTransport);
+		System.out.println("Temps moyen passé en voiture : " + timeUsedCars/nbPeopleCar);
+		System.out.println("Temps moyen passé en transports en commun : " + timeUsedPublicTransport/nbPeoplePublicTransport);
+	}
 	
 	
 }

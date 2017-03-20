@@ -242,7 +242,7 @@ Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et d
 
 Afin de représenter l'environnement global de notre simulation, nous avons créé une classe \texttt{Environment} qui sera instanciée une unique fois et contiendra les différents éléments du problème.
 
-\paragraph{Attributs}
+\subsubsection{Attributs}
 
 Cette classe contient les différents éléments de la simulation :
 \begin{itemize}
@@ -251,7 +251,7 @@ Cette classe contient les différents éléments de la simulation :
 \item \texttt{publicTransportPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers non motorisés (\texttt{FootPath}, \texttt{BikePath}, \texttt{BusPath} et \texttt{RerPath}).
 \end{itemize}
 
-\paragraph{Méthodes}
+\subsubsection{Méthodes}
 
 En plus des getters et setters usuels, cette classe contient également les méthodes permettant d'implémenter un algorithme de Djikstra afin de retourner le plus court chemin d'un point A à un point B sur le graphe des points de l'environnement.
 \begin{itemize}
@@ -331,19 +331,7 @@ Les personnes présentent un constructeur qui permet de les construire à la main,
 On se rendra vite compte que la création de trop nombreux agents peut créer des problèmes de mémoire et de CPU suivant la machine et les paramètres. Pour pouvoir constater des embouteillages plus facilement, on introduira dans le starter un paramètre \texttt{realUsersPerPerson} qui représente le nombre d'usagers réels représentés par un agent \texttt{Person}. Cette valeur interviendra dans les calculs de densité d'utilisateurs des routes.\\
 
 \pagebreak 
-\section{Interface}
-
-\subsection{Verbose}
-
-Un paramètre \texttt{verbose} est présent dans le starter. Il décrit la quantité d'information affichée en console lors de la simulation. Différents niveaux de précision sont disponibles~:
-\begin{itemize}
-\item \texttt{verbose <= -1} : Rien n'est affiché
-\item \texttt{verbose = 0} : Seulement le bilan des différentes journées est affiché
-\item \texttt{verbose = 1} : Sont affichés le bilan des journées, les lancements des personnes, les départs et arrivées des différentes personnes, le témoin des imports
-\item \texttt{verbose >= 2} : Sont en plus affichés le détail des trajets des personnes
-\end{itemize}
-
-\subsection{Interface graphique}
+\section{Interface graphique}
 
 Afin d'avoir une représentation graphique claire des différents points, chemins, et des évènements de la simulation, nous avons choisi de définir une interface graphique à l'aide des outils \texttt{Swing}. Cela consiste en deux classes \texttt{Window} et \texttt{Panel}. \texttt{Window} hérite de la classe \texttt{JFrame} et définit les caractéristiques de la fenêtre qui contiendra le \texttt{Panel}. \texttt{Panel} hérite de la classe \texttt{JPanel} et contient les méthodes associées au dessin des représentations. La méthode \texttt{paintComponent} dessine les différents éléments dans un \texttt{bufferGraphics}, attribut d'une image. L'horloge est également affichée.\\
 
@@ -353,11 +341,9 @@ Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le 
 \begin{center}
 \includegraphics[width=0.8\textwidth]{plateau.png}
 \caption{Représentation graphique de la simulation}
-\vspace{-1cm}
+\vspace{-0.5cm}
 \end{center}
 \end{figure}
-
-\paragraph{Représentation des éléments}
 
 Les différents éléments sont ajoutés au \texttt{bufferGraphics} dans la méthode \texttt{paintComponent} via les méthodes de dessin classique de \texttt{Swing}. Les points d'entrée sont représentés par des disques (\texttt{fillCirce}) roses, et les points d'intérêt sont représentés par des disques rouges et leur nom est affiché (\texttt{drawString}).\\
 
@@ -365,7 +351,7 @@ Les chemins de type route sont représentés en noir, et avec un trait plus épais 
 
 De plus, chaque agent (pouvant représenter plusieurs personnes), est représenté par un pictogramme de la forme d'un bonhomme. Ces pictogrammes se déplacent sur la carte (aux différents points de l'environnement) en suivant le déplacement de l'agent associé. Pour cela, la liste des agents \texttt{Persons} est ajoutée au constructeur du \texttt{Panel}, afin de pouvoir accéder aux informations des objets.\\
 
-Un exemple de simulation avec des chemins saturés est présenté figure XXX.
+Un exemple de simulation avec des chemins saturés est présenté figure 2.
 
 \begin{figure}
 \begin{center}
@@ -374,26 +360,115 @@ Un exemple de simulation avec des chemins saturés est présenté figure XXX.
 \end{center}
 \end{figure}
 
+
+
+%------------------------------------------------
+\pagebreak
+
+\section{Utilisation et inflluence des paramètres}
+
 \subsection{Lancement d'une simulation}
 
-EXPLIQUER LE LANCEMENT DANS STARTER + DAYS
+Le lancement d'une simulation se fait via le lancement d'un agent \texttt{Starter}. Pour cela le plus simple est de créer une nouvelle Run Configuration avec comme Main class \texttt{jade.Boot} et comme Program arguments :\\
+
+\texttt{-local-host 127.0.0.1 -agents "starter:mainPackage.Starter"} \\
+
+Les différents paramètres disponibles sont décrits dans la partie suivante.
+
+\subsection{Paramètres d'affichage}
+
+\subsubsection{Console}
+
+Un paramètre \texttt{verbose} est présent dans le starter. Il décrit la quantité d'information affichée en console lors de la simulation. Différents niveaux de précision sont disponibles~:
+\begin{itemize}
+\item \texttt{verbose <= -1} : Rien n'est affiché
+\item \texttt{verbose = 0} : Seulement le bilan des différentes journées est affiché
+\item \texttt{verbose = 1} : Sont affichés le bilan des journées, les lancements des personnes, les départs et arrivées des différentes personnes, le témoin des imports
+\item \texttt{verbose >= 2} : Sont en plus affichés le détail des trajets des personnes
+\end{itemize}
+
+\subsubsection{Interface graphique}
+
+Un paramètre booléen \texttt{showSimulation} est disponible pour l'affichage de la simulation. Un paramètre boolean \texttt{showTraffic} est aussi disponible pour camoufler les bordures affichées représentant la densité d'utilisateurs. La taille de la fenêtre est aussi modifiable.\\
+
+\subsection{Paramètres généraux de simulation}
+
+Des paramètres généraux de simulation dont certains ont déjà été évoqués plus haut sont modifiables dans \texttt{Starter} : 
+\begin{itemize}
+\item \texttt{simulationTime} : durée réelle de la simulation d'une journée de 24 heures
+\item \texttt{stepLength} : intervalle minimal de temps simulé (15 secondes recommandé)
+\item \texttt{startHour} : heure de début de la simulation
+\item \texttt{nbPersons} : nombre de personnes simulées
+\item \texttt{realUsersPerPerson} : nombre d'utilisateurs réels représentés par un agent (pour l'encombrement des routes)
+\end{itemize}
+
+Les paramètres des lois gaussiennes des heures générées aléatoirement lors de la création des emplois du temps : \texttt{centerBeginTime, sigmaBeginTime, centerEndTime, sigmaEndTime}.
+
+\subsection{Paramètres des Path}
+
+Les paramètres des classes \texttt{Path} comme la vitesse moyenne, le seuil critique de densité pour les routes automobiles, ou le temps perdu à chaque arrêt pour les transports en commun, sont accessibles directement dans les classes concernées. Ce sont des paramètres qui concernent le système réel lui même, nous n'avons donc pas désiré les faire apparaître directement dans le starter avec les autres paramètres.\\
+
+On peut aussi imaginer des \texttt{Path} qui auraient une certaine densité d'utilisateurs "de base", indépendante de notre système, comme sur la N118 par exemple (qui peut être embouteillée indépendamment des comportements des usagers du plateau de Saclay).\\
+
+On peut ainsi vérifier le comportement du prototype et de ces paramètres en effectuant des simulations. Par exemple, on effectuera deux simulations, en changeant le temps d'arrêt et le temps moyen d'attente des transports communs. On vérifie en console les durées annoncées sur chaque trajet, et on trouve bien des différences de performances, reportées en figure 3.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{RER}  & \textbf{RER}  & \textbf{Bus}  & \textbf{Bus}   & \textbf{Aller-Retour moyen} \ \\
+ stopTime &  waitingTime &  stopTime &  waitingTime & \textbf{en transports en commun} \\ \hline
+15 & 3 & 20 & 5 & 3199 secondes \\ \hline
+30 & 6 & 40 & 10 & 3711 secondes \\ \hline
+\end{tabular}\\
+\vspace{0.5cm}
+Figure 3 : Différences de performances selon les paramètres des transports
+\end{center}
+
+\subsection{Paramètres du modèle de décision}
+
+Comme précisé en première partie, au delà de vouloir mesurer les performances du système selon les conditions, les routes éventuellement fermées, les lignes de bus créées etc, il est aussi possible de modéliser le comportement des utilisateurs et leur choix de transport sur plusieurs jours.\\
+
+Les paramètres concernant cet aspect du prototype sont disponibles dans \texttt{Starter}, juste en dessous des paramètres généraux. On trouve : 
+\begin{itemize}
+\item \texttt{totalDays} : le nombre de jours
+\item \texttt{carFactorInit} : la probabilité initiale qu'une personne choisisse la voiture face aux transports en commun
+\item \texttt{carFactor()} : dans cette fonction réside le modèle de décision des agents. Elle peut se servir des scores de la journée précédente (nombre d'utilisateurs pour chaque mode de transport et performance de chaque mode)  et doit renvoyer une valeur de \texttt{carFactor} qui correspondra à la nouvelle probabilité pour une personne de choisir la voiture.
+\end{itemize}
+
+Le choix de \texttt{carFactor()} est délicat et représente donc la façon de penser des utilisateurs. Cette fonction devra être perfectionnée par l'utilisateur du prototype selon ses métadonnées et sa connaissance du comportement des usagers du plateau de Saclay. Nous avons nous même implémenté un simple ratio (le moyen de transport le plus rapide est le plus choisi). On pourrait aussi imaginer une notion de coût du trajet ou de praticité qui dissuade les utilisateurs dans un sens ou dans un autre.\\
+
+On effectue par exemple une simulation avec seulement 100 personnes par journée, sur 8 jours, sans traffic supplémentaire que ces 100 personnes. Selon notre fonction de décision, on intuite que l'absence d'embouteillages devrait rendre la voiture plus efficace et donc pousser les utilisateurs à l'adopter. On récupère les résultats en console et on vérifie ainsi bien le comportement en figure 4.\\
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=major,
+xlabel={\# Journée},
+ylabel={Probabilité de choix},
+legend entries={Voiture, Transports}]
+
+\addplot coordinates {(0,0.5) (1,0.82) (2,0.77) (3,0.88) (4,0.89) (5,0.73) (6,0.81) (7,0.75) (8,0.77)};
+\addplot coordinates {(0,0.5) (1,0.18) (2,0.23) (3,0.12) (4,0.11) (5,0.27) (6,0.19) (7,0.25) (8,0.23)};
+
+\end{axis}
+\end{tikzpicture}
+
+\vspace{0.5cm}
+Figure 4 : Evolution des comportements sur 8 jours sans embouteillages
+\end{center}
+
+On remarque d'ailleurs qu'il y a un certain bruit dans le comportement, mais qui pourrait être diminué avec un choix de modèle plus peaufiné, pondéré sur plusieurs jours par exemple.\\
+
 
 %------------------------------------------------
+
 \pagebreak
-
-\section{Principaux paramètres de la simulation}
-
-%------------------------------------------------
-\pagebreak
-
-\section{Simulation de différentes politiques d'aménagement}
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
 
 
-%------------------------------------------------
+On aura donc développé un prototype d'application permettant l'étude des déplacements des usagers du Plateau de Saclay. Les simulations sont très modulables ce qui permet donc à l'utilisateur de personnaliser ses modélisation selon ses besoins et ses métadonnées.\\
 
-%\pagebreak
-%\section*{Conclusion}
-%\addcontentsline{toc}{section}{Conclusion}
+Les simulations sont observables sous différents angles et à l'aide de différentes métriques : interface graphique, log des déplacements, compte rendu des performances sur une journée, fonction de décision des utilisateurs... Qui nous on permis de vérifier le fonctionnement du prototype et qui permettront aux utilisateurs de tirer des conclusions de leurs simulations.\\
 
 
 %----------------------------------------------------------------------------------------

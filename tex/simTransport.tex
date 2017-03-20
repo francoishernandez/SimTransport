@@ -168,7 +168,7 @@ Le but du projet est de simuler et d'étudier des politiques d'aménagement des tr
 
 %------------------------------------------------
 \pagebreak
-\section{Implémentation}
+\section{Présentation générale}
 
 Le programme comporte les packages suivants :
 \begin{itemize}
@@ -182,11 +182,11 @@ Le programme comporte les packages suivants :
 \end{itemize}
 
 
-\subsection{Objets et structure du programme}
+\section{Objets et structure du programme}
 
 Avant même de considérer la partie simulation multi-agents, il faut créer la structure du programme permettant de simuler le problème. La structure choisie est détaillée ci-après.
 
-\subsubsection{Points}
+\subsection{Points}
 
 Afin de représenter les différents points utiles à notre simulation, nous créons les classes suivantes, regroupées dans le package \texttt{Environment.Points} :
 \begin{itemize}
@@ -196,7 +196,7 @@ Afin de représenter les différents points utiles à notre simulation, nous créons
 \item \texttt{PreEntryPoint} : point se trouvant avant les points d'entrée, afin d'éviter toute situation où un agent d'un certain type serait bloqué à un \texttt{EntryPoint} ne disposant pas de chemin compatible avec son type.
 \end{itemize}
 
-\subsubsection{Chemins}
+\subsection{Chemins}
 
 Nous représentons aussi différents types de chemins. Pour cela, nous avons fait le choix d'un typage fort des chemins. Nous aurons un objet par type de chemin et par sens (de A vers B). Ainsi, par exemple, pour un chemin qui peut être emprunté par des piétons et des vélos, dans les deux sens, il y aura quatre objets. Les classes sont donc définies de la manière suivante dans le package \texttt{Environment.Paths} :
 \begin{itemize}
@@ -210,7 +210,7 @@ Nous représentons aussi différents types de chemins. Pour cela, nous avons fait 
 \item \texttt{EntryPath} : chemin entre les \texttt{PreEntryPoint} et \texttt{EntryPoint}, de poids nul (un agent débutera, sans délai, au point d'entrée le plus proche correspondant à son type).
 \end{itemize}
 
-\subsubsection{Temps}
+\subsection{Temps}
 
 Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et de pouvoir implémenter une horloge pour notre problème. Cette classe comporte trois attributs byte \texttt{hours}, \texttt{minutes} et \texttt{seconds}, ainsi que leurs getters. Elle comporte aussi les méthodes suivantes :
 \begin{itemize}
@@ -221,7 +221,7 @@ Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et d
 \item \texttt{randomEnd(Time begin)} : retourne une heure aléatoire de départ du travail, distribuée selon une gaussienne autour de 18h, comprise entre l'heure d'arrivée plus deux heures et minuit, et les minutes sont déterminées aléatoirement.
 \end{itemize}
 
-\subsubsection{Environnement}
+\subsection{Environnement}
 
 Afin de représenter l'environnement global de notre simulation, nous avons créé une classe \texttt{Environment} qui sera instanciée une unique fois et contiendra les différents éléments du problème.
 
@@ -248,24 +248,24 @@ En plus des getters et setters usuels, cette classe contient également les métho
 \end{itemize}
 
 
-\subsection{Agents et comportements}
+\section{Agents et comportements}
 
-\subsubsection{Horloge}
+\subsection{Horloge}
 
 LÉO
 
-\subsubsection{Individus}
+\subsection{Individus}
 
 LÉO
 
 \pagebreak 
-\subsection{Interface}
+\section{Interface}
 
-\subsubsection{Mode Verbose}
+\subsection{Mode Verbose}
 
 EXPLIQUER RAPIDO LES DIFFERENTS NIVEAUX
 
-\subsubsection{Interface graphique}
+\subsection{Interface graphique}
 
 AJOUTER LES NOUVEAUTÉS
 
@@ -280,7 +280,7 @@ Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le 
 \end{center}
 \end{figure}
 
-\subsubsection{Lancement d'une simulation}
+\subsection{Lancement d'une simulation}
 
 EXPLIQUER LE LANCEMENT DANS STARTER + DAYS
 

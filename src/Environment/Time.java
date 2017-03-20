@@ -61,6 +61,10 @@ public class Time {
 	
 	}
 
+	public Time clone(){
+		return new Time (hours, minutes);
+	}
+	
 	public byte getSeconds() {
 		return seconds;
 	}

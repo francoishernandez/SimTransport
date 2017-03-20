@@ -3,6 +3,7 @@ package Environment;
 import java.util.ArrayList;
 
 import Environment.Paths.Path;
+import Environment.Points.Point;
 
 // Décrit le trajet d'un point A à un point B
 

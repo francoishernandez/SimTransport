@@ -1,6 +1,6 @@
 package Environment.Paths;
 
-import Environment.Point;
+import Environment.Points.Point;
 
 public abstract class Path {
 

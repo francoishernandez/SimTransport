@@ -1,4 +1,4 @@
-package Environment;
+package mainPackage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,9 @@ import Util.Import;
 
 import javax.swing.SwingUtilities;
 
+import Environment.Environment;
 import Environment.Paths.Path;
+import Environment.Points.Point;
 import Graphics.*;
 import Individuals.Person;
 

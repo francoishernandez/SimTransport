@@ -3,6 +3,8 @@ import java.io.IOException;
 
 import Environment.*;
 import Environment.Paths.Path;
+import Environment.Points.Point;
+import Environment.Points.PreEntryPoint;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import mainPackage.Starter;
@@ -38,18 +40,35 @@ public class Moving extends jade.core.behaviours.Behaviour {
 			// nécessaires pour le parcourir
 			int currentPathWeight =  Math.max((int)(60*nextPath.weight()), 1);
 			// PRINT :
-			if (Starter.verbose>=2){ System.out.println(intro()+" Choix de "+ nextPath.toString() + 
-			", devrait prendre " + currentPathWeight/60 + " minutes et " + currentPathWeight%60  +" secondes."); }
+			if (Starter.verbose>=2){ if (getLocalisation() instanceof PreEntryPoint) {
+				System.out.println(intro()+" Départ de la pré-entrée " + getLocalisation().getName() + 
+				", entrée immédiate à " + nextPath.getB().getName() + ".");
+				} else {
+				System.out.println(intro()+" Choix de "+ nextPath.toString() + ", devrait prendre " + 
+				currentPathWeight/60 + " minutes et " + currentPathWeight%60  +" secondes."); }
+			}
 			// Pour le transport en commun, on ajoute le temps d'attente moyen en cas de nouvelle ligne
 			if (nextPath.getLineID() != getCurrentLineID()){
 				currentPathWeight += nextPath.getMeanWaitingTime()*60;
 				// et on met à jour la nouvelle ligne
 				setCurrentLineID(nextPath.getLineID());
 				// PRINT :
-				if (Starter.verbose>=2){ System.out.println(intro()+" Change de ligne et attend ainsi " + nextPath.getMeanWaitingTime() + " minutes.");	}
+				if (Starter.verbose>=2){
+					if (getCurrentLineID()!=0){ System.out.println(intro()+" Prend la ligne " + getCurrentLineID() + 
+							" et attend ainsi " + nextPath.getMeanWaitingTime() + " minutes.");	}
+				}
 			}
 			// Transformation pour arrondir à la step de temps supérieure
 			timeNeeded = (int) ( Starter.stepLength * Math.ceil((double)currentPathWeight/(double)Starter.stepLength) );
+			// On met à jour le compteur de temps passé général correspondant
+			switch(getTransportChoice()) {
+			case car :
+				Starter.timeUsedCars+=timeNeeded;
+				break;
+			case publicTransport :
+				Starter.timeUsedPublicTransport+=timeNeeded;
+				break;
+			}
 			nextPoint = nextPath.getB();
 			// On s'engage sur le segment
 			setCurrentPath(nextPath);
@@ -164,5 +183,6 @@ public class Moving extends jade.core.behaviours.Behaviour {
 	public void userOut(Path p){
 		p.usersOut(Starter.realUsersPerPerson);
 	}
+	
 	
 }

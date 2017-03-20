@@ -9,6 +9,11 @@ import java.util.Map;
 
 import Environment.*;
 import Environment.Paths.*;
+import Environment.Points.EntryPoint;
+import Environment.Points.InterestPoint;
+import Environment.Points.Point;
+import Environment.Points.PreEntryPoint;
+import mainPackage.Starter;
 
 // Cette classe comporte une méthode d'import par type d'objet.
 // Ces imports sont effectués depuis les fichiers .csv du dossier 'objects'.
@@ -20,6 +25,7 @@ public class Import {
 	ArrayList<Point> points = new ArrayList<Point>();
 	ArrayList<Path> userPaths = new ArrayList<Path>();
 	ArrayList<Path> carPaths = new ArrayList<Path>();
+	ArrayList<PreEntryPoint> pointsPreEntree = new ArrayList<PreEntryPoint>();
 	ArrayList<EntryPoint> pointsEntree = new ArrayList<EntryPoint>();
 	ArrayList<InterestPoint> pointsInteret = new ArrayList<InterestPoint>();
 
@@ -27,25 +33,28 @@ public class Import {
 	private Map<String, Point> pointsMap = new HashMap<String, Point>();
 
 	public Import() throws IOException {
+		pointsPreEntree = getPreEntryPoints();
+		points.addAll(pointsPreEntree);
 		pointsEntree = getEntryPoints();
 		points.addAll(pointsEntree);
 		pointsInteret = getInterestPoints();
 		points.addAll(pointsInteret);
 		points.addAll(getPoints());
 		points.addAll(getPointsRER());
-		userPaths.addAll(getFootPaths());
-		userPaths.addAll(getBikePaths());
-		userPaths.addAll(getBusPaths());
-		userPaths.addAll(getRerPaths());
 		carPaths.addAll(getRoadPaths());
 		carPaths.addAll(getHighwayPaths());
+		carPaths.addAll(getEntryPaths());
+		userPaths.addAll(getFootPaths());
+		userPaths.addAll(getEntryPaths());
+		userPaths.addAll(getBusPaths());
+		userPaths.addAll(getRerPaths());
 	};
 
 
 	// Importe les points d'intérêt
 	public ArrayList<InterestPoint> getInterestPoints() throws IOException {
 		ArrayList<InterestPoint> points = new ArrayList<InterestPoint>();
-		System.out.println("IN GETINTERESTPOINTS");
+		if (Starter.verbose>=1){ System.out.println("IN GETINTERESTPOINTS"); }
 		FileReader filer = new FileReader("objects/interestPoints.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -74,11 +83,39 @@ public class Import {
 		return points;
 	}
 
+	// Importe les points de pré-entrée
+		public ArrayList<PreEntryPoint> getPreEntryPoints() throws IOException {
+			ArrayList<PreEntryPoint> points = new ArrayList<PreEntryPoint>();
+			if (Starter.verbose>=1){ System.out.println("IN GETENTRYPOINTS"); }
+			FileReader filer = new FileReader("objects/preEntryPoints.csv");
+			// NOMBRE DE LIGNES
+			int lines = 0;
+			BufferedReader reader = new BufferedReader(filer);
+			while(reader.readLine()!=null) lines++;
+			reader.close();
+			// LECTURE DU FICHIER
+			FileReader fr = new FileReader("objects/preEntryPoints.csv");
+			BufferedReader br = new BufferedReader(fr);
+			br.readLine(); // éliminer la ligne d'entête
+			while (lines>1) {
+				String[] line = br.readLine().split(",");
+				String pointID = line[0];
+				String pointName = line[1];
+				PreEntryPoint point = new PreEntryPoint(pointName);
+				points.add(point);
+				pointsMap.put(pointID, point);
+				lines--;
+			}
+
+			br.close();
+
+			return points;
+		}
 
 	// Importe les points d'entrée
 	public ArrayList<EntryPoint> getEntryPoints() throws IOException {
 		ArrayList<EntryPoint> points = new ArrayList<EntryPoint>();
-		System.out.println("IN GETENTRYPOINTS");
+		if (Starter.verbose>=1){ System.out.println("IN GETENTRYPOINTS"); }
 		FileReader filer = new FileReader("objects/entryPoints.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -110,7 +147,7 @@ public class Import {
 	// Importe les points 'de passage'
 	public ArrayList<Point> getPoints() throws IOException {
 		ArrayList<Point> points = new ArrayList<Point>();
-		System.out.println("IN GETPOINTS");
+		if (Starter.verbose>=1){ System.out.println("IN GETPOINTS"); }
 		FileReader filer = new FileReader("objects/points.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -142,7 +179,7 @@ public class Import {
 	// Importe les points de RER
 	public ArrayList<Point> getPointsRER() throws IOException {
 		ArrayList<Point> points = new ArrayList<Point>();
-		System.out.println("IN GETPOINTSRER");
+		if (Starter.verbose>=1){ System.out.println("IN GETPOINTSRER"); }
 		FileReader filer = new FileReader("objects/pointsRER.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -171,10 +208,41 @@ public class Import {
 		return points;
 	}
 
+	//Importe les chemins d'entrée (abstraits)
+	public ArrayList<EntryPath> getEntryPaths() throws IOException {
+		ArrayList<EntryPath> paths = new ArrayList<EntryPath>();
+		if (Starter.verbose>=1){ System.out.println("IN GETENTRYPATH"); }
+		FileReader filer = new FileReader("objects/entryPaths.csv");
+		// NOMBRE DE LIGNES
+		int lines = 0;
+		BufferedReader reader = new BufferedReader(filer);
+		while(reader.readLine()!=null) lines++;
+		reader.close();
+		// LECTURE DU FICHIER
+		FileReader fr = new FileReader("objects/entryPaths.csv");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine(); // éliminer la ligne d'entête
+		while (lines>1) {
+			String[] line = br.readLine().split(",");
+			String pointAID = line[0];
+			String pointBID = line[1];
+			EntryPath path = new EntryPath(pointsMap.get(pointAID), pointsMap.get(pointBID));
+			EntryPath pathReturn = new EntryPath(pointsMap.get(pointBID), pointsMap.get(pointAID));
+			paths.add(path);
+			paths.add(pathReturn);
+			lines--;
+		}
+
+		br.close();
+
+		return paths;
+	}
+	
+	
 	// Importe les chemins autoroute
 	public ArrayList<HighwayPath> getHighwayPaths() throws IOException {
 		ArrayList<HighwayPath> paths = new ArrayList<HighwayPath>();
-		System.out.println("IN GETHIGHWAYPATH");
+		if (Starter.verbose>=1){ System.out.println("IN GETHIGHWAYPATH"); }
 		FileReader filer = new FileReader("objects/highwayPaths.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -204,7 +272,7 @@ public class Import {
 	// Importe les chemins route
 	public ArrayList<RoadPath> getRoadPaths() throws IOException {
 		ArrayList<RoadPath> paths = new ArrayList<RoadPath>();
-		System.out.println("IN GETROADPATH");
+		if (Starter.verbose>=1){ System.out.println("IN GETROADPATH"); }
 		FileReader filer = new FileReader("objects/roadPaths.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -234,7 +302,7 @@ public class Import {
 	// Importe les chemins piétons
 	public ArrayList<Path> getFootPaths() throws IOException {
 		ArrayList<Path> paths = new ArrayList<Path>();
-		System.out.println("IN GETFOOTPATH");
+		if (Starter.verbose>=1){ System.out.println("IN GETFOOTPATH"); }
 		FileReader filer = new FileReader("objects/footPaths.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -285,48 +353,14 @@ public class Import {
 			System.out.println(p.toString());
 		}*/
 
-		return paths;
-	}
-
-	// Importe les chemins cyclistes
-	public ArrayList<Path> getBikePaths() throws IOException {
-		ArrayList<Path> paths = new ArrayList<Path>();
-		System.out.println("IN GETBIKEPATH");
-		FileReader filer = new FileReader("objects/bikePaths.csv");
-		// NOMBRE DE LIGNES
-		int lines = 0;
-		BufferedReader reader = new BufferedReader(filer);
-		while(reader.readLine()!=null) lines++;
-		reader.close();
-		// LECTURE DU FICHIER
-		FileReader fr = new FileReader("objects/bikePaths.csv");
-		BufferedReader br = new BufferedReader(fr);
-		br.readLine(); // éliminer la ligne d'entête
-		while (lines>1) {
-			String[] line = br.readLine().split(",");
-			String pointAID = line[0];
-			String pointBID = line[1];
-			BikePath path = new BikePath(pointsMap.get(pointAID), pointsMap.get(pointBID));
-			//System.out.println(path.toString());
-			BikePath pathReturn = new BikePath(pointsMap.get(pointBID), pointsMap.get(pointAID));
-			paths.add(path);
-			paths.add(pathReturn);
-			lines--;
-		}
-
 		br.close();
-
-		/*for (Path p: paths){
-				System.out.println(p.toString());
-			}*/
-
 		return paths;
 	}
 
 	// Importe les chemins RER
 	public ArrayList<RerPath> getRerPaths() throws IOException {
 		ArrayList<RerPath> paths = new ArrayList<RerPath>();
-		System.out.println("IN GETRERPATH");
+		if (Starter.verbose>=1){ System.out.println("IN GETRERPATH"); }
 		FileReader filer = new FileReader("objects/rerPaths.csv");
 		// NOMBRE DE LIGNES
 		int lines = 0;
@@ -357,7 +391,7 @@ public class Import {
 	// Importe les chemins Bus
 		public ArrayList<BusPath> getBusPaths() throws IOException {
 			ArrayList<BusPath> paths = new ArrayList<BusPath>();
-			System.out.println("IN GETRERPATH");
+			if (Starter.verbose>=1){ System.out.println("IN GETRERPATH"); }
 			FileReader filer = new FileReader("objects/busPaths.csv");
 			// NOMBRE DE LIGNES
 			int lines = 0;
@@ -390,8 +424,8 @@ public class Import {
 
 	// GETTERS DES LISTES D'OBJETS
 
-	public ArrayList<EntryPoint> getPointsEntree(){
-		return pointsEntree;
+	public ArrayList<PreEntryPoint> getPointsPreEntree(){
+		return pointsPreEntree;
 	}
 
 	public ArrayList<InterestPoint> getPointsInteret(){

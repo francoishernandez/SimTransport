@@ -1,14 +1,14 @@
 package Environment.Paths;
 
-import Environment.Point;
+import Environment.Points.Point;
 
 public class RerPath extends Path {
 
 	// Représente une ligne de Rer
 	
-	private static int speed = 70; // km/h en moyenne sans compter les arrêts (ligne de bus => pas d'embouteillage)
-	private static int stopTime = 20; // durée d'un arrêt en secondes
-	private static int meanWaitingTime = 5; // durée moyenne d'attente en minutes
+	private static int speed = 80; // km/h en moyenne sans compter les arrêts (ligne de bus => pas d'embouteillage)
+	private static int stopTime = 15; // durée d'un arrêt en secondes
+	private static int meanWaitingTime = 3; // durée moyenne d'attente en minutes
 	// Pour un modèle plus réaliste on pourrait aussi calculer cette valeur 
 	// en fonction de la ligne et de l'heure de la journée
 	

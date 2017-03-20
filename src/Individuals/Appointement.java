@@ -1,12 +1,18 @@
 package Individuals;
 
 import Environment.*;
+import Environment.Points.Point;
 
 public class Appointement {
 
 	// Un rendez vous est constitué d'une heure de départ et d'une destination
 	Time departureTime;
 	Point destination;
+	
+	public Appointement clone(){
+		Time d = departureTime.clone();
+		return new Appointement(d,destination);
+	}
 	
 	public Appointement(Time departure, Point dest){
 		departureTime = departure;

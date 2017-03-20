@@ -26,31 +26,33 @@ public class Starter extends jade.core.Agent {
 
 	public Starter() {}
 	
-	// Lancer dans Run Configurations, Main class : jade.Boot, Program arguments : -local-host 127.0.0.1 -agents "starter:mainPackage.Starter"
+	// Lancer dans Run Configurations, Main class : jade.Boot, Program arguments :
+	// -local-host 127.0.0.1 -agents "starter:mainPackage.Starter"
 	
 	/////////////////////////////////// PARAMETRES ///////////////////////////////////
 	
-	public static int simulationTime = 50; // en s pour une journée complète
+	public static int simulationTime = 500; // en s pour une journée complète
 	public static int stepLength = 15; // en s (maximum 15s recommandé, sinon arrondis hasardeux)
-	public static int startHour = 2; // heure de début de la simulation (2 recommandée pour une 
+	public static int startHour = 10; // heure de début de la simulation (2 recommandée pour une 
 	// simulation sur plusieurs jours, sinon risque d'oublier des départs et donc de fausser les scores)
 	
 	// On fait tourner un certain nombre d'agents Person, mais ces agents peuvent 
 	// représenter plusieurs personnes réelles pour alléger la simulation. 
 	// Ceci intervient dans l'encombrement des routes.
-	public static int nbPersons = 10;
-	public static int realUsersPerPerson = 100;
+	public static int nbPersons = 100;
+	public static int realUsersPerPerson = 50;
 	
 	// Heures génération aléatoire des schedules :
 	public static int centerBeginTime = 10; 
-	public static double sigmaBeginTime = 4;
+	public static double sigmaBeginTime = 0;
 	public static int centerEndTime = 18; 
 	public static double sigmaEndTime = 4;
 
 	// Affichage
 	public static boolean showSimulation = true;
+	public static boolean showTraffic = false;
 	public static int windowSize = 700; // taille de la fenêtre en pixels (représente 10km)
-	public static int verbose = 0; 
+	public static int verbose = 1; 
 	// -1 : rien
 	// 0 : Bilan des journées
 	// 1 : 0 + Lancement des personnes et départs/arrivées + imports

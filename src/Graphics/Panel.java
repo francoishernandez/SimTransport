@@ -14,6 +14,7 @@ import Environment.Points.EntryPoint;
 import Environment.Points.InterestPoint;
 import Individuals.Person;
 import Individuals.PersonState;
+import mainPackage.Starter;
 
 // La classe Panel contient les méthodes d'affichage des différents éléments de la simulation
 // Elle sera ajoutée à une instance de la classe Window lors de la création de l'agent Starter
@@ -92,39 +93,44 @@ public class Panel extends JPanel {
 		for (int i=0; i<env.getPaths().size(); i++){ // On parcourt la liste des chemins de l'environnement
 			Path p = env.getPaths().get(i);
 			
-			// Tracé de l'utilisation des routes (voitures) en premier car le chemin est tracé par dessus
-			if(p instanceof RoadPath){
-				int density = p.currentDensity();
-				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
-				double rapport = ((double)density)/((double)((RoadPath)p).getCriticalDensity());
-				if (rapport<1){
-					bufferGraphics.setColor(Color.GREEN);
-				} else if (rapport<1.5){
-					bufferGraphics.setColor(Color.ORANGE);
-				} else {
-					bufferGraphics.setColor(Color.RED);
-				}
-				bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
-						(int) (p.getA().getY()*ratio), 
-						(int) (p.getB().getX()*ratio), 
-						(int) (p.getB().getY()*ratio));
-			}
 			
-			if(p instanceof HighwayPath){
-				int density = p.currentDensity();
-				((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
-				double rapport = ((double)density)/((double)((HighwayPath)p).getCriticalDensity());
-				if (rapport<1){
-					bufferGraphics.setColor(Color.GREEN);
-				} else if (rapport<1.5){
-					bufferGraphics.setColor(Color.ORANGE);
-				} else {
-					bufferGraphics.setColor(Color.RED);
+			if (Starter.showTraffic) {
+				
+				// Tracé de l'utilisation des routes (voitures) en premier car le chemin est tracé par dessus
+				if(p instanceof RoadPath){
+					int density = p.currentDensity();
+					((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
+					double rapport = ((double)density)/((double)((RoadPath)p).getCriticalDensity());
+					if (rapport<1){
+						bufferGraphics.setColor(Color.GREEN);
+					} else if (rapport<1.5){
+						bufferGraphics.setColor(Color.ORANGE);
+					} else {
+						bufferGraphics.setColor(Color.RED);
+					}
+					bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
+							(int) (p.getA().getY()*ratio), 
+							(int) (p.getB().getX()*ratio), 
+							(int) (p.getB().getY()*ratio));
 				}
-				bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
-						(int) (p.getA().getY()*ratio), 
-						(int) (p.getB().getX()*ratio), 
-						(int) (p.getB().getY()*ratio));
+				
+				if(p instanceof HighwayPath){
+					int density = p.currentDensity();
+					((Graphics2D) bufferGraphics).setStroke(new BasicStroke(density/10));
+					double rapport = ((double)density)/((double)((HighwayPath)p).getCriticalDensity());
+					if (rapport<1){
+						bufferGraphics.setColor(Color.GREEN);
+					} else if (rapport<1.5){
+						bufferGraphics.setColor(Color.ORANGE);
+					} else {
+						bufferGraphics.setColor(Color.RED);
+					}
+					bufferGraphics.drawLine((int) (p.getA().getX()*ratio), 
+							(int) (p.getA().getY()*ratio), 
+							(int) (p.getB().getX()*ratio), 
+							(int) (p.getB().getY()*ratio));
+				}
+			
 			}
 			
 			// Tracé du chemin à proprement parler

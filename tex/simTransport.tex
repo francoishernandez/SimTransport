@@ -188,33 +188,34 @@ Avant même de considérer la partie simulation multi-agents, il faut créer la str
 
 \subsubsection{Points}
 
-ADAPTER + PARLER DES PREENTRY
-
-Afin de représenter les différents points utiles à notre simulation, nous créons les classes suivantes :
+Afin de représenter les différents points utiles à notre simulation, nous créons les classes suivantes, regroupées dans le package \texttt{Environment.Points} :
 \begin{itemize}
 \item \texttt{Point} : point "classique" ne représentant pas de lieu particulier, comporte des coordonnées (\texttt{x}, \texttt{y}, \texttt{z}), un \texttt{id} entier et un nom \texttt{name} ainsi que les différents getters et setters utiles ;
 \item \texttt{EntryPoint} : point "source" à partir duquel les individus entreront dans la simulation, hérite de \texttt{Point} ;
-\item \texttt{InterestPoint} : point "d'intérêt" auquel les individus désireront se rendre, hérite de \texttt{Point}.
+\item \texttt{InterestPoint} : point "d'intérêt" auquel les individus désireront se rendre, hérite de \texttt{Point} ;
+\item \texttt{PreEntryPoint} : point se trouvant avant les points d'entrée, afin d'éviter toute situation où un agent d'un certain type serait bloqué à un \texttt{EntryPoint} ne disposant pas de chemin compatible avec son type.
 \end{itemize}
 
 \subsubsection{Chemins}
 
-ADAPTER ET DETAILLER LES WEIGHTS
-
-Nous représentons aussi différents types de chemins. Pour cela, nous avons fait le choix d'un typage fort des chemins. Nous aurons un objet par type de chemin et par sens (de A vers B). Ainsi, par exemple, pour un chemin qui peut être emprunté par des piétons et des vélos, dans les deux sens, il y aura quatre objets. Les classes sont donc définies de la manière suivante :
+Nous représentons aussi différents types de chemins. Pour cela, nous avons fait le choix d'un typage fort des chemins. Nous aurons un objet par type de chemin et par sens (de A vers B). Ainsi, par exemple, pour un chemin qui peut être emprunté par des piétons et des vélos, dans les deux sens, il y aura quatre objets. Les classes sont donc définies de la manière suivante dans le package \texttt{Environment.Paths} :
 \begin{itemize}
 \item \texttt{Path} : classe mère dont hériteront tous les chemins 'typés', comporte un point \texttt{A} source et un point \texttt{B} destination, les getters et setters associés ainsi que différentes méthodes permettant de récupérer la distance (dans l'espace et projetée sur le plan), le dénivelé et la pente ;
 \item \texttt{FootPath} : chemin piéton héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 5km/h, et prenant en compte la difficulté accrue pour un dénivelé positif) ;
 \item \texttt{BikePath} : chemin cycliste héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 15 km/h prenant en compte la difficulté accrue pour un dénivelé positif) ;
-\item \texttt{RoadPath} : chemin routier (agglomération) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 40 km/h) ;
+\item \texttt{RoadPath} : chemin routier (agglomération) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 35 km/h) ;
 \item \texttt{HighwayPath} : chemin routier (nationale) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 90 km/h) ;
+\item \texttt{BusPath} : chemin représentant un autobus (de vitesse moyenne 50 km/h), héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
+\item \texttt{RerPath} : chemin représentant un RER (de vitesse moyenne 80 km/h), héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
+\item \texttt{EntryPath} : chemin entre les \texttt{PreEntryPoint} et \texttt{EntryPoint}, de poids nul (un agent débutera, sans délai, au point d'entrée le plus proche correspondant à son type).
 \end{itemize}
 
 \subsubsection{Temps}
 
-Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et de pouvoir implémenter une horloge pour notre problème. Cette classe comporte deux attributs byte \texttt{hours} et \texttt{minutes}, ainsi que leurs getters. Elle comporte aussi les méthodes suivantes :
+Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et de pouvoir implémenter une horloge pour notre problème. Cette classe comporte trois attributs byte \texttt{hours}, \texttt{minutes} et \texttt{seconds}, ainsi que leurs getters. Elle comporte aussi les méthodes suivantes :
 \begin{itemize}
 \item \texttt{incMinute(byte m)} : incrémente l'heure de \texttt{m} minutes ;
+\item \texttt{incSeconds(byte s)} : incrémente l'heure de \texttt{s} secondes ;
 \item \texttt{equals(Time toCompare)} : retourne un booléen vrai si \texttt{this} et \texttt{toCompare} sont égaux ;
 \item \texttt{randomBegin()} : retourne une heure aléatoire de départ du point d'entrée, distribuée selon une gaussienne autour de 10h du matin, entre 2h et 20h, et les minutes sont déterminées aléatoirement ;
 \item \texttt{randomEnd(Time begin)} : retourne une heure aléatoire de départ du travail, distribuée selon une gaussienne autour de 18h, comprise entre l'heure d'arrivée plus deux heures et minuit, et les minutes sont déterminées aléatoirement.
@@ -230,7 +231,7 @@ Cette classe contient les différents éléments de la simulation :
 \begin{itemize}
 \item \texttt{points} : une \texttt{ArrayList} d'objets \texttt{Point} (classe mère et sous-classes) comprenant l'ensemble des points considérés ;
 \item \texttt{carPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers en voiture (\texttt{RoadPath} et \texttt{HighwayPath}) ;
-\item \texttt{userPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers non motorisés (\texttt{FootPath}, \texttt{BikePath} et TRANSPORTS EN COMMUN).
+\item \texttt{publicTransportPaths} : une \texttt{ArrayList} d'objets \texttt{Path} n'autorisant que les usagers non motorisés (\texttt{FootPath}, \texttt{BikePath}, \texttt{BusPath} et \texttt{RerPath}).
 \end{itemize}
 
 \paragraph{Méthodes}
@@ -239,12 +240,10 @@ En plus des getters et setters usuels, cette classe contient également les métho
 \begin{itemize}
 \item \texttt{initializeWeights} : retourne, à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>}, la matrice des poids minimal entre les points, c'est à dire la matrice de taille \texttt{n}x\texttt{n} avec \texttt{n} le nombre de points, contenant l'éventuel poids minimal (s'il existe un chemin) entre deux points ;
 \item \texttt{initializePaths} : retourne,  à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>} et d'une matrice de poids (\texttt{double[][]}, la matrice des éventuels chemins de poids minimal entre les points ;
-\item \texttt{findShortestPath} : implémente, à partir d'une \texttt{ArrayList<Point>}, d'une \texttt{ArrayList<Path>}, d'un point \texttt{source} et d'un point \texttt{target}, l'algorithme de Djikstra et retourne une \texttt{ArrayList<Point>} contenant les points formant le plus court chemin entre deux points ;
+\item \texttt{shortestPathPointList} : implémente, à partir d'une \texttt{ArrayList<Point>}, d'une \texttt{ArrayList<Path>}, d'un point \texttt{source} et d'un point \texttt{target}, l'algorithme de Djikstra et retourne une \texttt{ArrayList<Point>} contenant les points formant le plus court chemin entre deux points ;
 \item \texttt{shortestPath} : récupère la liste des chemins formant le plus court chemin, à partir des méthodes \texttt{findShortestPath} et \texttt{initializePaths} ;
-\item \texttt{findShortestCarPath} : retourne les points formant le plus court chemin pour un usager automobiliste ;
-\item \texttt{findShortestUserPath} : retourne les points formant le plus court chemin pour un usager non motorisé ;
 \item \texttt{shortestCarPath} : retourne les chemins formant le plus court chemin pour un usager automobiliste ;
-\item \texttt{shortestUserPath} : retourne les chemins formant le plus court chemin pour un usager non motorisé.
+\item \texttt{shortestPublicTransportPath} : retourne les chemins formant le plus court chemin pour un usager non motorisé.
 
 \end{itemize}
 

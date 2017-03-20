@@ -83,7 +83,7 @@ public class Time {
 		hours += r;
 	}
 	
-	public void incQuarter(byte s){
+	public void incSeconds(byte s){
 		byte r = (byte) ((seconds + s) / 60);
 		seconds = (byte) ((seconds + s) % 60);
 		if (r != (byte) 0){

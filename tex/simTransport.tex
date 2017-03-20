@@ -188,6 +188,8 @@ Avant même de considérer la partie simulation multi-agents, il faut créer la str
 
 \subsubsection{Points}
 
+ADAPTER + PARLER DES PREENTRY
+
 Afin de représenter les différents points utiles à notre simulation, nous créons les classes suivantes :
 \begin{itemize}
 \item \texttt{Point} : point "classique" ne représentant pas de lieu particulier, comporte des coordonnées (\texttt{x}, \texttt{y}, \texttt{z}), un \texttt{id} entier et un nom \texttt{name} ainsi que les différents getters et setters utiles ;
@@ -196,6 +198,8 @@ Afin de représenter les différents points utiles à notre simulation, nous créons
 \end{itemize}
 
 \subsubsection{Chemins}
+
+ADAPTER ET DETAILLER LES WEIGHTS
 
 Nous représentons aussi différents types de chemins. Pour cela, nous avons fait le choix d'un typage fort des chemins. Nous aurons un objet par type de chemin et par sens (de A vers B). Ainsi, par exemple, pour un chemin qui peut être emprunté par des piétons et des vélos, dans les deux sens, il y aura quatre objets. Les classes sont donc définies de la manière suivante :
 \begin{itemize}
@@ -256,7 +260,15 @@ LÉO
 LÉO
 
 \pagebreak 
-\subsection{Interface graphique}
+\subsection{Interface}
+
+\subsubsection{Mode Verbose}
+
+EXPLIQUER RAPIDO LES DIFFERENTS NIVEAUX
+
+\subsubsection{Interface graphique}
+
+AJOUTER LES NOUVEAUTÉS
 
 Afin d'avoir une représentation graphique claire des différents points, chemins, et des évènements de la simulation, nous avons choisi de définir une interface graphique à l'aide des outils \texttt{Swing}. Cela consiste en deux classes \texttt{Window} et \texttt{Panel}. \texttt{Window} hérite de la classe \texttt{JFrame} et définit les caractéristiques de la fenêtre qui contiendra le \texttt{Panel}. \texttt{Panel} hérite de la classe \texttt{JPanel} et contient les méthodes associées au dessin des représentations. La méthode \texttt{paintComponent} dessine les différents éléments dans un \texttt{bufferGraphics}, attribut d'une image. L'horloge est également affichée.\\
 
@@ -264,12 +276,14 @@ Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le 
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{plateau.png}
+\includegraphics[width=0.8\textwidth]{plateau.png}
 \caption{Représentation graphique de la simulation}
 \end{center}
 \end{figure}
 
+\subsubsection{Lancement d'une simulation}
 
+EXPLIQUER LE LANCEMENT DANS STARTER + DAYS
 
 %------------------------------------------------
 \pagebreak

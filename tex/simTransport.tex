@@ -198,7 +198,8 @@ Le programme comporte les packages suivants :
 \item \texttt{mainPackage} : contient la classe agent \texttt{Starter} et son comportement \texttt{Days} qui permettent de créer l'environnement et les agents pour lancer la simulation.
 \end{itemize}
 
-
+%------------------------------------------------
+\pagebreak
 \section{Objets et structure du programme}
 
 Avant même de considérer la partie simulation multi-agents, il faut créer la structure du programme permettant de simuler le problème. La structure choisie est détaillée ci-après.
@@ -255,8 +256,8 @@ Cette classe contient les différents éléments de la simulation :
 
 En plus des getters et setters usuels, cette classe contient également les méthodes permettant d'implémenter un algorithme de Djikstra afin de retourner le plus court chemin d'un point A à un point B sur le graphe des points de l'environnement.
 \begin{itemize}
-\item \texttt{initializeWeights} : retourne, à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>}, la matrice des poids minimal entre les points, c'est à dire la matrice de taille \texttt{n}x\texttt{n} avec \texttt{n} le nombre de points, contenant l'éventuel poids minimal (s'il existe un chemin) entre deux points ;
-\item \texttt{initializePaths} : retourne,  à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>} et d'une matrice de poids (\texttt{double[][]}, la matrice des éventuels chemins de poids minimal entre les points ;
+\item \texttt{initializeWeights} : à partir d'une \texttt{ArrayList<Point>} et d'une \texttt{ArrayList<Path>}, retourne la matrice des poids minimal entre les points, c'est à dire la matrice de taille \texttt{n}x\texttt{n} avec \texttt{n} le nombre de points, contenant l'éventuel poids minimal (s'il existe un chemin) entre deux points ;
+\item \texttt{initializePaths} : à partir d'une \texttt{ArrayList<Point>}, d'une \texttt{ArrayList<Path>} et d'une matrice de poids (\texttt{double[][]}, retourne la matrice des éventuels chemins de poids minimal entre les points ;
 \item \texttt{shortestPathPointList} : implémente, à partir d'une \texttt{ArrayList<Point>}, d'une \texttt{ArrayList<Path>}, d'un point \texttt{source} et d'un point \texttt{target}, l'algorithme de Djikstra et retourne une \texttt{ArrayList<Point>} contenant les points formant le plus court chemin entre deux points ;
 \item \texttt{shortestPath} : récupère la liste des chemins formant le plus court chemin, à partir des méthodes \texttt{findShortestPath} et \texttt{initializePaths} ;
 \item \texttt{shortestCarPath} : retourne les chemins formant le plus court chemin pour un usager automobiliste ;
@@ -270,6 +271,8 @@ La classe \texttt{Import} du package \texttt{Util} permet d'importer les points 
 Cette classe constitue un objet qui sera instancié en début de simulation, et qui contient en attributs les différentes listes d'objets (points et chemins) qui constitueront l'environnement. Cette classe contient une méthode pour chaque type d'objet, qui parcourt et parse chaque fichier \texttt{csv} (un par type d'objet), appelle le constructeur associé sur chaque instance, et l'ajoute à l'\texttt{ArrayList} attribut correspondant. Les fichiers \texttt{csv} sont stockés dans le dossier \texttt{objects}.\\
 
 Au début de la simulation, il suffit d'instancier un objet de la classe \texttt{Import} à l'aide de son constructeur, qui appelle dans l'ordre défini les différentes méthodes d'importation des objets, et ensuite de récupérer les différentes listes dont on aura l'utilité à l'aide des getters associés.\\
+
+\pagebreak
 
 \section{Agents et comportements}
 
@@ -290,8 +293,6 @@ EXPLIQUER RAPIDO LES DIFFERENTS NIVEAUX
 
 \subsection{Interface graphique}
 
-AJOUTER LES NOUVEAUTÉS
-
 Afin d'avoir une représentation graphique claire des différents points, chemins, et des évènements de la simulation, nous avons choisi de définir une interface graphique à l'aide des outils \texttt{Swing}. Cela consiste en deux classes \texttt{Window} et \texttt{Panel}. \texttt{Window} hérite de la classe \texttt{JFrame} et définit les caractéristiques de la fenêtre qui contiendra le \texttt{Panel}. \texttt{Panel} hérite de la classe \texttt{JPanel} et contient les méthodes associées au dessin des représentations. La méthode \texttt{paintComponent} dessine les différents éléments dans un \texttt{bufferGraphics}, attribut d'une image. L'horloge est également affichée.\\
 
 Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le problème, nous avons choisi de nous baser sur une carte réelle (Google Maps) pour définir nos points et chemins.\\
@@ -300,6 +301,24 @@ Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le 
 \begin{center}
 \includegraphics[width=0.8\textwidth]{plateau.png}
 \caption{Représentation graphique de la simulation}
+\vspace{-1cm}
+\end{center}
+\end{figure}
+
+\paragraph{Représentation des éléments}
+
+Les différents éléments sont ajoutés au \texttt{bufferGraphics} dans la méthode \texttt{paintComponent} via les méthodes de dessin classique de \texttt{Swing}. Les points d'entrée sont représentés par des disques (\texttt{fillCirce}) roses, et les points d'intérêt sont représentés par des disques rouges et leur nom est affiché (\texttt{drawString}).\\
+
+Les chemins de type route sont représentés en noir, et avec un trait plus épais pour les chemins de type nationale ou autoroute. Les chemins de type RER sont représentés en bleu légèrement plus épais. Les chemins piétons et cyclistes sont représentés en vert. Les chemins d'autobus sont représentés en bleu transparent légèrement plus large, afin d'apparaître sur les chemins routier. Enfin, pour les chemin de type \texttt{roadPath} et \texttt{highwayPath}, qui peuvent être saturés, nous avons fait le choix de représenter la saturation par une couleur (vert, orange ou rouge selon le niveau), ainsi qu'avec une épaisseur variable (en fonction du rapport entre le nombre d'agents et la capacité effective).\\
+
+De plus, chaque agent (pouvant représenter plusieurs personnes), est représenté par un pictogramme de la forme d'un bonhomme. Ces pictogrammes se déplacent sur la carte (aux différents points de l'environnement) en suivant le déplacement de l'agent associé. Pour cela, la liste des agents \texttt{Persons} est ajoutée au constructeur du \texttt{Panel}, afin de pouvoir accéder aux informations des objets.\\
+
+Un exemple de simulation avec des chemins saturés est présenté figure XXX.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{saturation.png}
+\caption{Simulation provoquant la saturation sur certaines routes}
 \end{center}
 \end{figure}
 

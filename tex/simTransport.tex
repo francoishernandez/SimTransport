@@ -163,13 +163,30 @@ Un Système Multi-Agents est un système composé d'un ensemble d'agents, situés da
 
 Ce projet a pour objectif de construire une simulation des transports sur le plateau de Saclay. Pour cela, on utilisera la plateforme Jade. La plateforme Jade est une plateforme répartie d'agents s'exécutant de manière asynchrone (chaque agent est une thread). Chaque agent définit ses actions à l'aide de comportements qu'il exécute les uns après les autres. La programmation de ces comportements se fait de manière à les "entrelacer' dans l'exécution de l'agent. Dans ces comportements, les agents peuvent envoyer et recevoir des messages, mais ils peuvent aussi déclencher d'autre comportements ou même créer d'autres agents.\\
 
-Le but du projet est de simuler et d'étudier des politiques d'aménagement des transports à l'aide d'un simulateur multi-agent. Nous adoptons une modélisation très simplifiée pour étudier quelques hypothèses et mesurer l'impact des paramètres sur la simulation.
+Le but du projet est de simuler et d'étudier des politiques d'aménagement des transports à l'aide d'un simulateur multi-agent. Nous adoptons une modélisation simplifiée pour étudier quelques hypothèses et mesurer l'impact des paramètres sur la simulation.\\
+
+Ce rapport fait le tour de notre travail mais ne va pas forcément au coeur des implémentations, celles-ci étant commentées à même le code.
 
 
 %------------------------------------------------
 \pagebreak
 \section{Présentation générale}
 
+Nous avons donc construit un prototype de plateforme pour simuler les déplacements des utilisateurs sur le plateau de Saclay. Cette simulation n'est pas une fin en soi, l'idée est de pouvoir simuler et donc tenter prédire le comportement de ces utilisateurs (par exemple leur propension à choisir les transports en commun) en fonction de différents paramètres (par exemple la fréquence des transports en commun, ou la fermeture d'une route). L'application doit donc pouvoir être utilisée pour estimer l'impact de paramètres réels sur le traffic.
+
+\subsection{Fonctionnement général}
+
+Le prototype comprend un simulateur des déplacements d'agents sur le plateau sur une journée. Les agents qui évoluent au cours de cette journée sont déterminés à l'avance, et ont un emploi du temps à suivre et un choix de mode de transport fixé : soit la voiture, soit les transports en commun et la marche. Au cours de la journée, des embouteillages peuvent se créer pour les voyageurs en voiture s'ils sont trop nombreux, ce qui les ralentit considérablement. Les performances des deux modes de transport (temps passé à voyager) sont relevées pendant toute la journée.\\
+
+À partir de ce simulateur sont possibles deux types de déductions :
+\begin{itemize}
+\item Des estimations de performances du réseau : avec un pool d'utilisateurs donné, simplement mesurer les performances du réseau, et évaluer la criticité du blocage de certaines routes ou de la suppression de certaines lignes de bus.
+\item Des estimations du comportement des utilisateurs : la simulation peut être effectuée sur plusieurs jours. Les agents sont les mêmes de jour en jour, mais choisissent chaque matin d'utiliser la voiture ou les transports en commun en fonction des performances des jours précédents. On peut ainsi étudier l'impact d'un changement dans le réseau sur plusieurs jours et donc l'évolution des choix des utilisateurs.
+\end{itemize}
+
+
+\subsection{Structure globale du code}
+ 
 Le programme comporte les packages suivants :
 \begin{itemize}
 \item \texttt{Environment} : contient les différents éléments de l'environnement dans lequel se déroulera la simulation (horloge et environnement) ;
@@ -178,7 +195,7 @@ Le programme comporte les packages suivants :
 \item \texttt{Graphics} : contient les différentes classes associées à la représentation graphique de la simulation ;
 \item \texttt{Individuals} : contient les différentes classes et comportements liés aux individus.
 \item \texttt{Util} : contient la classe permettant d'importer les points et chemins stockés au format \texttt{csv} ;
-\item \texttt{mainPackage} : contient la classe agent \texttt{Starter} qui permet de créer les agents pour lancer la simulation.
+\item \texttt{mainPackage} : contient la classe agent \texttt{Starter} et son comportement \texttt{Days} qui permettent de créer l'environnement et les agents pour lancer la simulation.
 \end{itemize}
 
 

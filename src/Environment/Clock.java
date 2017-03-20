@@ -33,7 +33,7 @@ public class Clock extends jade.core.Agent {
 	}
 	
 	public void incTime(){
-		currentTime.incQuarter((byte) this.stepLength);
+		currentTime.incSeconds((byte) this.stepLength);
 	}
 
 	public Time getCurrentTime() {

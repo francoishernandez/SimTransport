@@ -333,9 +333,15 @@ On se rendra vite compte que la création de trop nombreux agents peut créer des 
 \pagebreak 
 \section{Interface}
 
-\subsection{Mode Verbose}
+\subsection{Verbose}
 
-EXPLIQUER RAPIDO LES DIFFERENTS NIVEAUX
+Un paramètre \texttt{verbose} est présent dans le starter. Il décrit la quantité d'information affichée en console lors de la simulation. Différents niveaux de précision sont disponibles~:
+\begin{itemize}
+\item \texttt{verbose <= -1} : Rien n'est affiché
+\item \texttt{verbose = 0} : Seulement le bilan des différentes journées est affiché
+\item \texttt{verbose = 1} : Sont affichés le bilan des journées, les lancements des personnes, les départs et arrivées des différentes personnes, le témoin des imports
+\item \texttt{verbose >= 2} : Sont en plus affichés le détail des trajets des personnes
+\end{itemize}
 
 \subsection{Interface graphique}
 

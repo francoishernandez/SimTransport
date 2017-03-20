@@ -168,7 +168,7 @@ Le but du projet est de simuler et d'étudier des politiques d'aménagement des tr
 
 %------------------------------------------------
 \pagebreak
-\section{Implémentation}
+\section{Présentation générale}
 
 Le programme comporte les packages suivants :
 \begin{itemize}
@@ -182,11 +182,11 @@ Le programme comporte les packages suivants :
 \end{itemize}
 
 
-\subsection{Objets et structure du programme}
+\section{Objets et structure du programme}
 
 Avant même de considérer la partie simulation multi-agents, il faut créer la structure du programme permettant de simuler le problème. La structure choisie est détaillée ci-après.
 
-\subsubsection{Points}
+\subsection{Points}
 
 ADAPTER + PARLER DES PREENTRY
 
@@ -197,7 +197,7 @@ Afin de représenter les différents points utiles à notre simulation, nous créons
 \item \texttt{InterestPoint} : point "d'intérêt" auquel les individus désireront se rendre, hérite de \texttt{Point}.
 \end{itemize}
 
-\subsubsection{Chemins}
+\subsection{Chemins}
 
 ADAPTER ET DETAILLER LES WEIGHTS
 
@@ -210,7 +210,7 @@ Nous représentons aussi différents types de chemins. Pour cela, nous avons fait 
 \item \texttt{HighwayPath} : chemin routier (nationale) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 90 km/h) ;
 \end{itemize}
 
-\subsubsection{Temps}
+\subsection{Temps}
 
 Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et de pouvoir implémenter une horloge pour notre problème. Cette classe comporte deux attributs byte \texttt{hours} et \texttt{minutes}, ainsi que leurs getters. Elle comporte aussi les méthodes suivantes :
 \begin{itemize}
@@ -220,7 +220,7 @@ Nous avons aussi créé une classe \texttt{Time} afin de représenter le temps et d
 \item \texttt{randomEnd(Time begin)} : retourne une heure aléatoire de départ du travail, distribuée selon une gaussienne autour de 18h, comprise entre l'heure d'arrivée plus deux heures et minuit, et les minutes sont déterminées aléatoirement.
 \end{itemize}
 
-\subsubsection{Environnement}
+\subsection{Environnement}
 
 Afin de représenter l'environnement global de notre simulation, nous avons créé une classe \texttt{Environment} qui sera instanciée une unique fois et contiendra les différents éléments du problème.
 
@@ -249,24 +249,24 @@ En plus des getters et setters usuels, cette classe contient également les métho
 \end{itemize}
 
 
-\subsection{Agents et comportements}
+\section{Agents et comportements}
 
-\subsubsection{Horloge}
+\subsection{Horloge}
 
 LÉO
 
-\subsubsection{Individus}
+\subsection{Individus}
 
 LÉO
 
 \pagebreak 
-\subsection{Interface}
+\section{Interface}
 
-\subsubsection{Mode Verbose}
+\subsection{Mode Verbose}
 
 EXPLIQUER RAPIDO LES DIFFERENTS NIVEAUX
 
-\subsubsection{Interface graphique}
+\subsection{Interface graphique}
 
 AJOUTER LES NOUVEAUTÉS
 
@@ -281,7 +281,7 @@ Afin d'avoir une simulation plus réaliste et de pouvoir mieux se représenter le 
 \end{center}
 \end{figure}
 
-\subsubsection{Lancement d'une simulation}
+\subsection{Lancement d'une simulation}
 
 EXPLIQUER LE LANCEMENT DANS STARTER + DAYS
 

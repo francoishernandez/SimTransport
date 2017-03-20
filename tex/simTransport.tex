@@ -219,11 +219,10 @@ Nous représentons aussi différents types de chemins. Pour cela, nous avons fait 
 \begin{itemize}
 \item \texttt{Path} : classe mère dont hériteront tous les chemins 'typés', comporte un point \texttt{A} source et un point \texttt{B} destination, les getters et setters associés ainsi que différentes méthodes permettant de récupérer la distance (dans l'espace et projetée sur le plan), le dénivelé et la pente ;
 \item \texttt{FootPath} : chemin piéton héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 5km/h, et prenant en compte la difficulté accrue pour un dénivelé positif) ;
-\item \texttt{BikePath} : chemin cycliste héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 15 km/h prenant en compte la difficulté accrue pour un dénivelé positif) ;
-\item \texttt{RoadPath} : chemin routier (agglomération) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 35 km/h) ;
-\item \texttt{HighwayPath} : chemin routier (nationale) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (pour une vitesse moyenne de 90 km/h) ;
-\item \texttt{BusPath} : chemin représentant un autobus (de vitesse moyenne 50 km/h), héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
-\item \texttt{RerPath} : chemin représentant un RER (de vitesse moyenne 80 km/h), héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
+\item \texttt{RoadPath} : chemin routier (agglomération) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire pour une vitesse moyenne de base de 35 km/h, la durée étant exponentiellement allongée lorsque la densité d'utilisateurs sur la voie dépasse un seuil critique de 1 utilisateur pour 10m (embouteillages) ;
+\item \texttt{HighwayPath} : chemin routier (nationale) héritant de \texttt{Path} et comportant une méthode \texttt{weight()} retournant le temps de parcours nécessaire pour une vitesse moyenne de base de 90 km/h, la durée étant exponentiellement allongée lorsque la densité d'utilisateurs sur la voie dépasse un seuil critique de 2 utilisateurs pour 10m (embouteillages) ;
+\item \texttt{BusPath} : chemin représentant un autobus (de vitesse moyenne 50 km/h), héritant de \texttt{Path} et comportant un temps d'attente moyen et une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
+\item \texttt{RerPath} : chemin représentant un RER (de vitesse moyenne 80 km/h), héritant de \texttt{Path} et comportant un temps d'attente moyen et une méthode \texttt{weight()} retournant le temps de parcours nécessaire (calculé à partir de la vitesse et du temps perdu aux arrêts) ;
 \item \texttt{EntryPath} : chemin entre les \texttt{PreEntryPoint} et \texttt{EntryPoint}, de poids nul (un agent débutera, sans délai, au point d'entrée le plus proche correspondant à son type).
 \end{itemize}
 
@@ -269,11 +268,58 @@ En plus des getters et setters usuels, cette classe contient également les métho
 
 \subsection{Horloge}
 
-LÉO
+Dans le package \texttt{Environment} on retrouve deux classes : \texttt{Clock} et \texttt{ClockTick}. Notre premier agent, le plus important, est en effet l'horloge. Un seul agent d'horloge est créé pour la journée, et sont rôle sera de mesurer l'heure et d'en informer les autres agents.\\
+
+\texttt{Clock} possède un attribut \texttt{currentTime} de type \texttt{Time} décrit plus haut. Cet attribut représente l'heure de notre système. Elle est régulièrement incrémentée à l'aide du comportement \texttt{ClockTick} héritant de \texttt{TickerBehaviour} de Jade. Ce type de comportement est appelé à intervalles réguliers, l'intervalle étant défini ici à l'aide de la durée réelle \texttt{simulationTime} d'exécution souhaitée pour une journée simulée ; et de l'intervalle de temps minimal simulé \texttt{stepLength}, typiquement 15 secondes (un intervalle plus grand, de une minute par exemple, a l'inconvénient d'arrondir à une minute toutes les durées inférieures, ce qui fausse vite la simulation sur les segments courts).\\
+
+À chaque tick d'horloge, \texttt{ClockTick} envoie aussi un message contenant l'heure du système à tous les autres agents. Le comportement s'arrête quand minuit est atteint. Un message est alors envoyé à l'agent \texttt{Starter} pour prévenir de la fin de journée.\\
 
 \subsection{Individus}
 
-LÉO
+\subsubsection{Principaux attributs}
+
+Chaque personne est représentée par un agent \texttt{Person}. Ils possèdent chacun des attributs comme :
+\begin{itemize}
+\item Leur point de pré-entrée, déterminé à la construction
+\item Leur emploi du temps \texttt{schedule}, déterminé à la construction et qui sera "consommé" au fur et à mesure de la journée
+\item Leur localisation (point et éventuellement chemin)
+\item Leur choix de mode de transport, déterminé à la construction
+\item L'ID de la ligne de transport en commun qu'ils empruntent actuellement (0 sinon). Cela servira pour détecter les changements de ligne.
+\end{itemize}
+
+L'emploi du temps \texttt{schedule} consiste en une liste de rendez-vous \texttt{Appointement}, qui sont eux-mêmes de simples couples (\texttt{Point}, \texttt{Time}) correspondants à la destination et à l'heure de départ (et non d'arrivée).\\
+
+Ces agents fonctionnent comme des machines à état, et un type énuméré \texttt{PersonState} est donc créé pour décrire ces états. Trois états sont possibles : 
+\begin{itemize}
+\item \texttt{in\_place} : La personne est là où elle doit se trouver, mais il reste des déplacements prévus dans son emploi du temps.
+\item \texttt{moving} : La personne est en déplacement.
+\item \texttt{gone} : La personne est rentrée chez elle, son emploi du temps a été entièrement exécuté, elle n'interviendra plus de la journée.
+\end{itemize}
+
+Cet état est stocké dans l'attribut \texttt{personState}. Les comportements \texttt{InPlace} et \texttt{Moving} associés sont décrits dans les parties suivantes (L'état \texttt{gone} n'a pas de comportement associé : cet état correspond à l'arrêt des différents comportements).
+
+\subsubsection{Comportement InPlace}
+
+Quand il est \texttt{in\_place}, l'agent attend un signal de départ à l'aide de son comportement \texttt{InPlace}. C'est un comportement déclenché à chaque réception de tick d'horloge. L'heure est comparée avec l'heure du départ du prochain \texttt{Appointement}. Si il est l'heure de partir, on enclenche le trajet en créant un nouveau comportement \texttt{Moving} associé au point de destination. Le rendez-vous est supprimé du \texttt{schedule}, \texttt{PersonState} est modifié, et le comportement \texttt{InPlace} est ensuite arrêté. \\
+
+\subsubsection{Comportement Moving}
+
+Quand il est \texttt{moving}, l'agent se déplace vers son point de destination à l'aide de son comportement \texttt{Moving}. Le comportement est créé avec un point de destination, conservé en attribut. Lors de son déplacement, l'agent peut se trouver dans deux états différents correspondant à des phases différentes du mouvement. On créera pour celà un type énuméré \texttt{MovingState} :
+\begin{itemize}
+\item \texttt{none} : La personne n'est pas dans un état de mouvement \texttt{moving}
+\item \texttt{point} : La personne est à un \texttt{Point}, en attente du choix du prochain \texttt{Path}
+\item \texttt{path} : La personne est en train de parcourir un \texttt{Path}
+\end{itemize}
+
+Quand il est sur un point, l'agent récupère le prochain segment à emprunter à l'aide de Djikstra. On récupère le temps nécessaire pour parcourir le segment (prenant en compte comme expliqué la côte à pied, les embouteillages en voiture, et le temps d'arrêt en transports en commun). On y ajoute l'éventuel temps d'attente moyen lors d'un changement de ligne. On stocke ce temps dans un attribut \texttt{timeNeeded} et on initialise un compteur de temps passé sur le segment \texttt{currentPathProgress} à 0. On incrémente les compteurs globaux de temps passé dans les transports. Le moving state est finalement passé à \texttt{path}.\\
+
+Quand il est sur un segment, l'agent écoute les tick d'horloge et incrémente son compteur de temps passé sur le segment \texttt{currentPathProgress}. Quand \texttt{timeNeeded} est atteint, on change finalement l'attribut \texttt{localisation} de l'agent pour le placer sur le prochain point. Si le point atteint est la destination, on arrête le mouvement et on passe en \texttt{in\_place} si il reste des rendez-vous et en \texttt{gone} sinon. Si le point atteint n'est pas la destination, le mouvement continue et on recommence ce cycle en passant le moving state à \texttt{point}.\\
+
+\subsubsection{Construction}
+
+Les personnes présentent un constructeur qui permet de les construire à la main, mais nous utiliserons plutôt un constructeur \texttt{rand\_AllerRetour} qui construit une personne avec un emploi du temps simple : un aller retour depuis un point de pré-entrée vers un point d'intérêt. Les heures des trajets sont définies à l'aide de \texttt{randomBegin()} et \texttt{randomEnd()} décrite plus haut dans la section Time.\\
+
+On se rendra vite compte que la création de trop nombreux agents peut créer des problèmes de mémoire et de CPU suivant la machine et les paramètres. Pour pouvoir constater des embouteillages plus facilement, on introduira dans le starter un paramètre \texttt{realUsersPerPerson} qui représente le nombre d'usagers réels représentés par un agent \texttt{Person}. Cette valeur interviendra dans les calculs de densité d'utilisateurs des routes.\\
 
 \pagebreak 
 \section{Interface}

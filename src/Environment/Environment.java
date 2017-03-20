@@ -14,7 +14,6 @@ public class Environment {
 	private ArrayList<Point> points;
 	private ArrayList<Path> carPaths;
 	private ArrayList<Path> publicTransportPaths;
-	private ArrayList<Journey> journeys; // recense les plus court chemin entre deux points
 	
 	// retourne le chemin le plus court d'un point A à un point B
 	/*public ArrayList<Point> shortestPath(Point A, Point B){
